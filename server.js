@@ -13,12 +13,12 @@ import notificationRoutes from "./routes/notification.routes.js"
 import conversationRoutes from "./routes/conversation.routes.js"
 
 import { app, server } from "./socket/socket.js";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-const __dirname = path.resolve();
 
 
 app.use(express.json());
@@ -35,12 +35,20 @@ app.use('/api/friends', friendsRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/conversations', conversationRoutes);
 
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// use the client app 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__dirname);
+
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/client/dist/index.html'));
 });
 
+ 
 
 server.listen(PORT,() => {
   connectToMongoDB();
