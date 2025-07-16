@@ -6,7 +6,7 @@ import { JwtPayload } from "../types/jwt.js";
 const protectRoute = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const token = req.cookies.jwt;

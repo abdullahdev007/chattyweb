@@ -9,7 +9,7 @@ export interface ChangePasswordResponse {
 }
 
 export interface DeleteAccountResponse {
-    error?: string;
+  error?: string;
 }
 
 export interface LoginResponse {

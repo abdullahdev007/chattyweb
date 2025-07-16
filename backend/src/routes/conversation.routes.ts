@@ -14,7 +14,7 @@ router.get("/:id", protectRoute, getConversation as unknown as RequestHandler);
 router.put(
   "/read/:id",
   protectRoute,
-  markMessagesAsReaded as unknown as RequestHandler
+  markMessagesAsReaded as unknown as RequestHandler,
 );
 
 export default router;

@@ -17,7 +17,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const profilePic = fromMe
     ? authUser.profilePic
     : selectedConversation?.participants.find(
-        (p: any) => p.userId._id != authUser._id
+        (p: any) => p.userId._id != authUser._id,
       ).userId.profilePic;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
   const shakeClass = message.shouldShake ? "shake" : "";

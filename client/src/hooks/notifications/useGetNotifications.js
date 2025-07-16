@@ -3,34 +3,36 @@ import toast from "react-hot-toast";
 import useNotifications from "../../zustand/useNotifications";
 
 const useGetNotifications = () => {
-	const [loading, setLoading] = useState(false);
-    const { setNotifications, notifications,setUnReadedNotificationsCount } = useNotifications();
-    
-	useEffect(() => {
-		const getNotifications = async () => {
-			setLoading(true);
+  const [loading, setLoading] = useState(false);
+  const { setNotifications, notifications, setUnReadedNotificationsCount } =
+    useNotifications();
 
-			try {
-				const res = await fetch("/api/notifications");
-				const data = await res.json();
-				if (data.error) {
-					throw new Error(data.error);
-				}
+  useEffect(() => {
+    const getNotifications = async () => {
+      setLoading(true);
 
-				setUnReadedNotificationsCount(data.filter((not) => not.readed == false).length);
-				setNotifications(data);
-			} catch (error) {
-				toast.error(error.message);
-			} finally {
-				setLoading(false);
-			}
-		};
-		
-		getNotifications();
-	}, [setNotifications, setUnReadedNotificationsCount]);
+      try {
+        const res = await fetch("/api/notifications");
+        const data = await res.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
 
+        setUnReadedNotificationsCount(
+          data.filter((not) => not.readed == false).length,
+        );
+        setNotifications(data);
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-	return { loading, notifications };
+    getNotifications();
+  }, [setNotifications, setUnReadedNotificationsCount]);
+
+  return { loading, notifications };
 };
 
 export default useGetNotifications;

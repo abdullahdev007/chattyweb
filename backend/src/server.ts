@@ -19,14 +19,13 @@ dotenv.config();
 
 const PORT: string | number = process.env.PORT || 5000;
 
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.APP_URL,
     credentials: true,
-  })
+  }),
 );
 
 app.use("/api/auth", authRoutes);
@@ -40,11 +39,10 @@ app.use("/api/conversations", conversationRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
-
+app.use(express.static(path.join(__dirname, "../../client/dist")));
 
 app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
 });
 
 server.listen(PORT, () => {

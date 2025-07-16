@@ -15,7 +15,7 @@ import { AuthedRequest, AuthedRequestHandler } from "../types/express.js";
 
 export const signup: RequestHandler<any, any, SignupRequestBody> = async (
   req,
-  res
+  res,
 ) => {
   try {
     const { fullName, username, password, confirmPassword, gender } = req.body;
@@ -68,7 +68,7 @@ export const signup: RequestHandler<any, any, SignupRequestBody> = async (
 
 export const login: RequestHandler<any, any, LoginRequestBody> = async (
   req,
-  res
+  res,
 ) => {
   try {
     const { username, password } = req.body;
@@ -76,7 +76,7 @@ export const login: RequestHandler<any, any, LoginRequestBody> = async (
     const user: IUser | null = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(
       password,
-      user?.password || ""
+      user?.password || "",
     );
 
     if (!user || !isPasswordCorrect) {
@@ -111,7 +111,7 @@ export const logout: RequestHandler = (req, res) => {
 
 export const changePassword = async (
   req: Request<any, any, ChangePasswordRequestBody>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { password, confirmPassword } = req.body;
@@ -137,7 +137,7 @@ export const changePassword = async (
 
 export const updateProfile = async (
   req: Request<any, any, UpdateProfileRequestBody>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { username, fullName, gender } = req.body;

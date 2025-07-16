@@ -5,44 +5,45 @@ import useConversations from "../../zustand/useConversations";
 import useConversation from "../../zustand/useConversation";
 
 const useGetConversations = () => {
-	const [loading, setLoading] = useState(false);
-	const {conversations, setConversations} = useConversations();
-	const { selectedConversation, setSelectedConversation } = useConversation();
-	const { friends } = useFriends();
+  const [loading, setLoading] = useState(false);
+  const { conversations, setConversations } = useConversations();
+  const { selectedConversation, setSelectedConversation } = useConversation();
+  const { friends } = useFriends();
 
-	useEffect(() => {
-		const getConversations = async () => {
-			setLoading(true);
+  useEffect(() => {
+    const getConversations = async () => {
+      setLoading(true);
 
-			try {
-				const res = await fetch("/api/conversations");
-				const data = await res.json();
-				if (data.error) {
-					throw new Error(data.error);
-				}
+      try {
+        const res = await fetch("/api/conversations");
+        const data = await res.json();
+        if (data.error) {
+          throw new Error(data.error);
+        }
 
-				setConversations(data)
+        setConversations(data);
 
-				if(selectedConversation) {
-					if((data.find((conv) => conv._id == selectedConversation._id)) == undefined) {
-						setSelectedConversation(null)
-					}
-				}
-			} catch (error) {
-				toast.error(error.message);
-			} finally {
-				setLoading(false);
-			}
-		};
-		
+        if (selectedConversation) {
+          if (
+            data.find((conv) => conv._id == selectedConversation._id) ==
+            undefined
+          ) {
+            setSelectedConversation(null);
+          }
+        }
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-		getConversations();
+    getConversations();
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [friends]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [friends]);
 
-
-	return { loading, conversations };
+  return { loading, conversations };
 };
 
 export default useGetConversations;

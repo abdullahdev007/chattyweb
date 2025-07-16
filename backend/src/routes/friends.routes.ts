@@ -17,19 +17,19 @@ router.get("/requests", protectRoute, getFriendRequests);
 router.post(
   "/send-request/:id",
   protectRoute,
-  sendFriendRequest as unknown as RequestHandler
+  sendFriendRequest as unknown as RequestHandler,
 );
 
 router.post(
   "/respond-request/:id",
   protectRoute,
-  respondFriendRequest as unknown as RequestHandler
+  respondFriendRequest as unknown as RequestHandler,
 );
 
 router.delete(
   "/delete-friend/:id",
   protectRoute,
-  deleteFriend as unknown as RequestHandler
+  deleteFriend as unknown as RequestHandler,
 );
 
 export default router;

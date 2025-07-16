@@ -18,7 +18,7 @@ const participantSchema = new Schema<IParticipant>(
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     unreadCount: { type: Number, default: 0 },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const conversationSchema = new Schema<IConversation>(
@@ -37,12 +37,12 @@ const conversationSchema = new Schema<IConversation>(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Conversation: Model<IConversation> = mongoose.model<IConversation>(
   "Conversation",
-  conversationSchema
+  conversationSchema,
 );
 
 export default Conversation;

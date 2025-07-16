@@ -22,7 +22,7 @@ export const markAsReaded = async (req: Request, res: Response) => {
       notifications.map(async (notification: any) => {
         notification.readed = true;
         await notification.save();
-      })
+      }),
     );
 
     res.status(200).json({ message: "Notifications marked as read" });

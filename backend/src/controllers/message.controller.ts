@@ -7,7 +7,7 @@ import { ConversationParams } from "../types/requests/conversation.js";
 
 export const sendMessage = async (
   req: Request<ConversationParams, any, SendMessageBody>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { message } = req.body;
@@ -23,7 +23,7 @@ export const sendMessage = async (
     }
 
     const receiverParticipant = conversation.participants.find(
-      (user: any) => user.userId.id != req.user.id
+      (user: any) => user.userId.id != req.user.id,
     );
 
     if (!receiverParticipant) {
@@ -34,7 +34,7 @@ export const sendMessage = async (
     }
 
     const reciversocketId = getSocketId(
-      receiverParticipant.userId._id.toString()
+      receiverParticipant.userId._id.toString(),
     );
 
     const unreadCount = reciversocketId ? 0 : 1;
@@ -68,20 +68,19 @@ export const sendMessage = async (
 
 export const getMessages = async (
   req: Request<ConversationParams>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { id: conversationId } = req.params;
 
-    const conversation = await Conversation.findByIdAndUpdate(
-      conversationId
-    ).populate("messages");
+    const conversation =
+      await Conversation.findByIdAndUpdate(conversationId).populate("messages");
 
     if (!conversation)
       return res.status(404).json({ error: "the conversation is not found" });
 
     const currentUserParticipant = conversation.participants.find(
-      (user: any) => user.userId.toString() == req.user.id
+      (user: any) => user.userId.toString() == req.user.id,
     );
 
     if (currentUserParticipant) {
@@ -102,7 +101,7 @@ export const getMessages = async (
 
 export const getUnReadedMessageCount = async (
   req: Request<ConversationParams>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const userId = req.user.id;
@@ -114,7 +113,7 @@ export const getUnReadedMessageCount = async (
       return res.status(404).json({ error: "the conversation is not found" });
 
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId)
+      (participant: any) => participant.userId.equals(userId),
     );
 
     res.status(200).json(currentUserParticipant!.unreadCount);
@@ -126,7 +125,7 @@ export const getUnReadedMessageCount = async (
 
 export const increaseUnReadedMessage = async (
   req: Request<ConversationParams>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const conversationId = req.params.id;
@@ -145,7 +144,7 @@ export const increaseUnReadedMessage = async (
     const receiverUserParticipant = conversation.participants.find(
       (user: any) => {
         return user.userId.id == req.user.id;
-      }
+      },
     );
 
     if (!receiverUserParticipant) {

@@ -25,12 +25,12 @@ const notificationSchema = new Schema<INotification>(
     readed: { type: Boolean, default: false },
     message: { type: String, required: true },
   },
-  { timestamps: { createdAt: true, updatedAt: false } }
+  { timestamps: { createdAt: true, updatedAt: false } },
 );
 
 const Notification: Model<INotification> = mongoose.model<INotification>(
   "Notification",
-  notificationSchema
+  notificationSchema,
 );
 
 export default Notification;

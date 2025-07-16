@@ -14,5 +14,5 @@ export interface AuthedRequest<T = any> extends Request {
 export type AuthedRequestHandler<T = any> = (
   req: AuthedRequest<T>,
   res: Response,
-  next?: (err?: any) => void
+  next?: (err?: any) => void,
 ) => any;

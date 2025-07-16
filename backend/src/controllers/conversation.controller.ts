@@ -22,7 +22,7 @@ export const getConversations = async (req: Request, res: Response) => {
 // Controller: getConversation (does not use req.user)
 export const getConversation: RequestHandler<ConversationParams> = async (
   req: Request<ConversationParams>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const conversationId: string = req.params.id;
@@ -44,7 +44,7 @@ export const getConversation: RequestHandler<ConversationParams> = async (
 // Controller: markMessagesAsReaded (uses req.user)
 export const markMessagesAsReaded = async (
   req: Request<ConversationParams>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const conversationId: string = req.params.id;
@@ -55,7 +55,7 @@ export const markMessagesAsReaded = async (
     if (!conversation)
       return res.status(404).json({ error: "the conversation is not found" });
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(req.user?._id)
+      (participant: any) => participant.userId.equals(req.user?._id),
     );
     if (!currentUserParticipant)
       return res

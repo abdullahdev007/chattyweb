@@ -14,17 +14,17 @@ router.get("/:id", protectRoute, getMessages as unknown as RequestHandler);
 router.post(
   "/send/:id",
   protectRoute,
-  sendMessage as unknown as RequestHandler
+  sendMessage as unknown as RequestHandler,
 );
 router.get(
   "/unreadCount/:id",
   protectRoute,
-  getUnReadedMessageCount as unknown as RequestHandler
+  getUnReadedMessageCount as unknown as RequestHandler,
 );
 router.put(
   "/increaseUnreadCount/:id",
   protectRoute,
-  increaseUnReadedMessage as unknown as RequestHandler
+  increaseUnReadedMessage as unknown as RequestHandler,
 );
 
 export default router;

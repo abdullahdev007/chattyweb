@@ -12,7 +12,7 @@ import {
 
 export const sendFriendRequest = async (
   req: Request<FriendIdParam>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { id: friendId } = req.params;
@@ -57,7 +57,7 @@ export const sendFriendRequest = async (
 
 export const respondFriendRequest = async (
   req: Request<FriendIdParam, any, RespondFriendRequestBody>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { id: requestUserId } = req.params;
@@ -80,7 +80,7 @@ export const respondFriendRequest = async (
     }
 
     user.pendingFriendships = user.pendingFriendships.filter(
-      (id: string) => id != requestUserId
+      (id: string) => id != requestUserId,
     );
 
     const requestUser: IUser | null = await User.findById(requestUserId);
@@ -107,7 +107,7 @@ export const respondFriendRequest = async (
       requestUser,
       response === "accept"
         ? NotificationTypes.FriendRequestAccepted
-        : NotificationTypes.FriendRequestRejected
+        : NotificationTypes.FriendRequestRejected,
     );
 
     const receiverSocketId = getSocketId(requestUserId);
@@ -131,7 +131,7 @@ export const respondFriendRequest = async (
 
 export const deleteFriend = async (
   req: Request<FriendIdParam>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { id: friendId } = req.params;
@@ -198,7 +198,7 @@ export const getFriends = async (req: Request, res: Response) => {
   try {
     const userIds = req.user.friends;
     const friends = await User.find({ _id: { $in: userIds } }).select(
-      "-password -__v"
+      "-password -__v",
     );
     res.status(200).json(friends);
   } catch (error: any) {

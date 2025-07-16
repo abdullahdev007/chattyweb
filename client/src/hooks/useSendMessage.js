@@ -4,33 +4,36 @@ import toast from "react-hot-toast";
 import useConversations from "../zustand/useConversations";
 
 const useSendMessage = () => {
-	const [loading, setLoading] = useState(false);
-	const { messages, setMessages, selectedConversation } = useConversation();
-	const  {updateConversation} = useConversations();
+  const [loading, setLoading] = useState(false);
+  const { messages, setMessages, selectedConversation } = useConversation();
+  const { updateConversation } = useConversations();
 
-	const sendMessage = async (message) => {
-		setLoading(true);
-		try {
-			const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ message }),
-			});
-			const data = await res.json();
-			
-			if (data.error) throw new Error(data.error);
+  const sendMessage = async (message) => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `/api/messages/send/${selectedConversation._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        },
+      );
+      const data = await res.json();
 
-			updateConversation(data.conversation);
-			setMessages([...messages, data.newMessage]);
-		} catch (error) {
-			toast.error(error.message);
-		} finally {
-			setLoading(false);
-		}
-	};
+      if (data.error) throw new Error(data.error);
 
-	return { sendMessage, loading };
+      updateConversation(data.conversation);
+      setMessages([...messages, data.newMessage]);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { sendMessage, loading };
 };
 export default useSendMessage;

@@ -6,7 +6,7 @@ import { IUser } from "../models/user.model.js";
 const createNotification = async (
   sender: IUser,
   receiver: IUser,
-  type: NotificationTypes
+  type: NotificationTypes,
 ): Promise<INotification | { error: string }> => {
   try {
     let existingNotification: INotification | null = null;
@@ -25,14 +25,14 @@ const createNotification = async (
       type === NotificationTypes.NewFriendRequest
         ? `A new friend request from ${sender.fullName}`
         : type === NotificationTypes.FriendRequestAccepted
-        ? `${sender.fullName}'s friend request has been accepted`
-        : type === NotificationTypes.FriendRequestRejected
-        ? `${sender.fullName}'s friend request was rejected`
-        : type === NotificationTypes.RemoveFriendShip
-        ? `${sender.fullName} removed your friendship with him`
-        : type === NotificationTypes.NewMessage
-        ? `New message from ${sender.fullName}`
-        : "";
+          ? `${sender.fullName}'s friend request has been accepted`
+          : type === NotificationTypes.FriendRequestRejected
+            ? `${sender.fullName}'s friend request was rejected`
+            : type === NotificationTypes.RemoveFriendShip
+              ? `${sender.fullName} removed your friendship with him`
+              : type === NotificationTypes.NewMessage
+                ? `New message from ${sender.fullName}`
+                : "";
 
     if (existingNotification) {
       notification = existingNotification;

@@ -26,12 +26,12 @@ const messageSchema = new Schema<IMessage>(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Message: Model<IMessage> = mongoose.model<IMessage>(
   "Message",
-  messageSchema
+  messageSchema,
 );
 
 export default Message;
