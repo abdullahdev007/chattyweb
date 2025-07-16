@@ -10,8 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "backend": "file:..",
-    "chattyweb": "file:..",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,11 +18,13 @@
     "react-input-emoji": "^5.8.0",
     "react-router-dom": "^6.22.3",
     "socket.io-client": "^4.7.5",
+    "typescript": "^5.8.3",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
+    "@types/js-cookie": "^3.0.6",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.7.3",
