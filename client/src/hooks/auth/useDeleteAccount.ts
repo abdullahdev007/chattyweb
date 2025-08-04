@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
-import { useAuthContext } from "context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { useState } from "react";
-import { DeleteAccountResponse } from "types/auth";
+import { BaseResponse } from "@shared/types/http";
 
 const useDeleteAccount = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,11 +14,11 @@ const useDeleteAccount = () => {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
-      const data: DeleteAccountResponse = await res.json();
-      if (data.error) {
-        console.log("error");
-        throw new Error(data.error);
+      const data: BaseResponse = await res.json();
+      if (!data.success) {
+        throw new Error(data.message);
       }
+
       localStorage.removeItem("chat-user");
       setAuthUser(null);
     } catch (error) {

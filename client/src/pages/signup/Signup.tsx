@@ -2,14 +2,10 @@ import { Link } from "react-router-dom";
 import GenderCheckbox from "../../components/GenderCheckbox/GenderCheckbox";
 import { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import useSignup from "../../hooks/auth/useSignup";
+import { SignupRequestBody, SignupResponseBody } from "@shared/types/http";
+import { Gender } from "@shared/types/types";
 
-interface SignupInputs {
-  fullName: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-}
+type SignupInputs = SignupRequestBody;
 
 const Signup: React.FC = () => {
   const [inputs, setInputs] = useState<SignupInputs>({
@@ -17,12 +13,12 @@ const Signup: React.FC = () => {
     username: "",
     password: "",
     confirmPassword: "",
-    gender: "",
+    gender: "male",
   });
 
   const { signup, loading } = useSignup();
 
-  const handleCheckboxChange = (gender: string) => {
+  const handleCheckboxChange = (gender: Gender) => {
     setInputs({ ...inputs, gender });
   };
 

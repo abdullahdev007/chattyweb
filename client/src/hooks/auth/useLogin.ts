@@ -1,13 +1,16 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "../../context/AuthContext";
-import { LoginResponse, LoginInput } from "types/auth";
+import { useAuthContext } from "@/context/AuthContext";
+import { LoginRequestBody, LoginResponseBody } from "@shared/types/http";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { setAuthUser } = useAuthContext();
 
-  const login = async (username: string, password: string): Promise<void> => {
+  const login = async ({
+    username,
+    password,
+  }: LoginRequestBody): Promise<void> => {
     const success = handleInputErrors({ username, password });
     if (!success) return;
 
@@ -18,12 +21,13 @@ const useLogin = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      const data: LoginResponse = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
+      const data: LoginResponseBody = await res.json();
+      if (!data.success) {
+        throw new Error(data.message);
       }
-      localStorage.setItem("chat-user", JSON.stringify(data));
-      setAuthUser(data);
+
+      localStorage.setItem("chat-user", JSON.stringify(data.user));
+      setAuthUser(data.user);
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
@@ -36,7 +40,7 @@ const useLogin = () => {
 
 export default useLogin;
 
-function handleInputErrors({ username, password }: LoginInput): boolean {
+function handleInputErrors({ username, password }: LoginRequestBody): boolean {
   if (!username || !password) {
     toast.error("Please fill in all fields");
     return false;

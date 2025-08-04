@@ -1,18 +1,7 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import mongoose, { Model } from "mongoose";
+import type { IUser } from "@shared/types/models/user";
 
-export interface IUser extends Document {
-  fullName: string;
-  username: string;
-  password: string;
-  gender: "male" | "female";
-  profilePic?: string;
-  friends: mongoose.Types.ObjectId[];
-  pendingFriendships: mongoose.Types.ObjectId[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const userSchema = new Schema<IUser>(
+const userSchema = new mongoose.Schema<IUser & Document>(
   {
     fullName: {
       type: String,
@@ -39,14 +28,14 @@ const userSchema = new Schema<IUser>(
     },
     friends: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         default: [],
       },
     ],
     pendingFriendships: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         default: [],
       },
@@ -55,6 +44,9 @@ const userSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
+const User: Model<IUser & Document> = mongoose.model<IUser & Document>(
+  "User",
+  userSchema,
+);
 
 export default User;

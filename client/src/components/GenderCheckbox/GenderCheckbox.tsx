@@ -1,8 +1,9 @@
+import { Gender } from "@shared/types/types";
 import React from "react";
 
 interface GenderCheckboxProps {
-  onCheckboxChange: (gender: string) => void;
-  selectedGender: string;
+  onCheckboxChange: (gender: Gender) => void;
+  selectedGender: Gender;
 }
 
 const GenderCheckbox: React.FC<GenderCheckboxProps> = ({

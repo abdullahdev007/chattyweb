@@ -1,7 +1,7 @@
+import { useAuthContext } from "@/context/AuthContext";
+import { SignupRequestBody, SignupResponseBody } from "@shared/types/http";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "context/AuthContext";
-import { SignupResponse, SignupInput } from "types/auth";
 
 const useSignup = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -13,7 +13,7 @@ const useSignup = () => {
     password,
     confirmPassword,
     gender,
-  }: SignupInput): Promise<void> => {
+  }: SignupRequestBody): Promise<void> => {
     const success = handleInputErrors({
       fullName,
       username,
@@ -36,12 +36,11 @@ const useSignup = () => {
           gender,
         }),
       });
-      const data: SignupResponse = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      const data: SignupResponseBody = await res.json();
+      if (!data.success) throw new Error(data.message);
+
       localStorage.setItem("chat-user", JSON.stringify(data));
-      setAuthUser(data);
+      setAuthUser(data.user);
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
@@ -60,7 +59,7 @@ function handleInputErrors({
   password,
   confirmPassword,
   gender,
-}: SignupInput): boolean {
+}: SignupRequestBody): boolean {
   if (!fullName || !username || !password || !confirmPassword || !gender) {
     toast.error("Please fill in all fields");
     return false;

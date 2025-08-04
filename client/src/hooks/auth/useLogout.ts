@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { useAuthContext } from "../../context/AuthContext";
 import { useState } from "react";
-import { LogoutResponse } from "types/auth";
+import { BaseResponse } from "@shared/types/http";
 
 const useLogout = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,10 +14,9 @@ const useLogout = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
-      const data: LogoutResponse = await res.json();
-      if (data.error) {
-        console.log("error");
-        throw new Error(data.error);
+      const data: BaseResponse = await res.json();
+      if (!data.success) {
+        throw new Error(data.message);
       }
       localStorage.removeItem("chat-user");
       setAuthUser(null);

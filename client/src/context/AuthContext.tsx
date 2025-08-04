@@ -1,3 +1,4 @@
+import { SafeUser } from "@shared/types/models/user";
 import React, {
   createContext,
   useContext,
@@ -31,7 +32,7 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [authUser, setAuthUser] = useState<any>(
+  const [authUser, setAuthUser] = useState<SafeUser>(
     JSON.parse(localStorage.getItem("chat-user") as string) || null,
   );
 

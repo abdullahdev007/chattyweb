@@ -1,8 +1,11 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { UpdateProfileInput, UpdateProfileResponse } from "types/auth";
+import {
+  UpdateProfileRequestBody,
+  UpdateProfileResponseBody,
+} from "@shared/types/http";
+import { useAuthContext } from "@/context/AuthContext";
 
 const useUpdateProfile = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -13,7 +16,7 @@ const useUpdateProfile = () => {
     fullName,
     username,
     gender,
-  }: UpdateProfileInput): Promise<void> => {
+  }: UpdateProfileRequestBody): Promise<void> => {
     const success = handleInputErrors({ fullName, username, gender });
     if (!success) return;
 
@@ -24,12 +27,11 @@ const useUpdateProfile = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullName, username, gender }),
       });
-      const data: UpdateProfileResponse = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      const data: UpdateProfileResponseBody = await res.json();
+      if (!data.success) throw new Error(data.message);
+
       localStorage.setItem("chat-user", JSON.stringify(data));
-      setAuthUser(data);
+      setAuthUser(data.user);
       navigate("/");
       toast.success("Profile updated successfully");
     } catch (error) {
@@ -48,7 +50,7 @@ function handleInputErrors({
   fullName,
   username,
   gender,
-}: UpdateProfileInput): boolean {
+}: UpdateProfileRequestBody): boolean {
   if (!fullName || !username || !gender) {
     toast.error("Please fill in all fields");
     return false;

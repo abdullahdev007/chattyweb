@@ -1,6 +1,9 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import path from "path";
 import express, { Request, Response } from "express";
-import dotenv from "dotenv";
 import connectToMongoDB from "./db/connecttoMongoDB.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -14,8 +17,6 @@ import conversationRoutes from "./routes/conversation.routes.js";
 
 import { app, server } from "./socket/socket.js";
 import { fileURLToPath } from "url";
-
-dotenv.config();
 
 const PORT: string | number = process.env.PORT || 5000;
 

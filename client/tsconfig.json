@@ -1,10 +1,15 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/*": ["../shared/*"]
+    },
     "target": "esnext",
     "useDefineForClassFields": true,
     "lib": ["dom", "esnext"],
-    "allowJs": true,
+    //    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

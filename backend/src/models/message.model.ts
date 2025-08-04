@@ -1,15 +1,7 @@
-import mongoose, { Document, Model, Schema, Types } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
+import type { IMessage } from "@shared/types/models/message";
 
-export interface IMessage extends Document {
-  _id: Types.ObjectId;
-  senderId: mongoose.Types.ObjectId;
-  receiverId: mongoose.Types.ObjectId;
-  message: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const messageSchema = new Schema<IMessage>(
+const messageSchema = new Schema<IMessage & Document>(
   {
     senderId: {
       type: Schema.Types.ObjectId,
@@ -29,7 +21,7 @@ const messageSchema = new Schema<IMessage>(
   { timestamps: true },
 );
 
-const Message: Model<IMessage> = mongoose.model<IMessage>(
+const Message: Model<IMessage & Document> = mongoose.model<IMessage & Document>(
   "Message",
   messageSchema,
 );

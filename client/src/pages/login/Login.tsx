@@ -9,7 +9,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await login(username, password);
+    await login({ username, password });
   };
 
   useEffect(() => {

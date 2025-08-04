@@ -1,15 +1,7 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
+import type { INotification } from "@shared/types/models/notification";
 
-export interface INotification extends Document {
-  senderId: mongoose.Types.ObjectId;
-  receiverId: mongoose.Types.ObjectId;
-  type: string;
-  readed: boolean;
-  message: string;
-  createdAt: Date;
-}
-
-const notificationSchema = new Schema<INotification>(
+const notificationSchema = new Schema<INotification & Document>(
   {
     senderId: {
       type: Schema.Types.ObjectId,
@@ -28,9 +20,8 @@ const notificationSchema = new Schema<INotification>(
   { timestamps: { createdAt: true, updatedAt: false } },
 );
 
-const Notification: Model<INotification> = mongoose.model<INotification>(
-  "Notification",
-  notificationSchema,
-);
+const Notification: Model<INotification & Document> = mongoose.model<
+  INotification & Document
+>("Notification", notificationSchema);
 
 export default Notification;

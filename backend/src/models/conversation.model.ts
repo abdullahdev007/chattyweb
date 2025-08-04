@@ -1,17 +1,8 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
-
-interface IParticipant {
-  userId: mongoose.Types.ObjectId;
-  unreadCount: number;
-}
-
-export interface IConversation extends Document {
-  participants: IParticipant[];
-  messages: mongoose.Types.ObjectId[];
-  latestMessage: mongoose.Types.ObjectId | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import type {
+  IParticipant,
+  IConversation,
+} from "@shared/types/models/conversation";
 
 const participantSchema = new Schema<IParticipant>(
   {
@@ -21,7 +12,7 @@ const participantSchema = new Schema<IParticipant>(
   { _id: false },
 );
 
-const conversationSchema = new Schema<IConversation>(
+const conversationSchema = new Schema<IConversation & Document>(
   {
     participants: [participantSchema],
     messages: [
@@ -40,9 +31,8 @@ const conversationSchema = new Schema<IConversation>(
   { timestamps: true },
 );
 
-const Conversation: Model<IConversation> = mongoose.model<IConversation>(
-  "Conversation",
-  conversationSchema,
-);
+const Conversation: Model<IConversation & Document> = mongoose.model<
+  IConversation & Document
+>("Conversation", conversationSchema);
 
 export default Conversation;

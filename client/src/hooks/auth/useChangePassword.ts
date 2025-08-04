@@ -2,7 +2,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-import type { ChangePasswordParams, ChangePasswordResponse } from "types/auth";
+import type {
+  ChangePasswordRequestBody,
+  BaseResponse,
+} from "@shared/types/http";
 
 const useChangePassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -11,7 +14,7 @@ const useChangePassword = () => {
   const changePassword = async ({
     password,
     confirmPassword,
-  }: ChangePasswordParams): Promise<void> => {
+  }: ChangePasswordRequestBody): Promise<void> => {
     const success = handleInputErrors({ password, confirmPassword });
     if (!success) return;
 
@@ -23,14 +26,14 @@ const useChangePassword = () => {
         body: JSON.stringify({ password, confirmPassword }),
       });
 
-      const data: ChangePasswordResponse = await res.json();
+      const data: BaseResponse = await res.json();
 
-      if (data.error) {
-        throw new Error(data.error);
+      if (data.message) {
+        throw new Error(data.message);
       }
 
       navigate("/");
-      toast.success(data.message);
+      toast.success(data.message!);
     } catch (error) {
       const err = error as Error;
       toast.error(err.message);
@@ -47,7 +50,7 @@ export default useChangePassword;
 function handleInputErrors({
   password,
   confirmPassword,
-}: ChangePasswordParams): boolean {
+}: ChangePasswordRequestBody): boolean {
   if (!password || !confirmPassword) {
     toast.error("Please fill in all fields");
     return false;
