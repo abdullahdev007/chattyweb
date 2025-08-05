@@ -1,0 +1,39 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import useFriends from "@/zustand/useFriends";
+import useFriendRequests from "@/zustand/useFriendRequests";
+import { GetFriendsResponse } from "@shared/types/http";
+
+const useGetFriends = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { friends, setFriends } = useFriends();
+  const { friendRequests } = useFriendRequests();
+
+  useEffect(() => {
+    const getFriends = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/friends");
+        const data: GetFriendsResponse = await res.json();
+
+        if (!data.success) {
+          throw new Error(data.error);
+        }
+
+        setFriends(data.friends || []);
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : "Failed to fetch friends",
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getFriends();
+  }, [friendRequests, setFriends]);
+
+  return { loading, friends };
+};
+
+export default useGetFriends;

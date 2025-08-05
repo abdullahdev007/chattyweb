@@ -10,7 +10,7 @@ import {
 
 const router: Router = express.Router();
 
-router.get("/", protectRoute, getFriends);
+router.get("/", protectRoute, getFriends as unknown as RequestHandler);
 
 router.get("/requests", protectRoute, getFriendRequests);
 

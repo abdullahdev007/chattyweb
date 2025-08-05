@@ -11,7 +11,7 @@ export interface SignupRequestBody {
 }
 
 export interface SignupResponseBody extends BaseResponse {
-  user?: any; // need to convert to use IUser model from mongose
+  user?: SafeUser;
 }
 
 export interface LoginRequestBody {

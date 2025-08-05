@@ -1,28 +1,44 @@
-import { Request, RequestHandler, Response } from "express";
+import { Request, RequestHandler } from "express";
 import User from "../models/user.model.js";
+import toSafeUser, { toSafeUsers } from "../utils/toSafeUser.js";
+import {
+  GetUserResponseBody,
+  GetUsersResponseBody,
+} from "@shared/types/http/modules/user.js";
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
+  req: Request,
+  res,
+) => {
   try {
     const loggedInUserId = req.user?._id;
 
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUserId },
-    }).select("-password");
+    });
 
-    res.status(200).json(filteredUsers);
+    res.status(200).json({ success: true, users: toSafeUsers(filteredUsers) });
   } catch (error: any) {
     console.log("error in getUsers controller :", error.message);
-    res.status(500).json("Internal server error");
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
-export const getUser = async (req: Request, res: Response) => {
+export const getUser: RequestHandler<any, GetUserResponseBody, any> = async (
+  req,
+  res,
+) => {
   try {
-    const user = await User.findById(req.params.id).select("-password -__v");
+    const userID: string = req.params.id;
+    const user = await User.findById(userID);
 
-    res.status(200).json(user);
+    if (!user)
+      res
+        .status(404)
+        .json({ success: false, message: `user with ${userID} not found` });
+    else res.status(200).json({ success: true, user: toSafeUser(user) });
   } catch (error: any) {
     console.log("error in getUser controller :", error.message);
-    res.status(500).json("Internal server error");
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

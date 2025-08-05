@@ -5,7 +5,6 @@ import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import Notification from "../models/notification.model.js";
 import { Request, RequestHandler } from "express";
-import type { SafeUser, UserDocument } from "@shared/types/models/user";
 
 import {
   BaseResponse,
@@ -17,11 +16,7 @@ import {
   UpdateProfileRequestBody,
   UpdateProfileResponseBody,
 } from "@shared/types/http";
-
-const toSafeUser = (user: UserDocument): SafeUser => {
-  const { password, __v, ...safeUser } = user.toObject();
-  return safeUser;
-};
+import toSafeUser from "../utils/toSafeUser.js";
 
 export const signup: RequestHandler<
   any,
@@ -86,6 +81,8 @@ export const login: RequestHandler<
 > = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    console.log(username, password);
 
     const user = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(
@@ -171,7 +168,7 @@ export const updateProfile: RequestHandler<
       return;
     }
 
-    if (username !== user.username) {
+    if (username && username !== user.username) {
       const existingUser = await User.findOne({ username });
       if (existingUser) {
         res
@@ -182,9 +179,9 @@ export const updateProfile: RequestHandler<
     }
 
     user.username = username;
-    user.fullName = fullName;
+    if (fullName) user.fullName = fullName;
 
-    if (gender !== user.gender) {
+    if (gender && gender !== user.gender) {
       user.gender = gender;
       user.profilePic = `https://avatar.iran.liara.run/public/${
         gender === "male" ? "boy" : "girl"

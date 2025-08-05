@@ -1,16 +1,22 @@
 import { useEffect } from "react";
 import { useSocketContext } from "../../context/socketContext";
 import useFriendRequests from "../../zustand/useFriendRequests";
+import { NewFriendRequestPayload } from "@shared/types/socket";
 
 const useListenFriendRequest = () => {
   const { socket } = useSocketContext();
   const { addFriendRequest } = useFriendRequests();
 
   useEffect(() => {
-    socket?.on("newFriendRequest", (user) => {
+    const handleNewRequest = (user: NewFriendRequestPayload) => {
       addFriendRequest(user);
-    });
-    return () => socket?.off("newFriendRequest");
+    };
+
+    socket?.on("newFriendRequest", handleNewRequest);
+
+    return () => {
+      socket?.off("newFriendRequest", handleNewRequest);
+    };
   }, [addFriendRequest, socket]);
 };
 
