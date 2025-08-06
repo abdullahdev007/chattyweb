@@ -11,7 +11,9 @@ const Conversations = () => {
   const { searchConversation } = useSearchConversation();
   const { authUser } = useAuthContext();
 
-  useEffect(() => {
+
+
+  useEffect(() => {    
     let filtered = conversations.filter((c) => {
       const user = c.participants.find(
         (u) => u.userId._id !== authUser._id,
