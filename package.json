@@ -1,26 +1,5 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "build": "npm install --prefix ./client && npm run build --prefix ./client && npm install"
-  },
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.1",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.2.2",
-    "nodemon": "^3.1.0",
-    "socket.io": "^4.7.5",
-    "concurrently": "^7.0.0"
-
-  },
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.4"
+  }
 }
