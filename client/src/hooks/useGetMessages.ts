@@ -17,7 +17,7 @@ const useGetMessages = () => {
         setMessages(data.messages);
       } catch (error: any) {
         toast.error(
-          error instanceof Error ? error.message : "Error fetching messages"
+          error instanceof Error ? error.message : "Error fetching messages",
         );
       } finally {
         setLoading(false);

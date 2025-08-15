@@ -1,15 +1,17 @@
 import { useEffect, useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/auth/useLogin";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { loading, login } = useLogin();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login({ username, password });
+    navigate("/");
   };
 
   useEffect(() => {

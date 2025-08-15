@@ -2,12 +2,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { MarkMessagesAsReadedResponse } from "@shared/types/http";
 import useConversations from "@/zustand/useConversations";
-
-const useMarkMessagesAsRead = () => {
+const useMarkMessagesAsReaded = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { updateConversation } = useConversations();
 
-  const markMessagesAsRead = async (conversationId: string) => {
+  const markMessagesAsReaded = async (conversationId: string) => {
     setLoading(true);
     try {
       const res = await fetch(`/api/conversations/read/${conversationId}`, {
@@ -21,14 +20,14 @@ const useMarkMessagesAsRead = () => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Error marking messages as read"
+          : "Error marking messages as readed",
       );
     } finally {
       setLoading(false);
     }
   };
 
-  return { markMessagesAsRead, loading };
+  return { markMessagesAsReaded, loading };
 };
 
-export default useMarkMessagesAsRead;
+export default useMarkMessagesAsReaded;

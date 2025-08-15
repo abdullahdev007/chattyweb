@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GenderCheckbox from "../../components/GenderCheckbox/GenderCheckbox";
 import { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import useSignup from "../../hooks/auth/useSignup";
@@ -26,9 +26,11 @@ const Signup: React.FC = () => {
     document.title = "ChattyWeb: signup";
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup(inputs);
+    await signup(inputs);
+    navigate("/");
   };
 
   return (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "@/context/AuthContext";
 import { LoginRequestBody, LoginResponseBody } from "@shared/types/http";
+import { Navigate } from "react-router-dom";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,8 +27,9 @@ const useLogin = () => {
         throw new Error(data.message);
       }
 
-      localStorage.setItem("chat-user", JSON.stringify(data.user));
-      setAuthUser(data.user);
+      if (data.user) {
+        setAuthUser(data.user);
+      }
     } catch (error) {
       toast.error((error as Error).message);
     } finally {

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useFriendRequests from "../../zustand/useFriendRequests";
-import {
-  RespondFriendRequestBody,
-  RespondFriendRequestResponse,
-} from "@shared/types/http";
+import { BaseResponse, RespondFriendRequestBody } from "@shared/types/http";
 
 const useResponseFriendRequest = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -13,7 +10,7 @@ const useResponseFriendRequest = () => {
   const responseFriendRequest = async (
     friendId: string,
     response: RespondFriendRequestBody["response"],
-  ): Promise<RespondFriendRequestResponse | undefined> => {
+  ): Promise<void> => {
     setLoading(true);
     try {
       const res = await fetch(`/api/friends/respond-request/${friendId}`, {
@@ -22,10 +19,10 @@ const useResponseFriendRequest = () => {
         body: JSON.stringify({ response }),
       });
 
-      const data: RespondFriendRequestResponse = await res.json();
+      const data: BaseResponse = await res.json();
 
       if (!data.success) {
-        throw new Error(data.error);
+        throw new Error(data.message);
       }
 
       if (data.message) {
@@ -33,7 +30,6 @@ const useResponseFriendRequest = () => {
       }
 
       removeFriendRequest(friendId);
-      return data;
     } catch (error) {
       console.error("Error responding to friend request:", error);
       toast.error(
@@ -41,7 +37,6 @@ const useResponseFriendRequest = () => {
           ? error.message
           : "Failed to respond to friend request",
       );
-      return undefined;
     } finally {
       setLoading(false);
     }

@@ -30,7 +30,6 @@ const useUpdateProfile = () => {
       const data: UpdateProfileResponseBody = await res.json();
       if (!data.success) throw new Error(data.message);
 
-      localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data.user);
       navigate("/");
       toast.success("Profile updated successfully");

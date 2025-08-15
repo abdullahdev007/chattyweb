@@ -28,9 +28,7 @@ const useChangePassword = () => {
 
       const data: BaseResponse = await res.json();
 
-      if (data.message) {
-        throw new Error(data.message);
-      }
+      if (!data.success) throw new Error(data.message);
 
       navigate("/");
       toast.success(data.message!);

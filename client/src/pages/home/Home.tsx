@@ -1,23 +1,12 @@
-import MessageContainer from "../../components/messages/MessageContainer";
-import AddFriendModal from "../../components/modals/AddFriendModal/AddFriendModal";
-import ManageFriendsModal from "../../components/modals/ManageFriendsModal/ManageFriendsModal";
-import NotificationsModal from "../../components/modals/NotificationsModal/NotificationsModal";
-import PendingFriendShipsListModal from "../../components/modals/PendingFriendShipsListModal/PendingFriendShipsListModal";
-import Sidebar from "../../components/sidebar/sidebar";
-import useListenDeletedFromFriends from "../../hooks/friends/useListenDeletedFromFriends";
-import useListenFriendRequest from "../../hooks/friends/useListenFriendRequest";
-import useListenResponseToFriendRequest from "../../hooks/friends/useListenResponseToFriendRequest";
-import useListenNotifications from "../../hooks/notifications/useListenNotifications";
-import useListenMessages from "../../hooks/useListenMessages";
-import React from "react";
+import { FC } from "react";
+import MessageContainer from "@/components/messages/MessageContainer";
+import AddFriendModal from "@/components/modals/AddFriendModal/AddFriendModal";
+import ManageFriendsModal from "@/components/modals/ManageFriendsModal/ManageFriendsModal";
+import NotificationsModal from "@/components/modals/NotificationsModal/NotificationsModal";
+import PendingFriendShipsListModal from "@/components/modals/PendingFriendShipsListModal/PendingFriendShipsListModal";
+import Sidebar from "@/components/sidebar/Sidebar";
 
-const Home: React.FC = () => {
-  useListenResponseToFriendRequest();
-  useListenMessages();
-  useListenFriendRequest();
-  useListenNotifications();
-  useListenDeletedFromFriends();
-
+const Home: FC = () => {
   return (
     <>
       <div

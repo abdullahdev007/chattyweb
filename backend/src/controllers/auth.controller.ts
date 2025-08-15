@@ -82,8 +82,6 @@ export const login: RequestHandler<
   try {
     const { username, password } = req.body;
 
-    console.log(username, password);
-
     const user = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(
       password,

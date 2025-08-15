@@ -6,10 +6,11 @@ import React, {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 interface AuthContextType {
-  authUser: any;
+  authUser: SafeUser | null;
   setAuthUser: Dispatch<SetStateAction<any>>;
 }
 
@@ -32,10 +33,17 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
+  const storedUser = localStorage.getItem("chat-user");
   const [authUser, setAuthUser] = useState<SafeUser>(
-    JSON.parse(localStorage.getItem("chat-user") as string) || null,
+    storedUser ? JSON.parse(storedUser) : null,
   );
 
+  useEffect(() => {
+    if (authUser === null) return localStorage.removeItem("chat-user");
+    else {
+      localStorage.setItem("chat-user", JSON.stringify(authUser));
+    }
+  }, [authUser]);
   return (
     <AuthContext.Provider value={{ authUser, setAuthUser }}>
       {children}

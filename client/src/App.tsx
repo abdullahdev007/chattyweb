@@ -4,21 +4,35 @@ import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
-import Navbar from "./layout/Navbar/navbar";
-import ChangePassword from "./pages/changePassword/cahangePassword";
+import ChangePassword from "./pages/changePassword/ChangePassword";
 import UpdateProfile from "./pages/updateProfile/UpdateProfile";
-import StarBackground from "./layout/Background/StarBackground";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import Footar from "./layout/footar/footar";
+
+import Navbar from "./layout/Navbar/Navbar";
+import StarBackground from "./layout/Background/StarBackground";
+import Footar from "@/layout/Footer/Footer";
+
+import useListenDeletedFromFriends from "@/hooks/friends/useListenDeletedFromFriends";
+import useListenFriendRequest from "@/hooks/friends/useListenFriendRequest";
+import useListenResponseToFriendRequest from "@/hooks/friends/useListenResponseToFriendRequest";
+import useListenNotifications from "@/hooks/notifications/useListenNotifications";
+import useListenMessages from "@/hooks/useListenMessages";
+import { useSyncAuthUser } from "@/hooks/auth/useSyncAuthUser";
 
 const App: React.FC = () => {
   const { authUser, setAuthUser } = useAuthContext();
 
+  useListenResponseToFriendRequest();
+  useListenMessages();
+  useListenFriendRequest();
+  useListenNotifications();
+  useListenDeletedFromFriends();
+  useSyncAuthUser();
+
   useEffect(() => {
     const token = Cookies.get("jwt");
     if (!token) {
-      localStorage.removeItem("chat-user");
       setAuthUser(null);
     }
   }, [setAuthUser]);
@@ -35,7 +49,7 @@ const App: React.FC = () => {
           />
           <Route
             path="/login"
-            element={authUser ? <Navigate to={"/"} /> : <Login />}
+            element={!authUser ? <Login /> : <Navigate to={"/login"} />}
           />
           <Route
             path="/change-password"
@@ -47,7 +61,7 @@ const App: React.FC = () => {
           />
           <Route
             path="/signup"
-            element={authUser ? <Navigate to={"/"} /> : <Signup />}
+            element={!authUser ? <Signup /> : <Navigate to={"/"} />}
           />
         </Routes>
         <Toaster />

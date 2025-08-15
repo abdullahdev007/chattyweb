@@ -1,16 +1,16 @@
-import type { Document, ObjectId } from "mongoose";
+import type { Document, Types } from "mongoose";
 import type { Gender } from "../types";
 
 // Base user interface (shared between frontend and backend)
 export interface IUser {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   fullName: string;
   username: string;
   password: string;
   gender: Gender;
   profilePic?: string;
-  friends: ObjectId[];
-  pendingFriendships: ObjectId[];
+  friends: Types.ObjectId[];
+  pendingFriendships: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
   __v?: number;

@@ -1,21 +1,28 @@
 import NotificationTypes from "../types/NotificationTypes.js";
-import Notification, { INotification } from "../models/notification.model.js";
+import Notification from "../models/notification.model.js";
+import {
+  INotification,
+  SafeNotification,
+} from "@shared/types/models/notification.js";
+import { Document } from "mongoose";
 import { getSocketId, io } from "../socket/socket.js";
-import { IUser } from "../models/user.model.js";
+import { IUser, UserDocument } from "@shared/types/models/user.js";
+import toSafeUser from "./toSafeUser.js";
+import { NewNotificationPayload } from "@shared/types/socket/notification.js";
 
 const createNotification = async (
-  sender: IUser,
-  receiver: IUser,
+  sender: UserDocument,
+  receiver: UserDocument,
   type: NotificationTypes,
 ): Promise<INotification | { error: string }> => {
   try {
-    let existingNotification: INotification | null = null;
-    let notification: INotification;
+    let existingNotification: (INotification & Document) | null = null;
+    let notification: INotification & Document;
     // If notification type is NewMessage, check for existing unread notification
     if (type === NotificationTypes.NewMessage) {
       existingNotification = await Notification.findOne({
-        senderId: sender.id,
-        receiverId: receiver.id,
+        senderId: sender._id,
+        receiverId: receiver._id,
         type: NotificationTypes.NewMessage,
         readed: false,
       });
@@ -38,19 +45,31 @@ const createNotification = async (
       notification = existingNotification;
     } else {
       notification = new Notification({
-        senderId: sender.id,
-        receiverId: receiver.id,
+        senderId: sender._id,
+        receiverId: receiver._id,
         type,
         message,
-      }) as INotification;
+      });
       await notification.populate("senderId");
       await notification.populate("receiverId");
       await notification.save();
     }
 
-    const receiverSocketId = getSocketId(receiver.id);
+    const receiverSocketId = getSocketId(receiver._id.toString());
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newNotification", notification);
+      // Convert notifiaction to safe Notification
+      const obj = notification.toObject();
+
+      const safeNotification: SafeNotification = {
+        ...obj,
+        senderId: toSafeUser(sender),
+        receiverId: toSafeUser(receiver),
+      };
+
+      const payload: NewNotificationPayload = {
+        notification: safeNotification,
+      };
+      io.to(receiverSocketId).emit("newNotification", payload);
     }
     // Return the newly created notification
     return notification;

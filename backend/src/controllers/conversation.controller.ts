@@ -51,7 +51,7 @@ export const getConversation: RequestHandler<
     }
 
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(req.user?._id)
+      (participant: any) => participant.userId.equals(req.user?._id),
     );
     if (!currentUserParticipant) {
       res.status(403).json({
@@ -79,7 +79,7 @@ export const markMessagesAsReaded: RequestHandler<
   MarkMessagesAsReadedResponse
 > = async (
   req: Request<ConversationParams>,
-  res: Response<MarkMessagesAsReadedResponse>
+  res: Response<MarkMessagesAsReadedResponse>,
 ) => {
   try {
     const conversationId: string = req.params.id;
@@ -95,7 +95,7 @@ export const markMessagesAsReaded: RequestHandler<
       return;
     }
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(req.user?._id)
+      (participant: any) => participant.userId.equals(req.user?._id),
     );
     if (!currentUserParticipant) {
       res.status(403).json({

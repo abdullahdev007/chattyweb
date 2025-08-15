@@ -39,7 +39,6 @@ const useSignup = () => {
       const data: SignupResponseBody = await res.json();
       if (!data.success) throw new Error(data.message);
 
-      localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data.user);
     } catch (error) {
       toast.error((error as Error).message);

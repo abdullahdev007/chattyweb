@@ -9,7 +9,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "lib": ["dom", "esnext"],
-    //    "allowJs": true,
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -19,5 +19,5 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", "src/env.d.ts"]
 }

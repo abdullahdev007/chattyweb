@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import User, { IUser } from "../models/user.model.js";
+import { UserDocument } from "@shared/types/models/user.js";
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload } from "../types/jwt.js";
+import User from "../models/user.model.js";
 
 const protectRoute = async (
   req: Request,
@@ -25,7 +26,7 @@ const protectRoute = async (
       return;
     }
 
-    const user: IUser | null = await User.findById(decoded.userId)
+    const user: UserDocument | null = await User.findById(decoded.userId)
       .select("-password")
       .exec();
 

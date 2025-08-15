@@ -1,7 +1,7 @@
 import mongoose, { Model } from "mongoose";
-import type { IUser } from "@shared/types/models/user";
+import type { IUser, UserDocument } from "@shared/types/models/user";
 
-const userSchema = new mongoose.Schema<IUser & Document>(
+const userSchema = new mongoose.Schema<UserDocument>(
   {
     fullName: {
       type: String,
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema<IUser & Document>(
   { timestamps: true },
 );
 
-const User: Model<IUser & Document> = mongoose.model<IUser & Document>(
+const User: Model<UserDocument> = mongoose.model<UserDocument>(
   "User",
   userSchema,
 );

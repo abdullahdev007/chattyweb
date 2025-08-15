@@ -1,18 +1,8 @@
 import "express";
+import { UserDocument } from "./models/user";
 
 declare module "express" {
   interface Request {
-    user?: IUser;
+    user?: UserDocument;
   }
 }
-
-export interface AuthedRequest<T = any> extends Request {
-  user?: IUser;
-  body: T;
-}
-
-export type AuthedRequestHandler<T = any> = (
-  req: AuthedRequest<T>,
-  res: Response,
-  next?: (err?: any) => void,
-) => any;
