@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 
 import Navbar from "./layout/Navbar/Navbar";
-import StarBackground from "./layout/Background/StarBackground";
 import Footar from "@/layout/Footer/Footer";
 
 import useListenDeletedFromFriends from "@/hooks/friends/useListenDeletedFromFriends";
@@ -19,6 +18,7 @@ import useListenResponseToFriendRequest from "@/hooks/friends/useListenResponseT
 import useListenNotifications from "@/hooks/notifications/useListenNotifications";
 import useListenMessages from "@/hooks/useListenMessages";
 import { useSyncAuthUser } from "@/hooks/auth/useSyncAuthUser";
+import { ThemeProvider } from "@/context/themeContext";
 
 const App: React.FC = () => {
   const { authUser, setAuthUser } = useAuthContext();
@@ -38,36 +38,41 @@ const App: React.FC = () => {
   }, [setAuthUser]);
 
   return (
-    <>
-      <StarBackground />
-      <Navbar />
-      <div className="p-4 h-screen flex items-center justify-center">
-        <Routes>
-          <Route
-            path="/"
-            element={authUser ? <Home /> : <Navigate to={"/login"} />}
-          />
-          <Route
-            path="/change-password"
-            element={authUser ? <ChangePassword /> : <Navigate to={"/login"} />}
-          />
-          <Route
-            path="/update-profile"
-            element={authUser ? <UpdateProfile /> : <Navigate to={"/login"} />}
-          />
-          <Route
-            path="/login"
-            element={!authUser ? <Login /> : <Navigate to={"/"} />}
-          />
-          <Route
-            path="/signup"
-            element={!authUser ? <Signup /> : <Navigate to={"/"} />}
-          />
-        </Routes>
-        <Toaster />
+    <ThemeProvider>
+      <div className="flex flex-col h-screen">
+        <Navbar />
+        <div className="p-2 sm:p-4 flex-1 flex items-center justify-center min-h-0">
+          <Routes>
+            <Route
+              path="/"
+              element={authUser ? <Home /> : <Navigate to={"/login"} />}
+            />
+            <Route
+              path="/change-password"
+              element={
+                authUser ? <ChangePassword /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/update-profile"
+              element={
+                authUser ? <UpdateProfile /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/login"
+              element={!authUser ? <Login /> : <Navigate to={"/"} />}
+            />
+            <Route
+              path="/signup"
+              element={!authUser ? <Signup /> : <Navigate to={"/"} />}
+            />
+          </Routes>
+          <Toaster />
+        </div>
+        <Footar />
       </div>
-      <Footar />
-    </>
+    </ThemeProvider>
   );
 };
 

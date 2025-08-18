@@ -18,15 +18,15 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const profilePic = fromMe
     ? authUser?.profilePic
     : selectedConversation?.participants.find(
-        (p: any) => p.userId._id != authUser?._id,
+        (p: any) => p.userId._id != authUser?._id
       )!.userId.profilePic;
-  const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+  const bubbleBgColor = fromMe ? "chat-bubble-primary" : "";
   const shakeClass = message.shouldShake ? "shake" : "";
   const gender: Gender = fromMe ? authUser?.gender : message.senderId.gender;
   return (
     <div className={`chat ${chatClassName} break-words`}>
       <div className="chat-image avatar">
-        <div className="w-10 rounded-full">
+        <div className="w-8 sm:w-10 rounded-full">
           <img
             alt="Tailwind CSS chat bubble component"
             src={profilePic}
@@ -37,7 +37,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
         </div>
       </div>
       <div
-        className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass} pb-2`}
+        className={`chat-bubble text-base-content  ${bubbleBgColor} ${shakeClass} pb-2 max-w-[80%] sm:max-w-[70%] lg:max-w-[60%] text-sm sm:text-base`}
       >
         {message.message}
       </div>

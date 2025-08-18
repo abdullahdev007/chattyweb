@@ -10,7 +10,7 @@ const useSendMessage = () => {
   const { messages, setMessages, selectedConversation } = useConversation();
   const { updateConversation } = useConversations();
 
-  const sendMessage = async (message: string) => {
+  const sendMessage = async (message: string): Promise<boolean> => {
     setLoading(true);
     try {
       const res = await fetch(
@@ -31,10 +31,14 @@ const useSendMessage = () => {
         updateConversation(data.conversation);
         setMessages([...messages, data.newMessage]);
       }
+
+      return true;
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Error fetching conversations",
       );
+
+      return false;
     } finally {
       setLoading(false);
     }

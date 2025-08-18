@@ -9,10 +9,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 const Home: FC = () => {
   return (
     <>
-      <div
-        className="flex rounded-lg overflow-hidden bg-gray-400 bg-clip-padding \
-      backdrop-filter backdrop-blur-lg bg-opacity-0 w-full h-5/6 max-sm:flex-col sm:ml-10 sm:mr-10"
-      >
+      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full h-full max-h-[calc(100vh-200px)] flex flex-col sm:flex-row xl:mx-24 lg:mx-12 md:mx-0  max-sm:my-12">
         <Sidebar />
         <MessageContainer />
       </div>

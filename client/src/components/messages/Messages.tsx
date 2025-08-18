@@ -15,7 +15,7 @@ const Messages: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="px-4 flex-1 overflow-auto">
+    <div className="px-4 flex-1 overflow-y-auto min-h-0">
       {!loading &&
         messages.length > 0 &&
         messages.map((message: any) => (
@@ -25,7 +25,11 @@ const Messages: React.FC = () => {
         ))}
       {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
       {!loading && messages.length === 0 && (
-        <p className="text-center">Send a message to start conversation</p>
+        <div className="flex items-center justify-center h-full min-h-[200px]">
+          <p className="text-center text-base-content/70">
+            Send a message to start conversation
+          </p>
+        </div>
       )}
     </div>
   );

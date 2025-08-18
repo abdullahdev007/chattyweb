@@ -5,7 +5,6 @@ import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
 import React from "react";
-import { Navigate } from "react-router-dom";
 
 const MessageContainer: React.FC = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -13,15 +12,15 @@ const MessageContainer: React.FC = () => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className=" md:min-w-[450px] flex flex-col flex-1 overflow-auto max-sm:h-3/4">
+    <div className="flex flex-col flex-1 min-w-0 min-h-0">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>
           {/* Header */}
-          <div className="bg-salte-500 px-4 py-2 mb-2">
-            <span className="label-text">To:</span>{" "}
-            <span className="base-300 font-bold">
+          <div className="px-4 py-2 mb-2 border-b border-base-content border-opacity-20 flex-shrink-0">
+            <span className="text-base-content">To:</span>{" "}
+            <span className="text-primary font-bold">
               {selectedConversation.participants[0].userId.fullName}
             </span>
           </div>
@@ -39,14 +38,11 @@ const NoChatSelected: React.FC = () => {
   const { authUser } = useAuthContext();
 
   return (
-    <div className="flex items-center justify-center  w-full h-full">
-      <div
-        className="px-4 text-center sm:text-lg md:text-xl text-gray-200 \
-      font-semibold flex flex-col items-center gap-2"
-      >
-        <p> Welcome ✋ {authUser?.fullName}</p>
-        <p>Select a caht to start messaging</p>
-        <TiMessages className="text-3xl md:text-6xl text-center" />
+    <div className="flex items-center justify-center w-full h-full min-h-[400px]">
+      <div className="px-4 text-center text-lg sm:text-xl md:text-2xl font-semibold flex flex-col items-center gap-4">
+        <p>Welcome ✋ {authUser?.fullName}</p>
+        <p className="text-base sm:text-lg">Select a chat to start messaging</p>
+        <TiMessages className="text-4xl sm:text-5xl md:text-6xl text-primary" />
       </div>
     </div>
   );

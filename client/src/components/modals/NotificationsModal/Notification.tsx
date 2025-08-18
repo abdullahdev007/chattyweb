@@ -20,10 +20,10 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
 
   const handleOnClick = () => {
     const notificationsModal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     const requestsModal = document.getElementById(
-      "pending_friendships_modal",
+      "pending_friendships_modal"
     ) as HTMLDialogElement;
 
     if (
@@ -43,11 +43,11 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
         (conv) =>
           conv.participants.some(
             (participant) =>
-              participant.userId._id === notification.senderId._id,
+              participant.userId._id === notification.senderId._id
           ) &&
           conv.participants.some(
-            (participant) => participant.userId._id === authUser?._id,
-          ),
+            (participant) => participant.userId._id === authUser?._id
+          )
       );
 
       if (conversation) {
@@ -59,33 +59,37 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
   };
 
   return (
-    <div onClick={handleOnClick}>
-      <div
-        className={`flex justify-between my-4 hover:scale-105 transition-transform rounded-full 
-        cursor-pointer items-center max-xs:flex-col max-xs:text-center gap-y-3`}
-      >
-        <div className="flex gap-2 items-center w-fit max-xs:flex-col">
-          <div className="avatar ">
-            <div className="w-12 rounded-full">
+    <div
+      onClick={handleOnClick}
+      className="card bg-base-100 shadow-sm hover:shadow-md transition-all duration-200 border border-base-300 cursor-pointer hover:bg-base-200/50"
+    >
+      <div className="card-body p-4">
+        <div className="flex items-start gap-4">
+          {/* Avatar */}
+          <div className="avatar flex-shrink-0">
+            <div className="w-10 h-10 rounded-full ring-2 ring-base-300">
               <img
                 src={notification.senderId.profilePic}
                 onError={(e) => {
                   e.currentTarget.src = `/avatars/${notification.senderId.gender}.png`;
                 }}
-                alt="Avatar"
+                alt={`${notification.senderId.fullName} avatar`}
+                className="w-full h-full object-cover"
               />
             </div>
           </div>
 
-          <div className="message w-fit">{notification.message}</div>
-        </div>
-
-        <div className="date text-xs text-gray-600 min-w-max">
-          {calculateNotificationTime(notification.createdAt.toString())}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className="text-base-content text-sm leading-relaxed">
+              {notification.message}
+            </p>
+            <p className="text-base-content/50 text-xs mt-2">
+              {calculateNotificationTime(notification.createdAt.toString())}
+            </p>
+          </div>
         </div>
       </div>
-
-      {!lastIdx && <div className="divider my-0 py-0 h-1" />}
     </div>
   );
 };

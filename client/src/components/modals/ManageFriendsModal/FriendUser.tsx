@@ -30,10 +30,10 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
 
       if (
         participants.some(
-          (participant) => participant.userId._id === friend._id,
+          (participant) => participant.userId._id === friend._id
         ) &&
         participants.some(
-          (participant) => participant.userId._id === authUser?._id,
+          (participant) => participant.userId._id === authUser?._id
         )
       ) {
         return conversation;
@@ -44,57 +44,69 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
   }
 
   return (
-    <div>
-      <div
-        className={`flex gap-2 items-center rounded p-2 py-1 ${!lastIdx && "my-4"} max-xs:flex-col max-xs:text-center`}
-      >
-        <div className={`avatar ${isOnline ? "online" : ""}`}>
-          <div className="w-14 rounded-full">
-            <img
-              src={friend.profilePic}
-              onError={(e) => {
-                e.currentTarget.src = `/avatars/${friend.gender}.png`;
-              }}
-              alt=" user avatar"
-            />
+    <div className="card bg-base-100 shadow-sm hover:shadow-md transition-all duration-200 border border-base-300">
+      <div className="card-body p-4">
+        <div className="flex items-center gap-4">
+          {/* Avatar */}
+          <div className="avatar flex-shrink-0">
+            <div
+              className={`w-12 h-12 rounded-full ring-2 ${isOnline ? "ring-success" : "ring-base-300"}`}
+            >
+              <img
+                src={friend.profilePic}
+                onError={(e) => {
+                  e.currentTarget.src = `/avatars/${friend.gender}.png`;
+                }}
+                alt={`${friend.fullName} avatar`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {isOnline && (
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-base-100"></div>
+            )}
           </div>
-        </div>
 
-        <div className="flex flex-col flex-1">
-          <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-400 text-2xl">
+          {/* User Info */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-base-content text-lg truncate">
               {friend.fullName}
+            </h3>
+            <p className="text-base-content/60 text-sm truncate">
+              @{friend.username}
             </p>
           </div>
-          <p className="font-bold text-gray-200">{friend.username}</p>
-        </div>
 
-        <div className="flex gap-2 ">
-          <button
-            className="btn btn-circle btn-outline btn-error"
-            onClick={() => {
-              removeFriend(friend._id);
-            }}
-          >
-            {loading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              <IoPersonRemoveSharp />
-            )}
-          </button>
+          {/* Action Buttons */}
+          <div className="flex gap-2 flex-shrink-0">
+            <form method="dialog">
+              <button
+                className="btn btn-circle btn-outline btn-secondary hover:btn-primary transition-all duration-200"
+                onClick={() => {
+                  setSelectedConversation(
+                    findConversationWithFriendAndAuthUser()
+                  );
+                }}
+                title="Start chat"
+              >
+                <IoMdChatbubbles className="text-lg" />
+              </button>
+            </form>
 
-          <form method="dialog">
             <button
-              className="btn btn-circle btn-outline"
+              className="btn btn-circle btn-outline btn-error hover:btn-error transition-all duration-200"
               onClick={() => {
-                setSelectedConversation(
-                  findConversationWithFriendAndAuthUser(),
-                );
+                removeFriend(friend._id);
               }}
+              disabled={loading}
+              title="Remove friend"
             >
-              <IoMdChatbubbles />
+              {loading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                <IoPersonRemoveSharp className="text-lg" />
+              )}
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

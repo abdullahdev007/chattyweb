@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useSocketContext } from "@/context/socketContext";
 import { BsPersonFillAdd } from "react-icons/bs";
-import { FaUserFriends } from "react-icons/fa";
+import { FaUserFriends, FaCheck } from "react-icons/fa";
 import useSendFriendRequest from "@/hooks/friends/useSendFriendRequest";
 import useGetUsers from "@/hooks/users/useGetUsers";
 import { SafeUser } from "@shared/types/models/user";
@@ -29,42 +29,64 @@ const AddFriendUser: FC<AddFriendUserProps> = ({ user, lastIdx }) => {
   };
 
   return (
-    <div>
-      <div
-        className={`flex gap-2 items-center rounded p-2 py-1 ${!lastIdx && "my-4"} max-xs:flex-col max-xs:text-center`}
-      >
-        <div className={`avatar ${isOnline ? "online" : ""}`}>
-          <div className="w-14 rounded-full">
-            <img
-              src={user.profilePic}
-              onError={(e) => {
-                e.currentTarget.src = `/avatars/${user.gender}.png`;
-              }}
-              alt=" user avatar"
-            />
+    <div className="card bg-base-100 shadow-sm hover:shadow-md transition-all duration-200 border border-base-300">
+      <div className="card-body p-4">
+        <div className="flex items-center gap-4">
+          {/* Avatar */}
+          <div className="avatar flex-shrink-0">
+            <div
+              className={`w-12 h-12 rounded-full ring-2 ${isOnline ? "ring-success" : "ring-base-300"}`}
+            >
+              <img
+                src={user.profilePic}
+                onError={(e) => {
+                  e.currentTarget.src = `/avatars/${user.gender}.png`;
+                }}
+                alt={`${user.fullName} avatar`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {isOnline && (
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-base-100"></div>
+            )}
           </div>
-        </div>
 
-        <div className="flex flex-col flex-1">
-          <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-400 text-2xl">{user.fullName}</p>
+          {/* User Info */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-base-content text-lg truncate">
+              {user.fullName}
+            </h3>
+            <p className="text-base-content/60 text-sm truncate">
+              @{user.username}
+            </p>
           </div>
-          <p className="font-bold text-gray-200">{user.username}</p>
-        </div>
 
-        <div>
-          {inFriendRequests || waitingAcceptRequst ? (
-            <span className="loading loading-ring"></span>
-          ) : inFriends ? (
-            <FaUserFriends className="text-2xl" />
-          ) : loading ? (
-            <span className="loading loading-spinner "></span>
-          ) : (
-            <BsPersonFillAdd
-              className="text-2xl cursor-pointer"
-              onClick={() => handleAddFriend(user._id)}
-            />
-          )}
+          {/* Action Button */}
+          <div className="flex-shrink-0">
+            {inFriendRequests || waitingAcceptRequst ? (
+              <div className="badge badge-warning gap-2">
+                <span className="loading loading-spinner loading-xs"></span>
+                Pending
+              </div>
+            ) : inFriends ? (
+              <div className="badge badge-success gap-2">
+                <FaUserFriends className="text-xs" />
+                Friends
+              </div>
+            ) : loading ? (
+              <button className="btn btn-circle btn-ghost" disabled>
+                <span className="loading loading-spinner loading-sm"></span>
+              </button>
+            ) : (
+              <button
+                className="btn btn-circle btn-primary hover:btn-secondary transition-all duration-200"
+                onClick={() => handleAddFriend(user._id)}
+                title="Add friend"
+              >
+                <BsPersonFillAdd className="text-lg" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

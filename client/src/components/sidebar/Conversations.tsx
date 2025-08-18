@@ -20,7 +20,7 @@ const Conversations: FC = () => {
   useEffect(() => {
     let filtered = conversations.filter((c) => {
       const participant = c.participants.find(
-        (u) => u.userId._id !== authUser!._id,
+        (u) => u.userId._id !== authUser!._id
       );
       if (!participant) return false;
 
@@ -60,7 +60,7 @@ const Conversations: FC = () => {
             className="btn  btn-accent btn-circle btn-outline btn-ghost"
             onClick={() => {
               const modal = document.getElementById(
-                "add_friend_modal",
+                "add_friend_modal"
               ) as HTMLDialogElement;
               if (modal) modal.showModal();
             }}

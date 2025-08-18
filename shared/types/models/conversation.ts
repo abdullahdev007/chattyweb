@@ -13,3 +13,4 @@ export interface IConversation {
   createdAt: Date;
   updatedAt: Date;
 }
+
