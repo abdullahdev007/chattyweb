@@ -48,16 +48,16 @@ const App: React.FC = () => {
             element={authUser ? <Home /> : <Navigate to={"/login"} />}
           />
           <Route
-            path="/login"
-            element={!authUser ? <Login /> : <Navigate to={"/login"} />}
-          />
-          <Route
             path="/change-password"
             element={authUser ? <ChangePassword /> : <Navigate to={"/login"} />}
           />
           <Route
             path="/update-profile"
             element={authUser ? <UpdateProfile /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/login"
+            element={!authUser ? <Login /> : <Navigate to={"/"} />}
           />
           <Route
             path="/signup"

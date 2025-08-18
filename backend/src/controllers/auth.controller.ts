@@ -24,14 +24,7 @@ export const signup: RequestHandler<
   SignupRequestBody
 > = async (req, res) => {
   try {
-    const { fullName, username, password, confirmPassword, gender } = req.body;
-
-    if (password !== confirmPassword) {
-      res
-        .status(400)
-        .json({ success: false, message: "Passwords don't match" });
-      return;
-    }
+    const { fullName, username, password, gender } = req.body;
 
     const existingUser = await User.findOne({ username });
 
@@ -124,13 +117,7 @@ export const changePassword: RequestHandler<
   ChangePasswordRequestBody
 > = async (req: Request<any, any, ChangePasswordRequestBody>, res) => {
   try {
-    const { password, confirmPassword } = req.body;
-    if (password !== confirmPassword) {
-      res
-        .status(400)
-        .json({ success: false, message: "Passwords don't match" });
-      return;
-    }
+    const { password } = req.body;
 
     const user = await User.findById(req.user?._id);
     if (!user) {

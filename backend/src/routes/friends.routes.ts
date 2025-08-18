@@ -7,6 +7,13 @@ import {
   respondFriendRequest,
   sendFriendRequest,
 } from "../controllers/friends.controller.js";
+import {
+  deleteFriendParamsSchema,
+  respondFriendRequestBodySchema,
+  respondFriendRequestParamsSchema,
+  sendFriendRequestParamsSchema,
+} from "../validators/friend.validation.js";
+import { validate } from "../middleware/validate.js";
 
 const router: Router = express.Router();
 
@@ -17,19 +24,26 @@ router.get("/requests", protectRoute, getFriendRequests);
 router.post(
   "/send-request/:id",
   protectRoute,
-  sendFriendRequest as unknown as RequestHandler,
+  validate({ params: sendFriendRequestParamsSchema }),
+  sendFriendRequest as unknown as RequestHandler
 );
 
 router.post(
   "/respond-request/:id",
   protectRoute,
-  respondFriendRequest as unknown as RequestHandler,
+  validate({
+    params: respondFriendRequestParamsSchema,
+    body: respondFriendRequestBodySchema,
+  }),
+
+  respondFriendRequest as unknown as RequestHandler
 );
 
 router.delete(
   "/delete-friend/:id",
   protectRoute,
-  deleteFriend as unknown as RequestHandler,
+  validate({ params: deleteFriendParamsSchema }),
+  deleteFriend as unknown as RequestHandler
 );
 
 export default router;

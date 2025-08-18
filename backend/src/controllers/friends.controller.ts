@@ -37,6 +37,8 @@ export const sendFriendRequest = async (
     if (friend.friends.includes(user._id)) {
       res.status(400).json({ success: false, message: "Already friends" });
       return;
+    }else if(friend.pendingFriendships.includes(user._id)) {
+      res.status(400).json({success:false, message: "you already send friend request to this user"})
     }
 
     if (user.pendingFriendships.includes(friend._id)) {

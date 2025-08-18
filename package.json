@@ -1,5 +1,9 @@
 {
   "devDependencies": {
-    "@tailwindcss/line-clamp": "^0.4.4"
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@types/joi": "^17.2.2"
+  },
+  "dependencies": {
+    "joi": "^18.0.0"
   }
 }

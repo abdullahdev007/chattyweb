@@ -14,15 +14,6 @@ const useSignup = () => {
     confirmPassword,
     gender,
   }: SignupRequestBody): Promise<void> => {
-    const success = handleInputErrors({
-      fullName,
-      username,
-      password,
-      confirmPassword,
-      gender,
-    });
-    if (!success) return;
-
     setLoading(true);
     try {
       const res = await fetch("/api/auth/signup", {
@@ -40,7 +31,7 @@ const useSignup = () => {
       if (!data.success) throw new Error(data.message);
 
       setAuthUser(data.user);
-    } catch (error) {
+    } catch (error) {      
       toast.error((error as Error).message);
     } finally {
       setLoading(false);
@@ -51,25 +42,3 @@ const useSignup = () => {
 };
 
 export default useSignup;
-
-function handleInputErrors({
-  fullName,
-  username,
-  password,
-  confirmPassword,
-  gender,
-}: SignupRequestBody): boolean {
-  if (!fullName || !username || !password || !confirmPassword || !gender) {
-    toast.error("Please fill in all fields");
-    return false;
-  }
-  if (password !== confirmPassword) {
-    toast.error("Passwords do not match");
-    return false;
-  }
-  if (password.length < 6) {
-    toast.error("Password must be at least 6 characters");
-    return false;
-  }
-  return true;
-}

@@ -20,10 +20,6 @@ export const sendMessage = async (
   try {
     const { message } = req.body;
 
-    if (!message)
-      return res
-        .status(404)
-        .json({ success: false, message: "Your message is empty !!" });
     const { id: conversationId } = req.params;
 
     let conversation = await Conversation.findById(conversationId).populate({

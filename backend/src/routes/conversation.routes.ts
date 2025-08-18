@@ -6,15 +6,26 @@ import {
   getConversations,
   markMessagesAsReaded,
 } from "../controllers/conversation.controller.js";
+import {
+  getConversationParamsSchema,
+  markMessagesAsReadedParamsSchema,
+} from "../validators/conversation.validation";
+import { validate } from "../middleware/validate.js";
 
 const router: Router = express.Router();
 
 router.get("/", protectRoute, getConversations);
-router.get("/:id", protectRoute, getConversation as unknown as RequestHandler);
+router.get(
+  "/:id",
+  protectRoute,
+  validate({ params: getConversationParamsSchema }),
+  getConversation as unknown as RequestHandler
+);
 router.put(
   "/read/:id",
   protectRoute,
-  markMessagesAsReaded as unknown as RequestHandler,
+  validate({ params: markMessagesAsReadedParamsSchema }),
+  markMessagesAsReaded as unknown as RequestHandler
 );
 
 export default router;

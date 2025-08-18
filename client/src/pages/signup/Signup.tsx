@@ -30,7 +30,6 @@ const Signup: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await signup(inputs);
-    navigate("/");
   };
 
   return (

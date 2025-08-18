@@ -8,7 +8,7 @@ import {
 
 export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
   req: Request,
-  res,
+  res
 ) => {
   try {
     const loggedInUserId = req.user?._id;
@@ -26,7 +26,7 @@ export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
 
 export const getUser: RequestHandler<any, GetUserResponseBody, any> = async (
   req,
-  res,
+  res
 ) => {
   try {
     const userID: string = req.params.id;
