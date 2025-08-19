@@ -40,7 +40,12 @@ const NoChatSelected: React.FC = () => {
   return (
     <div className="flex items-center justify-center w-full h-full min-h-[400px]">
       <div className="px-4 text-center text-lg sm:text-xl md:text-2xl font-semibold flex flex-col items-center gap-4">
-        <p>Welcome ✋ {authUser?.fullName}</p>
+        <p>
+          Welcome ✋{" "}
+          <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent font-bold bg-[length:200%_100%] animate-[gradient_3s_ease-in-out_infinite]">
+            {authUser?.fullName}
+          </span>
+        </p>
         <p className="text-base sm:text-lg">Select a chat to start messaging</p>
         <TiMessages className="text-4xl sm:text-5xl md:text-6xl text-primary" />
       </div>

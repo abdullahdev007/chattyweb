@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 type Theme = "chattyweb_light" | "chattyweb_dark";
 
@@ -30,16 +36,18 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("chattyweb-theme") as Theme;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+
     let initialTheme: Theme = "chattyweb_light";
-    
+
     if (savedTheme) {
       initialTheme = savedTheme;
     } else if (prefersDark) {
       initialTheme = "chattyweb_dark";
     }
-    
+
     setThemeState(initialTheme);
     document.documentElement.setAttribute("data-theme", initialTheme);
     setIsLoading(false);
@@ -54,7 +62,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   // Toggle between light and dark themes
   const toggleTheme = () => {
-    const newTheme = theme === "chattyweb_light" ? "chattyweb_dark" : "chattyweb_light";
+    const newTheme =
+      theme === "chattyweb_light" ? "chattyweb_dark" : "chattyweb_light";
     setTheme(newTheme);
   };
 
@@ -66,8 +75,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };

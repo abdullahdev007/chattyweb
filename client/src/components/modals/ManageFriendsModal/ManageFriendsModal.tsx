@@ -18,8 +18,8 @@ const ManageFriendsModal: FC = () => {
 
     setfilteredFriends(
       friends.filter((friend) =>
-        friend.username.toLowerCase().startsWith(search.toLowerCase())
-      )
+        friend.username.toLowerCase().startsWith(search.toLowerCase()),
+      ),
     );
   }, [friends, search]);
 

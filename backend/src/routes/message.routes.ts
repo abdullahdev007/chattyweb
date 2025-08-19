@@ -22,27 +22,27 @@ router.post(
   "/send/:id",
   protectRoute,
   validate({ params: sendMessageParamsSchema, body: sendMessageBodySchema }),
-  sendMessage as unknown as RequestHandler
+  sendMessage as unknown as RequestHandler,
 );
 router.get(
   "/:id",
   protectRoute,
   validate({ params: getMessagesParamsSchema }),
-  getMessages as unknown as RequestHandler
+  getMessages as unknown as RequestHandler,
 );
 
 router.get(
   "/unreadCount/:id",
   protectRoute,
   validate({ params: getUnReadedMessageCountParamsSchema }),
-  getUnReadedMessageCount as unknown as RequestHandler
+  getUnReadedMessageCount as unknown as RequestHandler,
 );
 
 router.put(
   "/increaseUnreadCount/:id",
   protectRoute,
   validate({ params: increaseUnReadedMessageParamsSchema }),
-  increaseUnReadedMessage as unknown as RequestHandler
+  increaseUnReadedMessage as unknown as RequestHandler,
 );
 
 export default router;

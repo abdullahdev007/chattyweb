@@ -3,7 +3,8 @@ import { BaseResponse } from "../base";
 import { IMessage } from "@shared/types/models/message";
 
 export interface SendMessageRequestBody  {
-  message: string
+  message: string,
+  replayTo?: string
 }
 
 export interface SendMessageResponse extends BaseResponse {

@@ -17,11 +17,11 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
   const { authUser } = useAuthContext();
 
   const userObject = conversation.participants.find(
-    (u) => u.userId._id !== authUser?._id
+    (u) => u.userId._id !== authUser?._id,
   );
 
   const currentUserObject = conversation.participants.find(
-    (u) => u.userId._id === authUser?._id
+    (u) => u.userId._id === authUser?._id,
   );
 
   if (!userObject || !currentUserObject) {

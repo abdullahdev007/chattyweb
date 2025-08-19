@@ -12,10 +12,10 @@ This directory contains validation schemas for request validation using Joi.
 Validation schemas are used with the `validate` middleware to validate request data before it reaches the controller.
 
 ```typescript
-import { validate } from '../middleware/validate.js';
-import { signupSchema } from '../validators/auth.validator.js';
+import { validate } from "../middleware/validate.js";
+import { signupSchema } from "../validators/auth.validator.js";
 
-router.post('/signup', validate(signupSchema), signupController);
+router.post("/signup", validate(signupSchema), signupController);
 ```
 
 ## Benefits

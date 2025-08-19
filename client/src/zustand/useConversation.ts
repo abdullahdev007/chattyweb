@@ -7,14 +7,23 @@ interface ConversationState {
   setSelectedConversation: (selectedConversation: IConversation | null) => void;
   messages: IMessage[];
   setMessages: (messages: IMessage[]) => void;
+  replyToMessage: IMessage | null;
+  setReplyToMessage: (message: IMessage | null) => void;
+  clearReplyToMessage: () => void;
 }
 
 const useConversation = create<ConversationState>((set) => ({
   selectedConversation: null,
-  setSelectedConversation: (selectedConversation) =>
-    set({ selectedConversation }),
+  setSelectedConversation: (selectedConversation) => {
+    set({ selectedConversation, replyToMessage: null }); // Clear reply when conversation changes
+  },
   messages: [],
   setMessages: (messages) => set({ messages }),
+  replyToMessage: null,
+  setReplyToMessage: (message) => {
+    set({ replyToMessage: message });
+  },
+  clearReplyToMessage: () => set({ replyToMessage: null }),
 }));
 
 export default useConversation;

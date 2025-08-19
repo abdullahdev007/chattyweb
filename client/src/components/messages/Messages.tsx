@@ -19,7 +19,7 @@ const Messages: React.FC = () => {
       {!loading &&
         messages.length > 0 &&
         messages.map((message: any) => (
-          <div key={message._id} ref={lastMessageRef}>
+          <div key={message._id} ref={lastMessageRef} className="mb-4">
             <Message message={message} />
           </div>
         ))}

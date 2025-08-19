@@ -15,8 +15,8 @@ const AddFriendModal: FC = () => {
 
     setFilteredUsers(
       users.filter((user) =>
-        user.username.toLowerCase().startsWith(search.toLowerCase())
-      ) as SafeUser[]
+        user.username.toLowerCase().startsWith(search.toLowerCase()),
+      ) as SafeUser[],
     );
   }, [users, search]);
 

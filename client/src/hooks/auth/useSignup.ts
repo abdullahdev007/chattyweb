@@ -31,7 +31,7 @@ const useSignup = () => {
       if (!data.success) throw new Error(data.message);
 
       setAuthUser(data.user);
-    } catch (error) {      
+    } catch (error) {
       toast.error((error as Error).message);
     } finally {
       setLoading(false);

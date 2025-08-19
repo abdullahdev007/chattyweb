@@ -3,16 +3,24 @@ import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import useConversations from "../zustand/useConversations";
 import { SendMessageResponse } from "@shared/types/http";
-import { IMessage } from "@shared/types/models/message";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { messages, setMessages, selectedConversation } = useConversation();
   const { updateConversation } = useConversations();
 
-  const sendMessage = async (message: string): Promise<boolean> => {
+  const sendMessage = async (
+    message: string,
+    replyTo?: string,
+  ): Promise<boolean> => {
     setLoading(true);
     try {
+      const requestBody: any = { message };
+
+      if (replyTo) {
+        requestBody.replayTo = replyTo;
+      }
+
       const res = await fetch(
         `/api/messages/send/${selectedConversation!._id}`,
         {
@@ -20,7 +28,7 @@ const useSendMessage = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message }),
+          body: JSON.stringify(requestBody),
         },
       );
       const data: SendMessageResponse = await res.json();

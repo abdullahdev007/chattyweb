@@ -32,17 +32,17 @@ const NewMessageNotification: FC<NewMessageNotificationProps> = ({
           (conv: IConversation) =>
             conv.participants.some(
               (participant) =>
-                participant.userId._id === newMessage.senderId._id
+                participant.userId._id === newMessage.senderId._id,
             ) &&
             conv.participants.some(
-              (participant) => participant.userId._id === authUser?._id
-            )
+              (participant) => participant.userId._id === authUser?._id,
+            ),
         );
 
         if (!conversation) return;
 
         const currentUserObject = conversation.participants.find(
-          (u) => u.userId._id === authUser?._id
+          (u) => u.userId._id === authUser?._id,
         );
 
         if (!currentUserObject) return;

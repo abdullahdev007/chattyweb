@@ -35,10 +35,7 @@ const Navbar: FC = () => {
         <div className="flex items-center justify-between h-16 max-xs:my-5 max-xs:flex-col">
           {/* Logo Section - Always visible */}
           <div className="flex-shrink-0">
-            <a
-              href="/"
-              className="flex items-center gap-2 hover:scale-105 transition-transform duration-200"
-            >
+            <a href="/" className="flex items-center gap-2">
               <img
                 src="/logo.png"
                 alt="ChattyWeb Logo"
@@ -118,7 +115,7 @@ const Navbar: FC = () => {
                       label="Friend Requests"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "pending_friendships_modal"
+                          "pending_friendships_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                         setIsMobileMenuOpen(false);
@@ -130,7 +127,7 @@ const Navbar: FC = () => {
                       label="Manage Friends"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "manage_friends_modal"
+                          "manage_friends_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                         setIsMobileMenuOpen(false);
@@ -141,7 +138,7 @@ const Navbar: FC = () => {
                       label="Add Friend"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "add_friend_modal"
+                          "add_friend_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                         setIsMobileMenuOpen(false);
@@ -152,7 +149,7 @@ const Navbar: FC = () => {
                       label="Notifications"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "notifications_modal"
+                          "notifications_modal",
                         ) as HTMLDialogElement;
                         if (modal) {
                           modal.showModal();
@@ -272,7 +269,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({ authUser }) => {
         <li
           onClick={() => {
             const modal = document.getElementById(
-              "delete-account-modal"
+              "delete-account-modal",
             ) as HTMLDialogElement | null;
             if (modal) modal.showModal();
           }}
@@ -309,7 +306,7 @@ const NotificationsDropdown: FC = () => {
 
   const handleClick = () => {
     const modal = document.getElementById(
-      "notifications_modal"
+      "notifications_modal",
     ) as HTMLDialogElement;
     if (modal) {
       modal.showModal();
@@ -319,7 +316,7 @@ const NotificationsDropdown: FC = () => {
 
   return (
     <button
-      className="flex items-center justify-center w-5 h-5 rounded-lg"
+      className="relative flex items-center justify-center w-5 h-5 rounded-lg"
       onClick={handleClick}
       title="Notifications"
     >
@@ -336,7 +333,7 @@ const NotificationsDropdown: FC = () => {
 const AddFriendButton: FC = () => {
   const handleClick = () => {
     const modal = document.getElementById(
-      "add_friend_modal"
+      "add_friend_modal",
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };
@@ -355,7 +352,7 @@ const AddFriendButton: FC = () => {
 const ManageFriendsButton: FC = () => {
   const handleClick = () => {
     const modal = document.getElementById(
-      "manage_friends_modal"
+      "manage_friends_modal",
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };
@@ -376,7 +373,7 @@ const FriendRequestsDropdown: FC = () => {
 
   const handleClick = () => {
     const modal = document.getElementById(
-      "pending_friendships_modal"
+      "pending_friendships_modal",
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };

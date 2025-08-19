@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import NewMessageNotification from "@/components/NewMessageNotification/NewMessageNotification";
 import useMessageNotificationStore from "@/zustand/messageNotificationStore";
 import { SendMessagePayload } from "@shared/types/socket";
-import { IMessage } from "@shared/types/models/message";
+import { ClientMessage } from "@/types/MessageTypes";
 
 const useListenMessages = () => {
   const { socket } = useSocketContext();
@@ -32,7 +32,7 @@ const useListenMessages = () => {
         selectedConversation &&
         selectedConversation._id === conversation._id
       ) {
-        (newMessage as IMessage & { shouldShake?: boolean }).shouldShake = true;
+        (newMessage as ClientMessage).shouldShake = true;
 
         setMessages([...messages, newMessage]);
         updateConversation(conversation);

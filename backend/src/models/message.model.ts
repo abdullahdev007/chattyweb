@@ -17,6 +17,11 @@ const messageSchema = new Schema<IMessage & Document>(
       type: String,
       required: true,
     },
+    replayTo: {
+      type: Schema.Types.ObjectId,
+      ref: "Message",
+      default: null,
+    },
   },
   { timestamps: true },
 );

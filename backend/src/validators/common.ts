@@ -10,5 +10,13 @@ export const objectIdSchema = Joi.string()
     "string.empty": validationMessages["string.empty"],
     "any.required": validationMessages["any.required"],
     "string.pattern.base": "{#label} is invalid",
+  });
 
+export const objectIdSchemaOptional = Joi.string()
+  .optional()
+  .allow(null)
+  .empty(true)
+  .label("ID")
+  .messages({
+    "string.pattern.base": "{#label} is invalid",
   });

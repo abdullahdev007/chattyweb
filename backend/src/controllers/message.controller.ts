@@ -12,13 +12,14 @@ import {
 } from "@shared/types/http/index.js";
 import { IMessage } from "@shared/types/models/message.js";
 import { SendMessagePayload } from "@shared/types/socket/message.js";
+import { Types } from "mongoose";
 
 export const sendMessage = async (
   req: Request<ConversationParams, SendMessageResponse, SendMessageRequestBody>,
   res: Response<SendMessageResponse>,
 ) => {
   try {
-    const { message } = req.body;
+    const { message, replayTo } = req.body;
 
     const { id: conversationId } = req.params;
 
@@ -56,6 +57,7 @@ export const sendMessage = async (
       senderId: req.user?._id,
       receiverId: receiverParticipant.userId,
       message,
+      replayTo: replayTo ? new Types.ObjectId(replayTo) : null,
     });
 
     conversation.messages.push(newMessage._id);

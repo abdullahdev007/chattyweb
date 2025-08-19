@@ -1,13 +1,12 @@
 import Joi from "joi";
 import { validationMessages } from "./messages";
-import { objectIdSchema } from "./common";
+import { objectIdSchema, objectIdSchemaOptional } from "./common";
 
 // POST /:id
 
 export const sendMessageParamsSchema = Joi.object({
   id: objectIdSchema.label("User ID"),
 }).messages(validationMessages);
-
 
 // GET /:id
 export const getMessagesParamsSchema = Joi.object({
@@ -27,4 +26,5 @@ export const increaseUnReadedMessageParamsSchema = Joi.object({
 // Schema for body (message)
 export const sendMessageBodySchema = Joi.object({
   message: Joi.string().required().min(1).max(500).label("Message"),
-}).messages(validationMessages); 
+  replayTo: Joi.string().optional().allow(null).empty(true).label("Replay To"),
+}).messages(validationMessages);

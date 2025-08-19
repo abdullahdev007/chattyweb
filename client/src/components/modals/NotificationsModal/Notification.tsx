@@ -20,10 +20,10 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
 
   const handleOnClick = () => {
     const notificationsModal = document.getElementById(
-      "notifications_modal"
+      "notifications_modal",
     ) as HTMLDialogElement;
     const requestsModal = document.getElementById(
-      "pending_friendships_modal"
+      "pending_friendships_modal",
     ) as HTMLDialogElement;
 
     if (
@@ -43,11 +43,11 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
         (conv) =>
           conv.participants.some(
             (participant) =>
-              participant.userId._id === notification.senderId._id
+              participant.userId._id === notification.senderId._id,
           ) &&
           conv.participants.some(
-            (participant) => participant.userId._id === authUser?._id
-          )
+            (participant) => participant.userId._id === authUser?._id,
+          ),
       );
 
       if (conversation) {

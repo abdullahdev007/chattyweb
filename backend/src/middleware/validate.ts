@@ -8,8 +8,7 @@ type SchemaMap = {
 };
 
 export const validate =
-  (schemas: SchemaMap) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (schemas: SchemaMap) => (req: Request, res: Response, next: NextFunction) => {
     const locations: (keyof SchemaMap)[] = ["params", "query", "body"];
     for (const loc of locations) {
       if (schemas[loc]) {
@@ -22,7 +21,7 @@ export const validate =
           res.status(400).json({ success: false, message: errorMessage });
           return;
         }
-        req[loc] = value; 
+        req[loc] = value;
       }
     }
 

@@ -24,12 +24,12 @@ export const SearchConversation: FC = () => {
       <div className="relative group">
         {/* Search Icon */}
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
-          <FaSearch 
+          <FaSearch
             className={`text-lg transition-all duration-300 ${
-              isFocused 
-                ? "text-secondary scale-110" 
+              isFocused
+                ? "text-secondary scale-110"
                 : "text-base-content/50 group-hover:text-base-content/70"
-            }`} 
+            }`}
           />
         </div>
 
@@ -61,9 +61,11 @@ export const SearchConversation: FC = () => {
         )}
 
         {/* Cool Gradient Border Effect */}
-        <div className={`absolute inset-0 rounded-lg bg-gradient-to-r from-secondary/10 via-accent/10 to-primary/10 opacity-0 transition-opacity duration-300 pointer-events-none ${
-          isFocused ? "opacity-100" : ""
-        }`}></div>
+        <div
+          className={`absolute inset-0 rounded-lg bg-gradient-to-r from-secondary/10 via-accent/10 to-primary/10 opacity-0 transition-opacity duration-300 pointer-events-none ${
+            isFocused ? "opacity-100" : ""
+          }`}
+        ></div>
       </div>
 
       {/* Search Status */}

@@ -22,7 +22,7 @@ const ChangePassword: FC = () => {
     <div className="flex items-center justify-center w-full h-full min-h-[500px]">
       <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-4">
         {/* Header */}
-        <div className="bg-gradient-to-r from-warning to-error p-6 text-center">
+        <div className="bg-gradient-to-r from-secondary to-accent p-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-warning-content">
             Change Password
           </h1>

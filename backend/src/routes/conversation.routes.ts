@@ -19,13 +19,13 @@ router.get(
   "/:id",
   protectRoute,
   validate({ params: getConversationParamsSchema }),
-  getConversation as unknown as RequestHandler
+  getConversation as unknown as RequestHandler,
 );
 router.put(
   "/read/:id",
   protectRoute,
   validate({ params: markMessagesAsReadedParamsSchema }),
-  markMessagesAsReaded as unknown as RequestHandler
+  markMessagesAsReaded as unknown as RequestHandler,
 );
 
 export default router;

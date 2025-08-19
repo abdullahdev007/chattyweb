@@ -2,19 +2,29 @@ import useSendMessage from "../../hooks/useSendMessage";
 import { useState, useRef } from "react";
 import React from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import ReplyPreview from "./ReplyPreview";
+import useConversation from "@/zustand/useConversation";
 
 const MessageInput: React.FC = () => {
   const { loading, sendMessage } = useSendMessage();
+  const { replyToMessage, clearReplyToMessage } = useConversation();
   const [message, setMessage] = useState<string>("");
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = async () => {
     if (!message.trim() || loading) return;
-    const success = await sendMessage(message.trim());
+
+    // Send message with reply ID if available
+    const success = await sendMessage(
+      message.trim(),
+      replyToMessage?._id.toString(),
+    );
 
     if (!success) return;
+
     setMessage("");
+    clearReplyToMessage(); // Clear reply after sending
 
     // Reset textarea height
     if (inputRef.current) {
@@ -40,6 +50,9 @@ const MessageInput: React.FC = () => {
 
   return (
     <div className="px-4 my-3">
+      {/* Reply Preview */}
+      <ReplyPreview />
+
       <div
         className={`w-full relative transition-all duration-300 ${loading ? "opacity-60" : ""}`}
       >
@@ -63,7 +76,9 @@ const MessageInput: React.FC = () => {
             onKeyDown={handleKeyDown}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="Send a message..."
+            placeholder={
+              replyToMessage ? "Reply to message..." : "Send a message..."
+            }
             className="
               flex-1 min-h-[40px] max-h-[120px] resize-none
               bg-transparent border-none outline-none

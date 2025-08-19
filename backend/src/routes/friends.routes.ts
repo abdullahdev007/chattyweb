@@ -25,7 +25,7 @@ router.post(
   "/send-request/:id",
   protectRoute,
   validate({ params: sendFriendRequestParamsSchema }),
-  sendFriendRequest as unknown as RequestHandler
+  sendFriendRequest as unknown as RequestHandler,
 );
 
 router.post(
@@ -36,14 +36,14 @@ router.post(
     body: respondFriendRequestBodySchema,
   }),
 
-  respondFriendRequest as unknown as RequestHandler
+  respondFriendRequest as unknown as RequestHandler,
 );
 
 router.delete(
   "/delete-friend/:id",
   protectRoute,
   validate({ params: deleteFriendParamsSchema }),
-  deleteFriend as unknown as RequestHandler
+  deleteFriend as unknown as RequestHandler,
 );
 
 export default router;

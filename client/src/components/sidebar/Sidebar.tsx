@@ -3,7 +3,12 @@ import Conversations from "./Conversations";
 
 const Sidebar: FC = () => {
   return (
-    <div className="border-r max-sm:border-r-0 max-sm:border-b  border-base-content border-opacity-40  p-4 flex flex-col overflow-auto max-sm:h-1/4">
+    <div
+      className="border-r max-sm:border-r-0 
+    max-sm:border-b  border-base-content 
+    border-opacity-40  p-4 flex flex-col overflow-auto max-sm:h-1/4
+    min-w-64 max-md:min-w-32"
+    >
       <Conversations />
     </div>
   );
