@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import NotificationTypes from "../types/NotificationTypes.js";
+import NotificationTypes from "@shared/types/NotificationTypes.js";
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
@@ -18,7 +18,6 @@ import {
 import { UserDocument } from "@shared/types/models/user.js";
 import { RespondToFriendRequestPayload } from "@shared/types/socket";
 import { Types } from "mongoose";
-import { SyncAuthUserPayload } from "@shared/types/socket/auth.js";
 
 export const sendFriendRequest = async (
   req: Request<SendFriendRequestParams>,
@@ -38,12 +37,10 @@ export const sendFriendRequest = async (
       res.status(400).json({ success: false, message: "Already friends" });
       return;
     } else if (friend.pendingFriendships.includes(user._id)) {
-      res
-        .status(400)
-        .json({
-          success: false,
-          message: "you already send friend request to this user",
-        });
+      res.status(400).json({
+        success: false,
+        message: "you already send friend request to this user",
+      });
     }
 
     if (user.pendingFriendships.includes(friend._id)) {
@@ -98,7 +95,7 @@ export const respondFriendRequest = async (
     }
 
     const friendRequest = user.pendingFriendships.find(
-      (id) => id.toString() === requestUserId,
+      (id: any) => id.toString() === requestUserId,
     );
 
     if (!friendRequest) {
@@ -125,7 +122,7 @@ export const respondFriendRequest = async (
     }
 
     user.pendingFriendships = user.pendingFriendships.filter(
-      (id) => id.toString() !== requestUserId,
+      (id: any) => id.toString() !== requestUserId,
     );
 
     if (response === "accept") {

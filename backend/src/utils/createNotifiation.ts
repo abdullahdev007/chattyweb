@@ -1,4 +1,4 @@
-import NotificationTypes from "../types/NotificationTypes.js";
+import NotificationTypes from "@shared/types/NotificationTypes.js";
 import Notification from "../models/notification.model.js";
 import {
   INotification,
@@ -6,7 +6,7 @@ import {
 } from "@shared/types/models/notification.js";
 import { Document } from "mongoose";
 import { getSocketId, io } from "../socket/socket.js";
-import { IUser, UserDocument } from "@shared/types/models/user.js";
+import { UserDocument } from "@shared/types/models/user.js";
 import toSafeUser from "./toSafeUser.js";
 import { NewNotificationPayload } from "@shared/types/socket/notification.js";
 

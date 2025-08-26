@@ -1,6 +1,5 @@
-// src/validators/common.ts
 import Joi from "joi";
-import { validationMessages } from "./messages";
+import { validationMessages } from "./messages.js";
 
 export const objectIdSchema = Joi.string()
   .pattern(/^[0-9a-fA-F]{24}$/)

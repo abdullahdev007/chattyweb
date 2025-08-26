@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { validationMessages } from "./messages";
+import { validationMessages } from "./messages.js";
 
 // Validation schema for signup request
 export const signupSchema = Joi.object({

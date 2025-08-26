@@ -1,9 +1,29 @@
 {
-  "devDependencies": {
-    "@tailwindcss/line-clamp": "^0.4.4",
-    "@types/joi": "^17.2.2"
+  "name": "chattyweb",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npm run build -w backend && npm run build -w client && npx cpx \"client/dist/**/*\" backend/dist/public",
+    "start": "npm run start -w backend"
   },
-  "dependencies": {
-    "joi": "^18.0.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullahdev007/chattyweb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abdullahdev007/chattyweb/issues"
+  },
+  "workspaces": [
+    "backend",
+    "client",
+    "shared"
+  ],
+  "homepage": "https://github.com/abdullahdev007/chattyweb#readme",
+  "devDependencies": {
+    "cpx": "^1.5.0"
   }
 }

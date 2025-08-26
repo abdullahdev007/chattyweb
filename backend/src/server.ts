@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: [process.env.APP_URL as string, process.env.SERVER_URL as string],
     credentials: true,
-  }),
+  })
 );
 
 app.use("/api/auth", authRoutes);
@@ -40,10 +40,13 @@ app.use("/api/conversations", conversationRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, "../../client/dist")));
+
+// Serve static client files
+const clientPath = path.join(__dirname, "../../public");
+app.use(express.static(clientPath));
 
 app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+  res.sendFile(path.join(clientPath, "index.html"));
 });
 
 server.listen(PORT, () => {

@@ -1,6 +1,5 @@
-// src/validators/conversation.validation.ts
 import Joi from "joi";
-import { objectIdSchema } from "./common";
+import { objectIdSchema } from "./common.js";
 
 // GET /conversations/:id
 export const getConversationParamsSchema = Joi.object({

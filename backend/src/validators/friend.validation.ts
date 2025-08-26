@@ -1,7 +1,6 @@
-// src/validators/friend.validation.ts
 import Joi from "joi";
-import { objectIdSchema } from "./common";
-import { validationMessages } from "./messages";
+import { objectIdSchema } from "./common.js";
+import { validationMessages } from "./messages.js";
 
 // sendFriendRequest
 export const sendFriendRequestParamsSchema = Joi.object({

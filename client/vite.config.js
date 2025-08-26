@@ -22,6 +22,7 @@ export default defineConfig({
     alias: {
       "@daisyui/react": "@daisyui/react/dist/index.esm.js",
       "@": path.resolve(__dirname, "./src"),
+      "@shared": path.resolve(__dirname, "../shared"),
     },
   },
 });

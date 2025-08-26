@@ -1,6 +1,6 @@
 import Joi from "joi";
-import { validationMessages } from "./messages";
-import { objectIdSchema, objectIdSchemaOptional } from "./common";
+import { validationMessages } from "./messages.js";
+import { objectIdSchema, objectIdSchemaOptional } from "./common.js";
 
 // POST /:id
 

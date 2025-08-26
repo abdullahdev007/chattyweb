@@ -1,6 +1,6 @@
 import { FC } from "react";
 import calculateNotificationTime from "@/utils/calculateNotificationTime";
-import { NotificationTypes } from "@/types/NotificationTypes";
+import NotificationTypes from "@shared/types/NotificationTypes";
 import useConversation from "@/zustand/useConversation";
 import useFriends from "@/zustand/useFriends";
 import useConversations from "@/zustand/useConversations";
@@ -26,33 +26,36 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
       "pending_friendships_modal",
     ) as HTMLDialogElement;
 
-    if (
-      notification.type === NotificationTypes.NewFriendRequest &&
-      notificationsModal &&
-      requestsModal
-    ) {
-      notificationsModal.close();
-      requestsModal.showModal();
-    } else if (
-      notification.type === NotificationTypes.FriendRequestAccepted &&
-      friends.some((friend) => friend._id === notification.senderId._id) &&
-      notificationsModal
-    ) {
-      notificationsModal.close();
-      const conversation = conversations.find(
-        (conv) =>
-          conv.participants.some(
-            (participant) =>
-              participant.userId._id === notification.senderId._id,
-          ) &&
-          conv.participants.some(
-            (participant) => participant.userId._id === authUser?._id,
-          ),
-      );
+    switch (notification.type) {
+      case NotificationTypes.NewFriendRequest:
+        if (notificationsModal && requestsModal) {
+          notificationsModal.close();
+          requestsModal.showModal();
+        }
+        break;
 
-      if (conversation) {
-        setSelectedConversation(conversation);
-      }
+      case NotificationTypes.FriendRequestAccepted:
+        if (
+          friends.some((friend) => friend._id === notification.senderId._id) &&
+          notificationsModal
+        ) {
+          notificationsModal.close();
+          const conversation = conversations.find(
+            (conv) =>
+              conv.participants.some(
+                (participant) =>
+                  participant.userId.toString() === notification.senderId._id.toString(),
+              ) &&
+              conv.participants.some(
+                (participant) => participant.userId.toString() === authUser?._id?.toString(),
+              ),
+          );
+
+          if (conversation) {
+            setSelectedConversation(conversation);
+          }
+        }
+        break;
     }
 
     console.log(notification.type);
