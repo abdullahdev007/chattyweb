@@ -1,18 +1,18 @@
 import { BaseResponse } from "../base";
-import { IConversation } from "../../models/conversation";
+import { Conversation } from "../../models/conversation";
 
 export interface ConversationParams {
   id: string;
 }
 
 export interface GetConversationsResponse extends BaseResponse {
-  conversations?: IConversation[];
+  conversations?: Conversation[];
 }
 
 export interface GetConversationResponse extends BaseResponse {
-  conversation?: IConversation;
+  conversation?: Conversation;
 }
 
 export interface MarkMessagesAsReadedResponse extends BaseResponse {
-  conversation?: IConversation;
+  conversation?: Conversation;
 }

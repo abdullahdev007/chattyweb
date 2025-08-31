@@ -1,6 +1,6 @@
 import { FC } from "react";
 import calculateNotificationTime from "@/utils/calculateNotificationTime";
-import NotificationTypes from "@shared/types/NotificationTypes";
+import { NotificationTypes } from "@shared/types/notificationTypes";
 import useConversation from "@/zustand/useConversation";
 import useFriends from "@/zustand/useFriends";
 import useConversations from "@/zustand/useConversations";
@@ -44,10 +44,12 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
             (conv) =>
               conv.participants.some(
                 (participant) =>
-                  participant.userId.toString() === notification.senderId._id.toString(),
+                  participant.userId.toString() ===
+                  notification.senderId._id.toString(),
               ) &&
               conv.participants.some(
-                (participant) => participant.userId.toString() === authUser?._id?.toString(),
+                (participant) =>
+                  participant.userId.toString() === authUser?._id?.toString(),
               ),
           );
 

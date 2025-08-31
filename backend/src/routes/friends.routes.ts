@@ -1,19 +1,18 @@
 import express, { RequestHandler, Router } from "express";
-import protectRoute from "../middleware/protectRoute.js";
+import { protectRoute, validate } from "@/middleware";
 import {
   deleteFriend,
   getFriendRequests,
   getFriends,
   respondFriendRequest,
   sendFriendRequest,
-} from "../controllers/friends.controller.js";
+} from "@/controllers";
 import {
   deleteFriendParamsSchema,
   respondFriendRequestBodySchema,
   respondFriendRequestParamsSchema,
   sendFriendRequestParamsSchema,
 } from "../validators/friend.validation.js";
-import { validate } from "../middleware/validate.js";
 
 const router: Router = express.Router();
 

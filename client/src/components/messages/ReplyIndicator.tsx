@@ -1,12 +1,11 @@
 import React from "react";
-import { IMessage } from "@shared/types/models/message";
 import { ClientMessage } from "@/types/MessageTypes";
 import { FaReply } from "react-icons/fa";
 import { useAuthContext } from "@/context/AuthContext";
 
 interface ReplyIndicatorProps {
   message: ClientMessage;
-  repliedMessage?: IMessage | null;
+  repliedMessage?: ClientMessage | null;
 }
 
 const ReplyIndicator: React.FC<ReplyIndicatorProps> = ({

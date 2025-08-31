@@ -2,9 +2,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useFriends from "../../zustand/useFriends";
 import { BaseResponse, DeleteFriendRequestParams } from "@shared/types/http";
-import useConversation from "@/zustand/useConversation";
-import useConversations from "@/zustand/useConversations";
-import { IConversation } from "@shared/types/models/conversation";
 
 const useRemoveFriend = () => {
   const [loading, setLoading] = useState<boolean>(false);

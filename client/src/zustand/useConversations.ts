@@ -1,10 +1,10 @@
-import { IConversation } from "@shared/types/models/conversation";
 import { create } from "zustand";
+import { Conversation } from "@shared/types/models/conversation";
 
 interface ConversationsState {
-  conversations: IConversation[];
-  setConversations: (conversations: IConversation[]) => void;
-  updateConversation: (updatedConversation: IConversation) => void;
+  conversations: Conversation[];
+  setConversations: (conversations: Conversation[]) => void;
+  updateConversation: (updatedConversation: Conversation) => void;
 }
 
 const useConversations = create<ConversationsState>((set) => ({

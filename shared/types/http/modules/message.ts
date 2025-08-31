@@ -1,25 +1,25 @@
-import { IConversation } from "@shared/types/models/conversation";
+import { Conversation } from "@shared/types/models/conversation";
 import { BaseResponse } from "../base";
-import { IMessage } from "@shared/types/models/message";
+import { Message } from "@shared/types/models/message";
 
-export interface SendMessageRequestBody  {
-  message: string,
-  replayTo?: string
+export interface SendMessageRequestBody {
+  message: string;
+  replayTo?: string;
 }
 
 export interface SendMessageResponse extends BaseResponse {
-  conversation?: IConversation,
-  newMessage?: IMessage
+  conversation?: Conversation;
+  newMessage?: Message;
 }
 
 export interface GetMessagesResponse extends BaseResponse {
-  messages?: IMessage[],
+  messages?: Message[];
 }
 
 export interface GetUnreadCountResponse extends BaseResponse {
-  unreadCount?: number,
+  unreadCount?: number;
 }
 
 export interface IncreaseUnReadCountResponse extends BaseResponse {
-  conversation?: IConversation;
+  conversation?: Conversation;
 }

@@ -1,14 +1,14 @@
 import { create } from "zustand";
-import { IConversation } from "@shared/types/models/conversation";
-import { IMessage } from "@shared/types/models/message";
+import { Conversation } from "@shared/types/models/conversation";
+import { ClientMessage } from "@/types/MessageTypes";
 
 interface ConversationState {
-  selectedConversation: IConversation | null;
-  setSelectedConversation: (selectedConversation: IConversation | null) => void;
-  messages: IMessage[];
-  setMessages: (messages: IMessage[]) => void;
-  replyToMessage: IMessage | null;
-  setReplyToMessage: (message: IMessage | null) => void;
+  selectedConversation: Conversation | null;
+  setSelectedConversation: (selectedConversation: Conversation | null) => void;
+  messages: ClientMessage[];
+  setMessages: (messages: ClientMessage[]) => void;
+  replyToMessage: ClientMessage | null;
+  setReplyToMessage: (message: ClientMessage | null) => void;
   clearReplyToMessage: () => void;
 }
 

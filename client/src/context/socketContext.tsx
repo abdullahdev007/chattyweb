@@ -8,13 +8,9 @@ import React, {
 import { useAuthContext } from "./AuthContext";
 import io, { Socket } from "socket.io-client";
 
-interface OnlineUser {
-  _id: string;
-}
-
 interface SocketContextType {
   socket: Socket | null;
-  onlineUsers: OnlineUser[];
+  onlineUsers: string[];
 }
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
@@ -37,7 +33,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
   children,
 }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const { authUser } = useAuthContext();
 
   useEffect(() => {

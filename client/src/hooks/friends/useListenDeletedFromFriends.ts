@@ -10,7 +10,7 @@ const useListenDeletedFromFriends = () => {
 
   useEffect(() => {
     const handleDeleted = (user: DeletedFromFriendsPayload) => {
-      removeFriend(user._id);
+      removeFriend(user._id.toString());
       console.log("deletet from friends");
     };
 

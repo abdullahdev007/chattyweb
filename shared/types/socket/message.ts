@@ -1,7 +1,7 @@
-import { IConversation } from "../models/conversation"
-import { IMessage } from "../models/message"
+import { Conversation } from "../models/conversation";
+import { Message } from "../models/message";
 
 export type SendMessagePayload = {
-  conversation: IConversation,
-  newMessage: IMessage
-}
+  conversation: Conversation;
+  newMessage: Message;
+};

@@ -1,11 +1,7 @@
 import express, { Router } from "express";
 
-import protectRoute from "../middleware/protectRoute.js";
-import {
-  clearAll,
-  getNotifications,
-  markAsReaded,
-} from "../controllers/notification.controller.js";
+import { protectRoute } from "@/middleware";
+import { clearAll, getNotifications, markAsReaded } from "@/controllers";
 
 const router: Router = express.Router();
 

@@ -1,24 +1,24 @@
 import { Request, RequestHandler, Response } from "express";
-import Conversation from "../models/conversation.model.js";
 import {
   ConversationParams,
   GetConversationsResponse,
   GetConversationResponse,
   MarkMessagesAsReadedResponse,
 } from "@shared/types/http";
+import {
+  getUserConversations,
+  getConversationById,
+  markConversationMessagesAsRead,
+} from "@/services";
 
 export const getConversations: RequestHandler<
   any,
   GetConversationsResponse
 > = async (req: Request, res) => {
   try {
-    const userId = req.user?._id;
-    const conversations = await Conversation.find({
-      participants: { $elemMatch: { userId: userId } },
-    })
-      .populate("messages")
-      .populate({ path: "participants.userId" })
-      .populate("latestMessage");
+    const userId = req.user?._id.toString();
+    const conversations = await getUserConversations(userId);
+
     res.status(200).json({
       success: true,
       conversations,
@@ -38,25 +38,14 @@ export const getConversation: RequestHandler<
 > = async (req: Request<ConversationParams>, res) => {
   try {
     const conversationId: string = req.params.id;
-    const conversation = await Conversation.findById(conversationId)
-      .populate({ path: "participants.userId" })
-      .populate("messages")
-      .populate("latestMessage");
+    const userId = req.user?._id.toString();
+
+    const conversation = await getConversationById(conversationId, userId);
+
     if (!conversation) {
       res.status(404).json({
         success: false,
-        message: "Conversation not found",
-      });
-      return;
-    }
-
-    const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(req.user?._id),
-    );
-    if (!currentUserParticipant) {
-      res.status(403).json({
-        success: false,
-        message: "You don't have access to this conversation",
+        message: "Conversation not found or access denied",
       });
       return;
     }
@@ -83,36 +72,27 @@ export const markMessagesAsReaded: RequestHandler<
 ) => {
   try {
     const conversationId: string = req.params.id;
-    const conversation = await Conversation.findById(conversationId)
-      .populate({ path: "participants.userId" })
-      .populate("messages")
-      .populate("latestMessage");
+    const userId = req.user?._id.toString();
+
+    const conversation = await markConversationMessagesAsRead(
+      conversationId,
+      userId,
+    );
+
     if (!conversation) {
       res.status(404).json({
         success: false,
-        message: "Conversation not found",
+        message: "Conversation not found or access denied",
       });
       return;
     }
-    const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(req.user?._id),
-    );
-    if (!currentUserParticipant) {
-      res.status(403).json({
-        success: false,
-        message: "You are not a participant in this conversation",
-      });
 
-      return;
-    }
-    currentUserParticipant.unreadCount = 0;
-    await conversation.save();
     res.status(200).json({
       success: true,
       conversation,
     });
   } catch (error: any) {
-    console.log("Error in markMessagesAsReaded controller: ", error.message);
+    console.log("Error in markMessagesAsReaded controller : ", error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",

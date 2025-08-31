@@ -1,11 +1,4 @@
 import { Request, Response } from "express";
-import NotificationTypes from "@shared/types/NotificationTypes.js";
-import Conversation from "../models/conversation.model.js";
-import Message from "../models/message.model.js";
-import User from "../models/user.model.js";
-import { getSocketId, io } from "../socket/socket.js";
-import createNotification from "../utils/createNotifiation.js";
-import toSafeUser from "../utils/toSafeUser.js";
 import {
   SendFriendRequestParams,
   RespondFriendRequestParams,
@@ -15,9 +8,13 @@ import {
   DeleteFriendRequestParams,
   BaseResponse,
 } from "@shared/types/http";
-import { UserDocument } from "@shared/types/models/user.js";
-import { RespondToFriendRequestPayload } from "@shared/types/socket";
-import { Types } from "mongoose";
+import {
+  sendFriendRequest as sendFriendRequestService,
+  respondToFriendRequest,
+  deleteFriend as deleteFriendService,
+  getFriends as getFriendsService,
+  getFriendRequests as getFriendRequestsService,
+} from "@/services";
 
 export const sendFriendRequest = async (
   req: Request<SendFriendRequestParams>,
@@ -25,54 +22,17 @@ export const sendFriendRequest = async (
 ) => {
   try {
     const { id: friendId } = req.params;
-    const user = req.user;
-    const friend = await User.findById(friendId);
+    const userId = req.user?._id.toString();
 
-    if (!friend || !user) {
-      res.status(404).json({ success: false, message: "User not found" });
-      return;
-    }
+    const result = await sendFriendRequestService(userId, friendId);
 
-    if (friend.friends.includes(user._id)) {
-      res.status(400).json({ success: false, message: "Already friends" });
-      return;
-    } else if (friend.pendingFriendships.includes(user._id)) {
-      res.status(400).json({
-        success: false,
-        message: "you already send friend request to this user",
-      });
-    }
-
-    if (user.pendingFriendships.includes(friend._id)) {
-      res.status(500).json({
-        success: false,
-        message:
-          "This user is already waiting for you to accept his friend request.",
-      });
-
-      return;
-    }
-
-    friend.pendingFriendships.push(user._id);
-
-    await friend.save();
-
-    // Create Notification
-    createNotification(req.user!, friend, NotificationTypes.NewFriendRequest);
-
-    // Socket io
-    const receiverSocketId = getSocketId(friendId);
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("newFriendRequest", toSafeUser(req.user!));
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "Your friend request has been sent successfully",
-    });
+    res.status(200).json(result);
   } catch (err: any) {
     console.log("Error in sendFriendRequest: ", err.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: err.message || "Internal server error",
+    });
   }
 };
 
@@ -87,92 +47,22 @@ export const respondFriendRequest = async (
   try {
     const { id: requestUserId } = req.params;
     const { response } = req.body;
-    const user = req.user;
+    const userId = req.user?._id.toString();
 
-    if (!user) {
-      res.status(404).json({ success: false, message: "User not found" });
-      return;
-    }
-
-    const friendRequest = user.pendingFriendships.find(
-      (id: any) => id.toString() === requestUserId,
+    const result = await respondToFriendRequest(
+      userId,
+      requestUserId,
+      response,
     );
 
-    if (!friendRequest) {
-      res
-        .status(404)
-        .json({ success: false, message: "Friend request not found" });
-      return;
-    }
-
-    if (!["accept", "reject"].includes(response)) {
-      res.status(400).json({ success: false, message: "Invalid response" });
-      return;
-    }
-
-    // Remove the friend request from the pending list
-
-    const requestUser = await User.findById(requestUserId);
-
-    if (!requestUser) {
-      res
-        .status(400)
-        .json({ success: false, message: "request user not found" });
-      return;
-    }
-
-    user.pendingFriendships = user.pendingFriendships.filter(
-      (id: any) => id.toString() !== requestUserId,
-    );
-
-    if (response === "accept") {
-      // Add each user to the other's friends list
-      user.friends.push(new Types.ObjectId(requestUserId));
-
-      requestUser.friends.push(user._id);
-
-      // Create a new conversation for the friends
-      await Conversation.create({
-        participants: [
-          {
-            userId: user._id,
-          },
-          {
-            userId: new Types.ObjectId(requestUserId),
-          },
-        ],
-      });
-    }
-
-    await Promise.all([user.save(), requestUser.save()]);
-
-    createNotification(
-      user,
-      requestUser,
-      response === "accept"
-        ? NotificationTypes.FriendRequestAccepted
-        : NotificationTypes.FriendRequestRejected,
-    );
-
-    const receiverSocketId = getSocketId(requestUserId);
-    if (receiverSocketId) {
-      const payload: RespondToFriendRequestPayload = {
-        user: toSafeUser(user),
-        response,
-      };
-      io.to(receiverSocketId).emit("respondToFriendRequest", payload);
-    }
-
-    res.json({
-      success: true,
-      message: `Friend request ${
-        response === "accept" ? "accepted" : "rejected"
-      }`,
-    });
+    res.json(result);
   } catch (err: unknown) {
     const error = err as Error;
     console.log("Error in respondToFriendRequest: ", error.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 };
 
@@ -182,58 +72,18 @@ export const deleteFriend = async (
 ) => {
   try {
     const { id: friendId } = req.params;
-    const user = req.user;
+    const userId = req.user?._id.toString();
 
-    const friend = await User.findById(friendId);
+    const result = await deleteFriendService(userId, friendId);
 
-    if (!friend) {
-      res.status(404).json({ success: false, message: "User not found" });
-      return;
-    }
-
-    if (!user?.friends.includes(friend._id)) {
-      res.status(404).json({
-        success: false,
-        message: "This user is not one of your friends",
-      });
-      return;
-    }
-
-    user.friends = user.friends.filter(
-      (_id: Types.ObjectId) => !_id.equals(friend._id),
-    );
-
-    friend.friends = friend.friends.filter((_id) => !_id.equals(user._id));
-
-    await Promise.all([user.save(), friend.save()]);
-
-    await Conversation.findOneAndDelete({
-      "participants.userId": { $all: [user._id, friend._id] },
-    });
-
-    await Message.deleteMany({
-      $or: [
-        { senderId: user._id, receiverId: friend._id },
-        { senderId: friend._id, receiverId: user._id },
-      ],
-    });
-
-    createNotification(user, friend, NotificationTypes.RemoveFriendShip);
-
-    // Socket io
-    const receiverSocketId = getSocketId(friendId);
-    if (receiverSocketId) {
-      io.to(receiverSocketId).emit("deletedFromFriends", toSafeUser(user));
-    }
-
-    res.json({
-      success: true,
-      message: `${friend.fullName} has been removed from your friends list`,
-    });
+    res.json(result);
   } catch (err: unknown) {
     const error = err as Error;
     console.log("error in deleteFriend controller :", error.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 };
 
@@ -242,26 +92,21 @@ export const getFriends = async (
   res: Response<GetFriendsResponse>,
 ) => {
   try {
-    const userId = req.user?._id;
+    const userId = req.user?._id.toString();
 
-    const user = await User.findById(userId).populate<{
-      friends: UserDocument[];
-    }>("friends");
-
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
+    const friends = await getFriendsService(userId);
 
     res.status(200).json({
       success: true,
-      friends: user.friends.map((friend) => toSafeUser(friend)),
+      friends,
     });
   } catch (err: unknown) {
     const error = err as Error;
     console.log("Error in getFriends: ", error.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 };
 
@@ -270,18 +115,20 @@ export const getFriendRequests = async (
   res: Response<GetFriendRequestsResponse>,
 ) => {
   try {
-    const userIds = req.user?.pendingFriendships;
+    const userId = req.user?._id.toString();
 
-    // Find users whose IDs are in the pendingFriendships array
-    const friendRequests = await User.find({ _id: { $in: userIds } });
+    const friendRequests = await getFriendRequestsService(userId);
 
     res.status(200).json({
       success: true,
-      friendRequests: friendRequests.map((user) => toSafeUser(user)),
+      friendRequests,
     });
   } catch (err: unknown) {
     const error = err as Error;
     console.log("Error in getFriendRequests: ", error.message);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
   }
 };

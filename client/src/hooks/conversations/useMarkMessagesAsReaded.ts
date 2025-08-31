@@ -2,6 +2,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { MarkMessagesAsReadedResponse } from "@shared/types/http";
 import useConversations from "@/zustand/useConversations";
+
 const useMarkMessagesAsReaded = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { updateConversation } = useConversations();

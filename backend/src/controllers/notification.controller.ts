@@ -1,24 +1,28 @@
 import type { Request, RequestHandler, Response } from "express";
-import Notification from "../models/notification.model.js";
 import { GetNotificationsResponse } from "@shared/types/http/modules/notification.js";
 import { BaseResponse } from "@shared/types/http/base.js";
-import toSafeUser from "../utils/toSafeUser.js";
-import { UserDocument } from "@shared/types/models/user.js";
+import toSafeUser from "@/utils/toSafeUser.js";
 import { SafeNotification } from "@shared/types/models/notification.js";
+import {
+  getNotifications as getNotificationsService,
+  markAllNotificationsAsRead,
+  getUnreadNotificationsCount,
+  deleteAllNotifications,
+} from "@/services";
 
 export const getNotifications: RequestHandler<
   any,
   GetNotificationsResponse
 > = async (req: Request, res): Promise<void> => {
   try {
-    const notifications = await Notification.find({ receiverId: req.user!._id })
-      .populate<{ senderId: UserDocument }>("senderId")
-      .populate<{ receiverId: UserDocument }>("receiverId");
+    const notifications = await getNotificationsService(
+      req.user!._id.toString(),
+    );
 
     const safeNotifications: SafeNotification[] = notifications.map((n) => ({
-      ...n.toObject(),
-      senderId: toSafeUser(n.senderId as UserDocument),
-      receiverId: toSafeUser(n.receiverId as UserDocument),
+      ...(n as any).toObject(),
+      senderId: toSafeUser(n.senderId as any),
+      receiverId: toSafeUser(n.receiverId as any),
     }));
 
     res.status(200).json({
@@ -39,19 +43,34 @@ export const markAsReaded = async (
   res: Response<BaseResponse>,
 ): Promise<void> => {
   try {
-    await Notification.updateMany(
-      { receiverId: req.user!._id.toString() },
-      { $set: { readed: true } },
-    );
-    res.status(200).json({
-      success: true,
-      message: "Notifications marked as read",
-    });
+    await markAllNotificationsAsRead(req.user!._id.toString());
+
+    res.status(200).json({ success: true });
   } catch (error: any) {
     console.log("Error in markAsReaded controller: ", error.message);
     res.status(500).json({
       success: false,
       message: "Internal server error",
+    });
+  }
+};
+
+export const getUnreadCount = async (
+  req: Request,
+  res: Response<{ success: boolean; count: number }>,
+): Promise<void> => {
+  try {
+    const count = await getUnreadNotificationsCount(req.user!._id.toString());
+
+    res.status(200).json({
+      success: true,
+      count,
+    });
+  } catch (error: any) {
+    console.log("Error in getUnreadCount controller: ", error.message);
+    res.status(500).json({
+      success: false,
+      count: 0,
     });
   }
 };
@@ -65,12 +84,10 @@ export const clearAll: RequestHandler = async (
       res.status(401).json({ success: false, message: "Unauthorized" });
       return;
     }
-
-    await Notification.deleteMany({ receiverId: req.user?._id.toString() });
+    await deleteAllNotifications(req.user?._id.toString());
 
     res.status(200).json({
       success: true,
-      message: "Notifications cleared",
     });
   } catch (error: any) {
     console.log("Error in clearAll controller: ", error.message);

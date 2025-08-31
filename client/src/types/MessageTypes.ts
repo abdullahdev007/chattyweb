@@ -1,3 +1,5 @@
-import { IMessage } from "@shared/types/models/message";
+import { Message } from "@shared/types/models/message";
 
-export type ClientMessage = IMessage & { shouldShake: boolean };
+export type ClientMessage = Message & {
+  shouldShake: boolean;
+};

@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { IMessage } from "@shared/types/models/message";
+import { Message } from "@shared/types/models/message";
 
 interface MessageQueueItem {
   toastId: string;
-  newMessage: IMessage;
+  newMessage: Message;
 }
 
 interface MessageNotificationStore {

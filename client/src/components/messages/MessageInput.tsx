@@ -1,5 +1,5 @@
 import useSendMessage from "../../hooks/useSendMessage";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import ReplyPreview from "./ReplyPreview";
@@ -12,13 +12,20 @@ const MessageInput: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  // Refocus textarea after message is sent
+  useEffect(() => {
+    if (!loading && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [loading]);
+
   const handleSubmit = async () => {
     if (!message.trim() || loading) return;
 
     // Send message with reply ID if available
     const success = await sendMessage(
       message.trim(),
-      replyToMessage?._id.toString(),
+      replyToMessage?._id.toString()
     );
 
     if (!success) return;

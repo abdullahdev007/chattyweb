@@ -2,7 +2,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "@/context/AuthContext";
 import { LoginRequestBody, LoginResponseBody } from "@shared/types/http";
-import { Navigate } from "react-router-dom";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);

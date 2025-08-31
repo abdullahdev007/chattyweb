@@ -5,9 +5,8 @@ import {
   getUnReadedMessageCount,
   increaseUnReadedMessage,
   sendMessage,
-} from "../controllers/message.controller.js";
-import protectRoute from "../middleware/protectRoute.js";
-import { validate } from "../middleware/validate.js";
+} from "@/controllers";
+import { protectRoute, validate } from "@/middleware";
 import {
   getMessagesParamsSchema,
   getUnReadedMessageCountParamsSchema,

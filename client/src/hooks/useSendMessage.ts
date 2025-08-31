@@ -3,6 +3,7 @@ import useConversation from "../zustand/useConversation";
 import toast from "react-hot-toast";
 import useConversations from "../zustand/useConversations";
 import { SendMessageResponse } from "@shared/types/http";
+import { ClientMessage } from "@/types/MessageTypes";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +38,7 @@ const useSendMessage = () => {
 
       if (data.conversation && data.newMessage) {
         updateConversation(data.conversation);
-        setMessages([...messages, data.newMessage]);
+        setMessages([...messages, data.newMessage as ClientMessage]);
       }
 
       return true;

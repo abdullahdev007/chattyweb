@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { GetConversationsResponse } from "@shared/types/http";
-import { IConversation } from "@shared/types/models/conversation";
+import { Conversation } from "@shared/types/models/conversation";
 import useConversation from "@/zustand/useConversation";
 import useFriends from "@/zustand/useFriends";
 import useConversations from "@/zustand/useConversations";
@@ -26,7 +26,7 @@ const useGetConversations = () => {
         if (
           selectedConversation &&
           !data.conversations!.find(
-            (conv: IConversation) => conv._id == selectedConversation._id,
+            (conv: Conversation) => conv._id == selectedConversation._id,
           )
         ) {
           setSelectedConversation(null);

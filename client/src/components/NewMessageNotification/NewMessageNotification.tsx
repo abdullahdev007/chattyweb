@@ -4,13 +4,13 @@ import useConversation from "../../zustand/useConversation";
 import useConversations from "../../zustand/useConversations";
 import { useAuthContext } from "../../context/AuthContext";
 import useMarkMessagesAsReaded from "../../hooks/conversations/useMarkMessagesAsReaded";
-import { IConversation } from "@shared/types/models/conversation";
-import { IMessage } from "@shared/types/models/message";
 import { FaMessage } from "react-icons/fa6";
+import { ClientMessage } from "@/types/MessageTypes";
+import { Conversation } from "@shared/types/models/conversation";
 
 interface NewMessageNotificationProps {
   t: Toast;
-  newMessage: IMessage;
+  newMessage: ClientMessage;
 }
 
 const NewMessageNotification: FC<NewMessageNotificationProps> = ({
@@ -29,7 +29,7 @@ const NewMessageNotification: FC<NewMessageNotificationProps> = ({
       } max-w-md w-full bg-base-100 shadow-xl rounded-xl pointer-events-auto flex ring-1 ring-base-300 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-base-300`}
       onClick={() => {
         const conversation = conversations.find(
-          (conv: IConversation) =>
+          (conv: Conversation) =>
             conv.participants.some(
               (participant) =>
                 participant.userId._id === newMessage.senderId._id,
@@ -48,7 +48,7 @@ const NewMessageNotification: FC<NewMessageNotificationProps> = ({
         if (!currentUserObject) return;
 
         const unReadCount = currentUserObject.unreadCount;
-        if (unReadCount > 0) markMessagesAsReaded(conversation._id);
+        if (unReadCount > 0) markMessagesAsReaded(conversation._id.toString());
 
         setSelectedConversation(conversation);
       }}

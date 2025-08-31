@@ -14,7 +14,7 @@ const useListenResponseToFriendRequest = () => {
       user,
       response,
     }: RespondToFriendRequestPayload) => {
-      removeFriendRequest(user._id);
+      removeFriendRequest(user._id.toString());
       if (response === "accept") {
         addFriend(user);
       }

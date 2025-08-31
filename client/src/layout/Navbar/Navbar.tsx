@@ -24,9 +24,7 @@ const Navbar: FC = () => {
   const { unReadedNotificationsCount } = useNotifications();
   const { markAsReaded } = useMarkAsReaded();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
     <nav className="bg-base-200 shadow-sm border-b border-base-300 z-50 relative">
@@ -118,7 +116,6 @@ const Navbar: FC = () => {
                           "pending_friendships_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
-                        setIsMobileMenuOpen(false);
                       }}
                       badge={friendRequests.length}
                     />
@@ -130,7 +127,6 @@ const Navbar: FC = () => {
                           "manage_friends_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
-                        setIsMobileMenuOpen(false);
                       }}
                     />
                     <MobileActionButton
@@ -141,7 +137,6 @@ const Navbar: FC = () => {
                           "add_friend_modal",
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
-                        setIsMobileMenuOpen(false);
                       }}
                     />
                     <MobileActionButton
@@ -155,7 +150,6 @@ const Navbar: FC = () => {
                           modal.showModal();
                           markAsReaded();
                         }
-                        setIsMobileMenuOpen(false);
                       }}
                       badge={unReadedNotificationsCount}
                     />

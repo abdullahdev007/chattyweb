@@ -1,10 +1,9 @@
 import { useAuthContext } from "@/context/AuthContext";
 import useConversation from "@/zustand/useConversation";
 import { extractTime } from "@/utils/extractTime";
-import React, { useState, useRef } from "react";
+import React from "react";
 import { Gender } from "@shared/types/types";
 import { ClientMessage } from "@/types/MessageTypes";
-import { IMessage } from "@shared/types/models/message";
 import ReplyIndicator from "./ReplyIndicator";
 import useDoubleClick from "@/hooks/ui/useDoubleClick";
 
@@ -34,7 +33,8 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   // Find the replied message from the conversation messages
   const repliedMessage = isReply
     ? messages.find(
-        (msg: IMessage) => msg._id.toString() === message.replayTo?.toString(),
+        (msg: ClientMessage) =>
+          msg._id.toString() === message.replayTo?.toString(),
       )
     : null;
 

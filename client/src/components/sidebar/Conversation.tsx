@@ -2,11 +2,11 @@ import { useSocketContext } from "@/context/socketContext";
 import useConversation from "@/zustand/useConversation";
 import useMarkMessagesAsReaded from "@/hooks/conversations/useMarkMessagesAsReaded";
 import { useAuthContext } from "@/context/AuthContext";
-import { IConversation } from "@shared/types/models/conversation";
 import { FC } from "react";
+import { Conversation as ConversationType } from "@shared/types/models/conversation";
 
 interface ConversationProps {
-  conversation: IConversation;
+  conversation: ConversationType;
   lastIdx: boolean;
 }
 
@@ -33,7 +33,7 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
 
   const isSelected = selectedConversation?._id === conversation._id;
 
-  const isOnline = onlineUsers.includes(user._id);
+  const isOnline = onlineUsers.includes(user._id.toString());
 
   return (
     <>
@@ -41,7 +41,8 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
         className={`flex gap-2 items-center hover:bg-primary rounded p-2 cursor-pointer overflow-hidden w-full
       ${isSelected ? "bg-primary" : ""}`}
         onClick={() => {
-          if (unReadCount > 0) markMessagesAsReaded(conversation._id);
+          if (unReadCount > 0)
+            markMessagesAsReaded(conversation._id.toString());
           setSelectedConversation(conversation);
         }}
       >

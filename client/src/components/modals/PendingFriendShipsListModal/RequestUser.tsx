@@ -12,7 +12,7 @@ interface RequestUserProps {
 const RequestUser: FC<RequestUserProps> = ({ user, lastIdx }) => {
   const { onlineUsers } = useSocketContext();
 
-  const isOnline = onlineUsers.includes(user._id);
+  const isOnline = onlineUsers.includes(user._id.toString());
   const { responseFriendRequest, loading } = useResponseFriendRequest();
 
   return (

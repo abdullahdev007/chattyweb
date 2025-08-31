@@ -32,16 +32,22 @@ const useListenMessages = () => {
         selectedConversation &&
         selectedConversation._id === conversation._id
       ) {
-        (newMessage as ClientMessage).shouldShake = true;
+        let message: ClientMessage = newMessage as ClientMessage;
+        message.shouldShake = true;
 
-        setMessages([...messages, newMessage]);
+        setMessages([...messages, message]);
         updateConversation(conversation);
       } else {
-        increaseUnreadCount(conversation._id);
+        increaseUnreadCount(conversation._id.toString());
 
         pushMessage({
           toastId: toast.custom(
-            (t) => <NewMessageNotification t={t} newMessage={newMessage} />,
+            (t) => (
+              <NewMessageNotification
+                t={t}
+                newMessage={newMessage as ClientMessage}
+              />
+            ),
             {
               position: "bottom-right",
               duration: 1500,
@@ -83,7 +89,6 @@ const useListenMessages = () => {
     return () => {
       socket?.off("newMessage");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     socket,
     setMessages,

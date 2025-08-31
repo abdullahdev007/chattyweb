@@ -18,10 +18,10 @@ const AddFriendUser: FC<AddFriendUserProps> = ({ user, lastIdx }) => {
   const { sendFriendRequest, loading } = useSendFriendRequest();
   const { fetchUsers } = useGetUsers();
 
-  const isOnline = onlineUsers.includes(user._id);
-  const inFriendRequests = user.pendingFriendships.includes(authUser?._id);
+  const isOnline = onlineUsers.includes(user._id.toString());
+  const inFriendRequests = user.pendingFriendships.includes(authUser?._id!);
   const waitingAcceptRequst = authUser?.pendingFriendships.includes(user._id);
-  const inFriends = user.friends.includes(authUser?._id);
+  const inFriends = user.friends.includes(authUser?._id!);
 
   const handleAddFriend = async (friendId: string) => {
     await sendFriendRequest(friendId);
@@ -80,7 +80,7 @@ const AddFriendUser: FC<AddFriendUserProps> = ({ user, lastIdx }) => {
             ) : (
               <button
                 className="btn btn-circle btn-primary hover:btn-secondary transition-all duration-200"
-                onClick={() => handleAddFriend(user._id)}
+                onClick={() => handleAddFriend(user._id.toString())}
                 title="Add friend"
               >
                 <BsPersonFillAdd className="text-lg" />

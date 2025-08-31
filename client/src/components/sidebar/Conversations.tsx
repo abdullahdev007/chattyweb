@@ -4,13 +4,13 @@ import useSearchConversation from "@/zustand/useSearchConversation";
 import Conversation from "./Conversation";
 import { FaUserPlus } from "react-icons/fa";
 import { useAuthContext } from "@/context/AuthContext";
-import { IConversation } from "@shared/types/models/conversation";
 import { Navigate } from "react-router-dom";
+import { Conversation as ConversationType } from "@shared/types/models/conversation";
 
 const Conversations: FC = () => {
   const { loading, conversations } = useGetConversations();
   const [filtredConversations, setFiltredConversations] = useState<
-    IConversation[]
+    ConversationType[]
   >([]);
   const { searchConversation } = useSearchConversation();
   const { authUser } = useAuthContext();

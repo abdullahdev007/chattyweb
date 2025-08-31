@@ -1,9 +1,9 @@
-enum NotificationTypes {
-  NewFriendRequest = "NewFriendRequest",
-  NewMessage = "NewMessage",
-  FriendRequestRejected = "FriendRequestRejected",
-  FriendRequestAccepted = "FriendRequestAccepted",
-  RemoveFriendShip = "RemoveFriendShip",
-}
+export const NotificationTypes = {
+  NewFriendRequest: "NewFriendRequest",
+  FriendRequestRejected: "FriendRequestRejected",
+  FriendRequestAccepted: "FriendRequestAccepted",
+  RemoveFriendShip: "RemoveFriendShip",
+} as const;
 
-export default NotificationTypes;
+export type NotificationType =
+  (typeof NotificationTypes)[keyof typeof NotificationTypes];

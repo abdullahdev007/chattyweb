@@ -1,16 +1,28 @@
 import type { ObjectId } from "mongoose";
+import { SafeUser } from "./user";
+import { IMessage } from "./message";
 
-export interface IParticipant {
-  userId: ObjectId;
+export interface IParticipant<TUserId = ObjectId> {
+  userId: TUserId;
   unreadCount: number;
 }
 
-export interface IConversation {
+export interface IConversation<
+  TParticipants = IParticipant[],
+  TMessages = ObjectId[],
+  TLatestMessage = ObjectId | null,
+> {
   _id: ObjectId;
-  participants: IParticipant[];
-  messages: ObjectId[];
-  latestMessage: ObjectId | null;
+  participants: TParticipants;
+  messages: TMessages;
+  latestMessage: TLatestMessage;
   createdAt: Date;
   updatedAt: Date;
 }
 
+// Fully populated conversation type
+export type Conversation = IConversation<
+  IParticipant<SafeUser>[],
+  IMessage<SafeUser, SafeUser, ObjectId | null>[],
+  IMessage<SafeUser, SafeUser, ObjectId | null>
+>;

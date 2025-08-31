@@ -6,9 +6,8 @@ import {
   logout,
   signup,
   updateProfile,
-} from "../controllers/auth.controller.js";
-import protectRoute from "../middleware/protectRoute.js";
-import { validate } from "../middleware/validate.js";
+} from "@/controllers";
+import { protectRoute, validate } from "@/middleware";
 import {
   signupSchema,
   loginSchema,

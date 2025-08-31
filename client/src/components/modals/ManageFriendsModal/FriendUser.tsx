@@ -7,7 +7,7 @@ import useRemoveFriend from "@/hooks/friends/useRemoveFriend";
 import useConversations from "@/zustand/useConversations";
 import { useAuthContext } from "@/context/AuthContext";
 import { SafeUser } from "@shared/types/models/user";
-import { IConversation } from "@shared/types/models/conversation";
+import { Conversation } from "@shared/types/models/conversation";
 
 interface FriendUserProps {
   friend: SafeUser;
@@ -22,9 +22,9 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
   const { removeFriend, loading } = useRemoveFriend();
   const { authUser } = useAuthContext();
 
-  const isOnline = onlineUsers.includes(friend._id);
+  const isOnline = onlineUsers.includes(friend._id.toString());
 
-  function findConversationWithFriendAndAuthUser(): IConversation | null {
+  function findConversationWithFriendAndAuthUser(): Conversation | null {
     for (const conversation of conversations) {
       const participants = conversation.participants;
 
@@ -95,7 +95,7 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
             <button
               className="btn btn-circle btn-outline btn-error hover:btn-error transition-all duration-200"
               onClick={() => {
-                removeFriend(friend._id);
+                removeFriend(friend._id.toString());
               }}
               disabled={loading}
               title="Remove friend"

@@ -1,8 +1,7 @@
 import express, { Router } from "express";
 
-import { getUser, getUsers } from "../controllers/user.controller.js";
-import protectRoute from "../middleware/protectRoute.js";
-import { validate } from "../middleware/validate.js";
+import { getUser, getUsers } from "@/controllers";
+import { protectRoute, validate } from "@/middleware";
 import { getUserSchema } from "../validators/user.validator.js";
 
 const router: Router = express.Router();
