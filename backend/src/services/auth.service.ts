@@ -10,6 +10,7 @@ import {
   generateProfilePic,
 } from "../utils/auth.utils.js";
 import bcrypt from "bcryptjs";
+import { deleteConversation } from "./conversation.service.js";
 /**
  * Create a new user account
  * @param userData - User data (fullName, username, password, gender)
@@ -164,11 +165,18 @@ export const updateUserProfile = async (
 export const deleteUserAccount = async (userId: string): Promise<boolean> => {
   try {
     // Delete all user-related data
+    const conversations = await Conversation.find({
+      "participants.userId": userId,
+    });
+
+    await Promise.all(
+      conversations.map((c) => deleteConversation(c._id.toString()))
+    );
+
     await Promise.all([
       Message.deleteMany({
-        $or: [{ senderId: userId }, { receiverId: userId }],
+        senderId: userId,
       }),
-      Conversation.deleteMany({ "participants.userId": userId }),
       User.findByIdAndDelete(userId),
       Notification.deleteMany({
         $or: [{ senderId: userId }, { receiverId: userId }],

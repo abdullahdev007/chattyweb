@@ -1,13 +1,13 @@
 import { Types } from "mongoose";
 import User from "../models/user.model.js";
 import Conversation from "../models/conversation.model.js";
-import Message from "../models/message.model.js";
 import { UserDocument } from "@shared/types/models/user.js";
 import { NotificationTypes } from "@shared/types/notificationTypes.js";
 import { createNotification } from "./notification.service.js";
 import { getSocketId, io } from "../socket/socket.js";
 import toSafeUser from "../utils/toSafeUser.js";
 import { RespondToFriendRequestPayload } from "@shared/types/socket";
+import { deleteConversation } from "./conversation.service.js";
 
 /**
  * Send friend request to another user
@@ -17,7 +17,7 @@ import { RespondToFriendRequestPayload } from "@shared/types/socket";
  */
 export const sendFriendRequest = async (
   senderId: string,
-  friendId: string,
+  friendId: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
     const [sender, friend] = await Promise.all([
@@ -42,7 +42,7 @@ export const sendFriendRequest = async (
     // Check if waiting for friend's response
     if (sender.pendingFriendships.includes(friend._id)) {
       throw new Error(
-        "This user is already waiting for you to accept his friend request",
+        "This user is already waiting for you to accept his friend request"
       );
     }
 
@@ -54,7 +54,7 @@ export const sendFriendRequest = async (
     await createNotification(
       sender,
       friend,
-      NotificationTypes.NewFriendRequest,
+      NotificationTypes.NewFriendRequest
     );
 
     // Send socket notification
@@ -83,7 +83,7 @@ export const sendFriendRequest = async (
 export const respondToFriendRequest = async (
   userId: string,
   requestUserId: string,
-  response: "accept" | "reject",
+  response: "accept" | "reject"
 ): Promise<{ success: boolean; message: string }> => {
   try {
     const [user, requestUser] = await Promise.all([
@@ -97,7 +97,7 @@ export const respondToFriendRequest = async (
 
     // Check if friend request exists
     const friendRequest = user.pendingFriendships.find(
-      (id: any) => id.toString() === requestUserId,
+      (id: any) => id.toString() === requestUserId
     );
 
     if (!friendRequest) {
@@ -111,7 +111,7 @@ export const respondToFriendRequest = async (
 
     // Remove from pending friendships
     user.pendingFriendships = user.pendingFriendships.filter(
-      (id: any) => id.toString() !== requestUserId,
+      (id: any) => id.toString() !== requestUserId
     );
 
     if (response === "accept") {
@@ -137,7 +137,7 @@ export const respondToFriendRequest = async (
       requestUser,
       response === "accept"
         ? NotificationTypes.FriendRequestAccepted
-        : NotificationTypes.FriendRequestRejected,
+        : NotificationTypes.FriendRequestRejected
     );
 
     // Send socket notification
@@ -168,7 +168,7 @@ export const respondToFriendRequest = async (
  */
 export const deleteFriend = async (
   userId: string,
-  friendId: string,
+  friendId: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
     const [user, friend] = await Promise.all([
@@ -187,25 +187,18 @@ export const deleteFriend = async (
 
     // Remove from friends list
     user.friends = user.friends.filter(
-      (_id: Types.ObjectId) => !_id.equals(friend._id),
+      (_id: Types.ObjectId) => !_id.equals(friend._id)
     );
     friend.friends = friend.friends.filter((_id) => !_id.equals(user._id));
 
     // Save both users
     await Promise.all([user.save(), friend.save()]);
 
-    // Delete conversation
-    await Conversation.findOneAndDelete({
+    // Find their 1:1 conversation and delete it ( by conversation service )
+    const conv = await Conversation.findOne({
       "participants.userId": { $all: [user._id, friend._id] },
     });
-
-    // Delete messages
-    await Message.deleteMany({
-      $or: [
-        { senderId: user._id, receiverId: friend._id },
-        { senderId: friend._id, receiverId: user._id },
-      ],
-    });
+    if (conv) await deleteConversation(conv._id.toString());
 
     // Create notification
     await createNotification(user, friend, NotificationTypes.RemoveFriendShip);

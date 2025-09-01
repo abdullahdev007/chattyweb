@@ -2,6 +2,7 @@ import { asPopulatedConversation } from "@/utils/typeHelpers.js";
 import Conversation from "../models/conversation.model.js";
 import { Conversation as ConversationType } from "@shared/types/models/conversation.js";
 import { Types } from "mongoose";
+import Message from "../models/message.model.js";
 
 /**
  * Get all conversations for a user
@@ -9,7 +10,7 @@ import { Types } from "mongoose";
  * @returns Array of conversations with populated data
  */
 export const getUserConversations = async (
-  userId: string,
+  userId: string
 ): Promise<ConversationType[]> => {
   try {
     const conversations = await Conversation.find({
@@ -34,7 +35,7 @@ export const getUserConversations = async (
  */
 export const getConversationById = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId)
@@ -48,7 +49,7 @@ export const getConversationById = async (
 
     // Check if user has access to this conversation
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId),
+      (participant: any) => participant.userId.equals(userId)
     );
 
     if (!currentUserParticipant) {
@@ -70,7 +71,7 @@ export const getConversationById = async (
  */
 export const markConversationMessagesAsRead = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId)
@@ -84,7 +85,7 @@ export const markConversationMessagesAsRead = async (
 
     // Check if user has access to this conversation
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId),
+      (participant: any) => participant.userId.equals(userId)
     );
 
     if (!currentUserParticipant) {
@@ -108,7 +109,7 @@ export const markConversationMessagesAsRead = async (
  * @returns New conversation object
  */
 export const createConversation = async (
-  participants: string[],
+  participants: string[]
 ): Promise<ConversationType> => {
   try {
     const conversation = new Conversation({
@@ -134,7 +135,7 @@ export const createConversation = async (
  */
 export const addParticipantToConversation = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId);
@@ -145,7 +146,7 @@ export const addParticipantToConversation = async (
 
     // Check if user is already a participant
     const existingParticipant = conversation.participants.find((p: any) =>
-      p.userId.equals(userId),
+      p.userId.equals(userId)
     );
 
     if (existingParticipant) {
@@ -174,7 +175,7 @@ export const addParticipantToConversation = async (
  */
 export const removeParticipantFromConversation = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId);
@@ -185,7 +186,7 @@ export const removeParticipantFromConversation = async (
 
     // Remove participant
     conversation.participants = conversation.participants.filter(
-      (p: any) => !p.userId.equals(userId),
+      (p: any) => !p.userId.equals(userId)
     );
 
     await conversation.save();
@@ -204,7 +205,7 @@ export const removeParticipantFromConversation = async (
  */
 export const getUnreadMessageCount = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<number> => {
   try {
     const conversation = await Conversation.findByIdAndUpdate(conversationId);
@@ -214,7 +215,7 @@ export const getUnreadMessageCount = async (
     }
 
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId),
+      (participant: any) => participant.userId.equals(userId)
     );
 
     if (!currentUserParticipant) {
@@ -225,5 +226,30 @@ export const getUnreadMessageCount = async (
   } catch (error: any) {
     console.error("Error getting unread message count:", error);
     throw new Error(error.message || "Failed to get unread count");
+  }
+};
+
+/**
+ * Delete a conversation and all related messages
+ * @param conversationId - The conversation ID
+ */
+export const deleteConversation = async (
+  conversationId: string
+): Promise<void> => {
+  try {
+    const conversation = await Conversation.findById(conversationId);
+    if (!conversation) {
+      return;
+    }
+
+    const messageIds = conversation.messages ?? [];
+    if (messageIds.length > 0) {
+      await Message.deleteMany({ _id: { $in: messageIds } });
+    }
+
+    await Conversation.findByIdAndDelete(conversationId);
+  } catch (error: any) {
+    console.error("Error deleting conversation:", error);
+    throw new Error(error.message || "Failed to delete conversation");
   }
 };

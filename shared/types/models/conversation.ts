@@ -23,6 +23,6 @@ export interface IConversation<
 // Fully populated conversation type
 export type Conversation = IConversation<
   IParticipant<SafeUser>[],
-  IMessage<SafeUser, SafeUser, ObjectId | null>[],
-  IMessage<SafeUser, SafeUser, ObjectId | null>
+  IMessage<SafeUser, ObjectId | null>[],
+  IMessage<SafeUser, ObjectId | null>
 >;

@@ -8,11 +8,6 @@ const messageSchema = new Schema<IMessage & Document>(
       ref: "User",
       required: true,
     },
-    receiverId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     message: {
       type: String,
       required: true,
@@ -23,12 +18,12 @@ const messageSchema = new Schema<IMessage & Document>(
       default: null,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Message: Model<IMessage & Document> = mongoose.model<IMessage & Document>(
   "Message",
-  messageSchema,
+  messageSchema
 );
 
 export default Message;

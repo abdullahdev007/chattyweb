@@ -57,6 +57,8 @@ Handles all conversation-related business logic:
 - **createConversation()** - Create a new conversation between users
 - **addParticipantToConversation()** - Add user to existing conversation
 - **removeParticipantFromConversation()** - Remove user from conversation
+- **getUnreadMessageCount()** - Get unread message count for a conversation
+- **deleteConversation()** - Delete a conversation and all related messages
 
 ### MessageService
 

@@ -26,7 +26,7 @@ export const sendMessage = async (
   conversationId: string,
   senderId: string,
   message: string,
-  replayTo?: string,
+  replayTo?: string
 ): Promise<{ conversation: any; newMessage: any }> => {
   try {
     // Use conversation service to check access and get populated conversation
@@ -37,7 +37,7 @@ export const sendMessage = async (
 
     // Get all other participants (receivers)
     const receiverParticipants = conversation.participants.filter(
-      (user: any) => user.userId.id != senderId,
+      (user: any) => user.userId.id != senderId
     );
 
     if (receiverParticipants.length === 0) {
@@ -56,11 +56,9 @@ export const sendMessage = async (
       }
     });
 
-    // Create the new message (for group chats, we'll use the first receiver as primary)
-    const primaryReceiver = receiverParticipants[0];
+    // Create the new message
     const newMessage = new Message({
       senderId,
-      receiverId: primaryReceiver.userId,
       message,
       replayTo: replayTo ? (replayTo as any) : null,
     });
@@ -83,11 +81,7 @@ export const sendMessage = async (
       { path: "latestMessage" },
     ]);
 
-    await newMessage.populate([
-      { path: "senderId" },
-      { path: "receiverId" },
-      { path: "replayTo" },
-    ]);
+    await newMessage.populate([{ path: "senderId" }, { path: "replayTo" }]);
 
     const populatedConversation = asPopulatedConversation(conversationDoc);
     const populatedMessage = asPopulatedMessage(newMessage);
@@ -120,7 +114,7 @@ export const sendMessage = async (
  */
 export const getMessages = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<any[]> => {
   try {
     const conversation = await Conversation.findById(conversationId).populate([
@@ -138,7 +132,7 @@ export const getMessages = async (
 
     const messages: IMessage[] = await Message.find({
       _id: { $in: conversation.messages },
-    }).populate(["senderId", "receiverId", "replayTo"]);
+    }).populate(["senderId", "replayTo"]);
 
     return asPopulatedMessages(messages);
   } catch (error: any) {
@@ -155,7 +149,7 @@ export const getMessages = async (
  */
 export const increaseUnreadMessageCount = async (
   conversationId: string,
-  userId: string,
+  userId: string
 ): Promise<any> => {
   try {
     // Use conversation service to check access and get populated conversation
@@ -171,7 +165,7 @@ export const increaseUnreadMessageCount = async (
     }
 
     const receiverUserParticipant = conversationDoc.participants.find(
-      (user: any) => user.userId.equals(userId),
+      (user: any) => user.userId.equals(userId)
     );
 
     if (!receiverUserParticipant) {
