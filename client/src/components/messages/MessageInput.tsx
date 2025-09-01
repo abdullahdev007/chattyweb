@@ -1,9 +1,9 @@
-import useSendMessage from "../../hooks/useSendMessage";
+import useSendMessage from "../../hooks/messages/useSendMessage";
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { FaPaperPlane } from "react-icons/fa";
 import ReplyPreview from "./ReplyPreview";
-import useConversation from "@/zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 
 const MessageInput: React.FC = () => {
   const { loading, sendMessage } = useSendMessage();

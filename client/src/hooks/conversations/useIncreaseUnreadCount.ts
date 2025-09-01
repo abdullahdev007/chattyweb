@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useConversations from "../../zustand/useConversations";
+import useConversations from "@/stores/useConversations";
 import { IncreaseUnReadCountResponse } from "@shared/types/http";
 
 const useIncreaseUnreadCount = () => {
@@ -14,7 +14,7 @@ const useIncreaseUnreadCount = () => {
         `/api/messages/increaseUnreadCount/${conversationID}`,
         {
           method: "PUT",
-        },
+        }
       );
       const data: IncreaseUnReadCountResponse = await res.json();
 
@@ -23,7 +23,7 @@ const useIncreaseUnreadCount = () => {
       if (data.conversation) updateConversation(data.conversation);
     } catch (error: any) {
       toast.error(
-        error instanceof Error ? error.message : "Error fetching conversations",
+        error instanceof Error ? error.message : "Error fetching conversations"
       );
     } finally {
       setLoading(false);

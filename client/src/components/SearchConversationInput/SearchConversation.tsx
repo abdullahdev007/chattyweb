@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
-import useSearchConversation from "@/zustand/useSearchConversation";
+import useSearchConversation from "@/stores/useSearchConversation";
 
 export const SearchConversation: FC = () => {
   const { setSearchConversation } = useSearchConversation();
@@ -67,15 +67,6 @@ export const SearchConversation: FC = () => {
           }`}
         ></div>
       </div>
-
-      {/* Search Status */}
-      {search.length > 0 && (
-        <div className="mt-2 text-xs text-base-content/60 animate-fade-in">
-          <span className="text-secondary">
-            Searching conversations for "{search}"...
-          </span>
-        </div>
-      )}
     </div>
   );
 };

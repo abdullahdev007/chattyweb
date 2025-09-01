@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useConversation from "../zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 import toast from "react-hot-toast";
 import { Message } from "@shared/types/models/message";
 import { ClientMessage } from "@/types/MessageTypes";
@@ -18,7 +18,7 @@ const useGetMessages = () => {
         setMessages(data.messages as ClientMessage[]);
       } catch (error: any) {
         toast.error(
-          error instanceof Error ? error.message : "Error fetching messages",
+          error instanceof Error ? error.message : "Error fetching messages"
         );
       } finally {
         setLoading(false);

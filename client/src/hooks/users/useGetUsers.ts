@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useUsers from "@/zustand/useUsers";
-import useFriends from "@/zustand/useFriends";
-import useFriendRequests from "@/zustand/useFriendRequests";
+import useUsers from "@/stores/useUsers";
+import useFriends from "@/stores/useFriends";
+import useFriendRequests from "@/stores/useFriendRequests";
 import { GetUsersResponseBody } from "@shared/types/http/modules/user";
 
 const useGetUsers = () => {

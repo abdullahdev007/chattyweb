@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useNotifications from "@/zustand/useNotifications";
+import useNotifications from "@/stores/useNotifications";
 import { BaseResponse } from "@shared/types/http/base";
 
 const useMarkAsReaded = () => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import useConversation from "../zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 import toast from "react-hot-toast";
-import useConversations from "../zustand/useConversations";
+import useConversations from "@/stores/useConversations";
 import { SendMessageResponse } from "@shared/types/http";
 import { ClientMessage } from "@/types/MessageTypes";
 
@@ -12,7 +12,7 @@ const useSendMessage = () => {
 
   const sendMessage = async (
     message: string,
-    replyTo?: string,
+    replyTo?: string
   ): Promise<boolean> => {
     setLoading(true);
     try {
@@ -30,7 +30,7 @@ const useSendMessage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(requestBody),
-        },
+        }
       );
       const data: SendMessageResponse = await res.json();
 
@@ -44,7 +44,7 @@ const useSendMessage = () => {
       return true;
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Error fetching conversations",
+        error instanceof Error ? error.message : "Error fetching conversations"
       );
 
       return false;

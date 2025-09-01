@@ -1,25 +1,29 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Signup from "./pages/signup/Signup";
 import { Toaster } from "react-hot-toast";
-import { useAuthContext } from "./context/AuthContext";
-import ChangePassword from "./pages/changePassword/ChangePassword";
-import UpdateProfile from "./pages/updateProfile/UpdateProfile";
+import { useAuthContext } from "@/context/AuthContext";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 
-import Navbar from "./layout/Navbar/Navbar";
-import Footar from "@/layout/Footer/Footer";
+import { ThemeProvider } from "@/context/themeContext";
 
 import useListenDeletedFromFriends from "@/hooks/friends/useListenDeletedFromFriends";
 import useListenFriendRequest from "@/hooks/friends/useListenFriendRequest";
 import useListenResponseToFriendRequest from "@/hooks/friends/useListenResponseToFriendRequest";
 import useListenNotifications from "@/hooks/notifications/useListenNotifications";
-import useListenMessages from "@/hooks/useListenMessages";
+import useListenMessages from "@/hooks/messages/useListenMessages";
 import { useSyncAuthUser } from "@/hooks/auth/useSyncAuthUser";
-import { ThemeProvider } from "@/context/themeContext";
-import AnimatedBackground from "./components/AnimatedBackground";
+
+
+import ChangePassword from "@/pages/changePassword/ChangePassword";
+import UpdateProfile from "@/pages/updateProfile/UpdateProfile";
+import Home from "@/pages/home/Home";
+import Login from "@/pages/login/Login";
+import Signup from "@/pages/signup/Signup";
+
+
+import Navbar from "@/layout/Navbar/Navbar";
+import Footar from "@/layout/Footer/Footer";
+import AnimatedBackground from "@/layout/AnimatedBackground";
 
 const App: React.FC = () => {
   const { authUser, setAuthUser } = useAuthContext();

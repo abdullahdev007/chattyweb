@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import useClearAllNotifications from "@/hooks/notifications/useClearNotifications";
 import useGetNotifications from "@/hooks/notifications/useGetNotifications";
 import Notification from "./Notification";
-import useNotifications from "@/zustand/useNotifications";
+import useNotifications from "@/stores/useNotifications";
 import useMarkAsReaded from "@/hooks/notifications/useMarkAsReaded";
 import { FaBell, FaTrash, FaBellSlash } from "react-icons/fa";
 

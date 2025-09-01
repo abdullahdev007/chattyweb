@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useFriends from "../../zustand/useFriends";
+import useFriends from "@/stores/useFriends";
 import { BaseResponse, DeleteFriendRequestParams } from "@shared/types/http";
 
 const useRemoveFriend = () => {
@@ -8,7 +8,7 @@ const useRemoveFriend = () => {
   const { removeFriend: deleteFriend } = useFriends();
 
   const removeFriend = async (
-    friendId: DeleteFriendRequestParams["id"],
+    friendId: DeleteFriendRequestParams["id"]
   ): Promise<void> => {
     setLoading(true);
     try {
@@ -30,7 +30,7 @@ const useRemoveFriend = () => {
     } catch (error) {
       console.error("Error removing friend:", error);
       toast.error(
-        error instanceof Error ? error.message : "Failed to remove friend",
+        error instanceof Error ? error.message : "Failed to remove friend"
       );
     } finally {
       setLoading(false);

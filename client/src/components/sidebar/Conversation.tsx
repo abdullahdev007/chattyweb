@@ -1,5 +1,5 @@
 import { useSocketContext } from "@/context/socketContext";
-import useConversation from "@/zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 import useMarkMessagesAsReaded from "@/hooks/conversations/useMarkMessagesAsReaded";
 import { useAuthContext } from "@/context/AuthContext";
 import { FC } from "react";
@@ -17,11 +17,11 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
   const { authUser } = useAuthContext();
 
   const userObject = conversation.participants.find(
-    (u) => u.userId._id !== authUser?._id,
+    (u) => u.userId._id !== authUser?._id
   );
 
   const currentUserObject = conversation.participants.find(
-    (u) => u.userId._id === authUser?._id,
+    (u) => u.userId._id === authUser?._id
   );
 
   if (!userObject || !currentUserObject) {

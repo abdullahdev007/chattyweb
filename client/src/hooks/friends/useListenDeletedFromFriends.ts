@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useSocketContext } from "@/context/socketContext";
-import useFriends from "@/zustand/useFriends";
+import useFriends from "@/stores/useFriends";
 import { DeletedFromFriendsPayload } from "@shared/types/socket";
-import useConversation from "@/zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 
 const useListenDeletedFromFriends = () => {
   const { socket } = useSocketContext();

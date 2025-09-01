@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Toast } from "react-hot-toast";
-import useConversation from "../../zustand/useConversation";
-import useConversations from "../../zustand/useConversations";
+import useConversation from "@/stores/useConversation";
+import useConversations from "@/stores/useConversations";
 import { useAuthContext } from "../../context/AuthContext";
 import useMarkMessagesAsReaded from "../../hooks/conversations/useMarkMessagesAsReaded";
 import { FaMessage } from "react-icons/fa6";

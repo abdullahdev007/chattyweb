@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useSocketContext } from "@/context/socketContext";
-import useConversation from "@/zustand/useConversation";
-import useIncreaseUnreadCount from "./conversations/useIncreaseUnreadCount";
-import useConversations from "@/zustand/useConversations";
+import useConversation from "@/stores/useConversation";
+import useIncreaseUnreadCount from "@/hooks/conversations/useIncreaseUnreadCount";
+import useConversations from "@/stores/useConversations";
 import toast from "react-hot-toast";
 import NewMessageNotification from "@/components/NewMessageNotification/NewMessageNotification";
-import useMessageNotificationStore from "@/zustand/messageNotificationStore";
+import useMessageNotificationStore from "@/stores/messageNotificationStore";
 import { SendMessagePayload } from "@shared/types/socket";
 import { ClientMessage } from "@/types/MessageTypes";
 

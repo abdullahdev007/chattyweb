@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useFriendRequests from "../../zustand/useFriendRequests";
+import useFriendRequests from "@/stores/useFriendRequests";
 import { GetFriendRequestsResponse } from "@shared/types/http";
 
 const useGetFriendRequests = () => {
@@ -23,7 +23,7 @@ const useGetFriendRequests = () => {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Failed to fetch friend requests",
+            : "Failed to fetch friend requests"
         );
       } finally {
         setLoading(false);

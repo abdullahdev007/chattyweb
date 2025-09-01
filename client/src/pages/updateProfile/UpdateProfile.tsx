@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, FormEvent, ChangeEvent } from "react";
-import GenderCheckbox from "@/components/GenderCheckbox/GenderCheckbox";
+import GenderCheckbox from "@/components/ui/GenderCheckbox";
 import useUpdateProfile from "@/hooks/auth/useUpdateProfile";
 import { useAuthContext } from "@/context/AuthContext";
 import { UpdateProfileRequestBody } from "@shared/types/http";

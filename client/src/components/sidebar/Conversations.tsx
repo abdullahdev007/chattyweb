@@ -1,6 +1,6 @@
 import { useEffect, useState, FC } from "react";
 import useGetConversations from "@/hooks/conversations/useFetchConversations";
-import useSearchConversation from "@/zustand/useSearchConversation";
+import useSearchConversation from "@/stores/useSearchConversation";
 import Conversation from "./Conversation";
 import { FaUserPlus } from "react-icons/fa";
 import { useAuthContext } from "@/context/AuthContext";
@@ -41,7 +41,7 @@ const Conversations: FC = () => {
   }, [authUser, conversations, searchConversation]);
 
   return (
-    <div className="py-2 flex flex-col">
+    <div className="py-2  text-content">
       {filtredConversations.length <= 0 && searchConversation.length > 0 ? (
         <div className="flex flex-col justify-center items-center break-words text-center">
           <span className="max-w-52">

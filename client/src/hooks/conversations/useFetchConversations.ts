@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { GetConversationsResponse } from "@shared/types/http";
 import { Conversation } from "@shared/types/models/conversation";
-import useConversation from "@/zustand/useConversation";
-import useFriends from "@/zustand/useFriends";
-import useConversations from "@/zustand/useConversations";
+import useConversation from "@/stores/useConversation";
+import useFriends from "@/stores/useFriends";
+import useConversations from "@/stores/useConversations";
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ const useGetConversations = () => {
         if (
           selectedConversation &&
           !data.conversations!.find(
-            (conv: Conversation) => conv._id == selectedConversation._id,
+            (conv: Conversation) => conv._id == selectedConversation._id
           )
         ) {
           setSelectedConversation(null);
@@ -34,7 +34,7 @@ const useGetConversations = () => {
       }
     } catch (error: any) {
       toast.error(
-        error instanceof Error ? error.message : "Error fetching conversations",
+        error instanceof Error ? error.message : "Error fetching conversations"
       );
     } finally {
       setLoading(false);

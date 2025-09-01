@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { useTheme } from "../context/themeContext";
+import { useTheme } from "@/context/themeContext";
 
 const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme, isLoading } = useTheme();

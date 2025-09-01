@@ -1,9 +1,9 @@
 import { FC } from "react";
 import calculateNotificationTime from "@/utils/calculateNotificationTime";
 import { NotificationTypes } from "@shared/types/notificationTypes";
-import useConversation from "@/zustand/useConversation";
-import useFriends from "@/zustand/useFriends";
-import useConversations from "@/zustand/useConversations";
+import useConversation from "@/stores/useConversation";
+import useFriends from "@/stores/useFriends";
+import useConversations from "@/stores/useConversations";
 import { useAuthContext } from "@/context/AuthContext";
 import { SafeNotification } from "@shared/types/models/notification";
 

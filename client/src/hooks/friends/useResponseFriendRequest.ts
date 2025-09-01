@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useFriendRequests from "../../zustand/useFriendRequests";
+import useFriendRequests from "@/stores/useFriendRequests";
 import { BaseResponse, RespondFriendRequestBody } from "@shared/types/http";
 
 const useResponseFriendRequest = () => {
@@ -9,7 +9,7 @@ const useResponseFriendRequest = () => {
 
   const responseFriendRequest = async (
     friendId: string,
-    response: RespondFriendRequestBody["response"],
+    response: RespondFriendRequestBody["response"]
   ): Promise<void> => {
     setLoading(true);
     try {
@@ -35,7 +35,7 @@ const useResponseFriendRequest = () => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to respond to friend request",
+          : "Failed to respond to friend request"
       );
     } finally {
       setLoading(false);

@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/AuthContext";
-import useConversation from "@/zustand/useConversation";
+import useConversation from "@/stores/useConversation";
 import { extractTime } from "@/utils/extractTime";
 import React from "react";
 import { Gender } from "@shared/types/types";
@@ -21,7 +21,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const profilePic = fromMe
     ? authUser?.profilePic
     : selectedConversation?.participants.find(
-        (p: any) => p.userId._id != authUser?._id,
+        (p: any) => p.userId._id != authUser?._id
       )!.userId.profilePic;
   const bubbleBgColor = fromMe ? "chat-bubble-primary" : "";
   const shakeClass = message.shouldShake ? "shake" : "";
@@ -34,7 +34,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const repliedMessage = isReply
     ? messages.find(
         (msg: ClientMessage) =>
-          msg._id.toString() === message.replayTo?.toString(),
+          msg._id.toString() === message.replayTo?.toString()
       )
     : null;
 

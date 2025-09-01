@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import GenderCheckbox from "../../components/GenderCheckbox/GenderCheckbox";
+import GenderCheckbox from "../../components/ui/GenderCheckbox";
 import { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import useSignup from "../../hooks/auth/useSignup";
 import { SignupRequestBody, SignupResponseBody } from "@shared/types/http";
