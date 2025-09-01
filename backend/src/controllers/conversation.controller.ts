@@ -9,6 +9,8 @@ import {
   getUserConversations,
   getConversationById,
   markConversationMessagesAsRead,
+  getUnreadMessageCount,
+  increaseUnreadMessageCount,
 } from "@/services";
 
 export const getConversations: RequestHandler<
@@ -68,7 +70,7 @@ export const markMessagesAsReaded: RequestHandler<
   MarkMessagesAsReadedResponse
 > = async (
   req: Request<ConversationParams>,
-  res: Response<MarkMessagesAsReadedResponse>,
+  res: Response<MarkMessagesAsReadedResponse>
 ) => {
   try {
     const conversationId: string = req.params.id;
@@ -76,7 +78,7 @@ export const markMessagesAsReaded: RequestHandler<
 
     const conversation = await markConversationMessagesAsRead(
       conversationId,
-      userId,
+      userId
     );
 
     if (!conversation) {
@@ -96,6 +98,58 @@ export const markMessagesAsReaded: RequestHandler<
     res.status(500).json({
       success: false,
       message: "Internal server error",
+    });
+  }
+};
+
+export const getUnReadedMessageCount = async (
+  req: Request<ConversationParams>,
+  res: Response<{ success: boolean; unreadCount: number }>
+) => {
+  try {
+    const userId = req.user?._id.toString();
+    const conversationId = req.params.id;
+
+    const unreadCount = await getUnreadMessageCount(conversationId, userId);
+
+    res.status(200).json({
+      success: true,
+      unreadCount,
+    });
+  } catch (error: any) {
+    console.log("error in getUnReadedMessageCount controller :", error.message);
+    res.status(500).json({
+      success: false,
+      unreadCount: 0,
+    });
+  }
+};
+
+export const increaseUnReadedMessage = async (
+  req: Request<ConversationParams, any>,
+  res: Response<any>
+) => {
+  try {
+    const conversationId = req.params.id;
+    const userId = req.user?._id.toString();
+
+    const conversation = await increaseUnreadMessageCount(
+      conversationId,
+      userId
+    );
+
+    res.status(200).json({
+      success: true,
+      conversation,
+    });
+  } catch (error: any) {
+    console.log(
+      "Error in increaseUnReadedMessage controller : ",
+      error.message
+    );
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
     });
   }
 };

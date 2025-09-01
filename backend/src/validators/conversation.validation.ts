@@ -10,3 +10,13 @@ export const getConversationParamsSchema = Joi.object({
 export const markMessagesAsReadedParamsSchema = Joi.object({
   id: objectIdSchema.label("Conversation ID"),
 });
+
+// GET /conversations/unreadCount/:id
+export const getUnReadedMessageCountParamsSchema = Joi.object({
+  id: objectIdSchema.label("Conversation ID"),
+});
+
+// PUT /conversations/increaseUnreadCount/:id
+export const increaseUnReadedMessageParamsSchema = Joi.object({
+  id: objectIdSchema.label("Conversation ID"),
+});

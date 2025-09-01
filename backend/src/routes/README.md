@@ -77,6 +77,16 @@ Handles conversation management endpoints:
   - Marks all messages in conversation as read
   - Requires authentication
 
+- **GET `/unreadCount/:id`** - Get unread message count for conversation
+  - Validates conversation ID parameter
+  - Returns count of unread messages
+  - Requires authentication
+
+- **PUT `/increaseUnreadCount/:id`** - Increase unread message count for conversation
+  - Validates conversation ID parameter
+  - Increments unread message counter
+  - Requires authentication
+
 ### Message Routes (`/api/messages`)
 
 Handles message-related endpoints:
@@ -89,16 +99,6 @@ Handles message-related endpoints:
 - **GET `/:id`** - Get messages for conversation
   - Validates conversation ID parameter
   - Returns paginated messages for conversation
-  - Requires authentication
-
-- **GET `/unreadCount/:id`** - Get unread message count
-  - Validates conversation ID parameter
-  - Returns count of unread messages
-  - Requires authentication
-
-- **PUT `/increaseUnreadCount/:id`** - Increase unread message count
-  - Validates conversation ID parameter
-  - Increments unread message counter
   - Requires authentication
 
 ### Notification Routes (`/api/notifications`)

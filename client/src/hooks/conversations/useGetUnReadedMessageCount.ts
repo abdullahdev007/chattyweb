@@ -1,32 +1,20 @@
 import { GetUnreadCountResponse } from "@shared/types/http";
-import { Conversation } from "@shared/types/models/conversation";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { IConversation } from "@shared/types/models/conversation";
 
-const useGetUnReadedMessageCount = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+const getUnReadedMessageCount = async (conversation: IConversation) => {
+  try {
+    const res = await fetch(
+      `/api/conversations/unreadCount/${conversation._id}`
+    );
+    const data: GetUnreadCountResponse = await res.json();
 
-  const getUnReadedMessageCount = async (conversation: Conversation) => {
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/messages/unreadCount/${conversation._id}`);
-      const data: GetUnreadCountResponse = await res.json();
+    if (!data.success) throw new Error(data.message);
 
-      if (!data.success) throw new Error(data.message);
-
-      return data.unreadCount;
-    } catch (error: any) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Error fetching un readed message count",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { loading, getUnReadedMessageCount };
+    return data.unreadCount;
+  } catch (error) {
+    console.error("Error getting unread count:", error);
+    return 0;
+  }
 };
 
-export default useGetUnReadedMessageCount;
+export default getUnReadedMessageCount;

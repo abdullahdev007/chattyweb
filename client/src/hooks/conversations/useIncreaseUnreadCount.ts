@@ -1,30 +1,29 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-import useConversations from "@/stores/useConversations";
 import { IncreaseUnReadCountResponse } from "@shared/types/http";
 
 const useIncreaseUnreadCount = () => {
   const [loading, setLoading] = useState(false);
-  const { updateConversation } = useConversations();
 
   const increaseUnreadCount = async (conversationID: string) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await fetch(
-        `/api/messages/increaseUnreadCount/${conversationID}`,
+        `/api/conversations/increaseUnreadCount/${conversationID}`,
         {
           method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
+
+      if (!res.ok) throw new Error("Failed to increase unread count");
+
       const data: IncreaseUnReadCountResponse = await res.json();
-
-      if (!data.success) throw new Error(data.message);
-
-      if (data.conversation) updateConversation(data.conversation);
-    } catch (error: any) {
-      toast.error(
-        error instanceof Error ? error.message : "Error fetching conversations"
-      );
+      return data;
+    } catch (error) {
+      console.error("Error increasing unread count:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
