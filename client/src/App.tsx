@@ -19,6 +19,7 @@ import useListenNotifications from "@/hooks/notifications/useListenNotifications
 import useListenMessages from "@/hooks/useListenMessages";
 import { useSyncAuthUser } from "@/hooks/auth/useSyncAuthUser";
 import { ThemeProvider } from "@/context/themeContext";
+import AnimatedBackground from "./components/AnimatedBackground";
 
 const App: React.FC = () => {
   const { authUser, setAuthUser } = useAuthContext();
@@ -39,6 +40,7 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider>
+      <AnimatedBackground/>
       <div className="flex flex-col h-screen">
         <Navbar />
         <div className="p-2 sm:p-4 flex-1 flex items-center justify-center min-h-0">
