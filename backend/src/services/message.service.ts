@@ -2,7 +2,10 @@ import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getSocketId, io } from "../socket/socket.js";
 import { Types } from "mongoose";
-import { IMessage, Message as MessageType } from "@shared/types/models/message.js";
+import {
+  IMessage,
+  Message as MessageType,
+} from "@shared/types/models/message.js";
 import { SendMessagePayload } from "@shared/types/socket/message.js";
 import {
   asPopulatedConversation,
@@ -70,7 +73,6 @@ export const sendMessage = async (
     }
 
     conversationDoc.messages.push(newMessage._id);
-    conversationDoc.latestMessage = newMessage._id;
 
     await Promise.all([conversationDoc.save(), newMessage.save()]);
 
@@ -78,7 +80,6 @@ export const sendMessage = async (
     await conversationDoc.populate([
       { path: "participants.userId" },
       { path: "messages" },
-      { path: "latestMessage" },
     ]);
 
     await newMessage.populate([{ path: "senderId" }, { path: "replayTo" }]);
@@ -120,7 +121,6 @@ export const getMessages = async (
     const conversation = await Conversation.findById(conversationId).populate([
       { path: "participants.userId" },
       { path: "messages" },
-      { path: "latestMessage" },
     ]);
 
     if (!conversation) {
@@ -179,7 +179,6 @@ export const increaseUnreadMessageCount = async (
     await conversationDoc.populate([
       { path: "participants.userId" },
       { path: "messages" },
-      { path: "latestMessage" },
     ]);
 
     return asPopulatedConversation(conversationDoc);

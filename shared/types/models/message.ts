@@ -1,5 +1,5 @@
 import type { ObjectId } from "mongoose";
-import { SafeUser } from "@/types/models/user";
+import { SafeUser } from "./user";
 
 export interface IMessage<TSenderId = ObjectId, TReplayTo = ObjectId | null> {
   _id: ObjectId;

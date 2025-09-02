@@ -1,5 +1,5 @@
 import type { Document, Types } from "mongoose";
-import type { Gender } from "@/types/types";
+import type { Gender } from "../types";
 
 // Base user interface (shared between frontend and backend)
 export interface IUser {

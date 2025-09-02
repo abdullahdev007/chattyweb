@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import User from "../models/user.model.js";
 import Conversation from "../models/conversation.model.js";
 import { UserDocument } from "@shared/types/models/user.js";
-import { NotificationTypes } from "@shared/types/notificationTypes.js";
+import { NotificationTypes } from "@shared/types/NotificationTypes.js";
 import { createNotification } from "./notification.service.js";
 import { getSocketId, io } from "../socket/socket.js";
 import toSafeUser from "../utils/toSafeUser.js";

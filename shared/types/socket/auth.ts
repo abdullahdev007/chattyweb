@@ -1,5 +1,5 @@
-import { SafeUser } from "@/types/models/user";
+import { SafeUser } from "../models/user";
 
 export type SyncAuthUserPayload = {
-  newUserData: SafeUser,
-}
+  newUserData: SafeUser;
+};

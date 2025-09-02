@@ -1,5 +1,5 @@
-import { SafeNotification } from "@/types/models/notification"
+import { SafeNotification } from "../models/notification";
 
-export type  NewNotificationPayload = {
-  notification: SafeNotification
-}
+export type NewNotificationPayload = {
+  notification: SafeNotification;
+};

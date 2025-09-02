@@ -21,8 +21,7 @@ export const getUserConversations = async (
       participants: { $elemMatch: { userId: userId } },
     })
       .populate("messages")
-      .populate({ path: "participants.userId" })
-      .populate("latestMessage");
+      .populate({ path: "participants.userId" });
 
     return conversations.map((conv) => asPopulatedConversation(conv));
   } catch (error: any) {
@@ -44,9 +43,7 @@ export const getConversationById = async (
   try {
     const conversation = await Conversation.findById(conversationId)
       .populate({ path: "participants.userId" })
-      .populate("messages")
-      .populate("latestMessage");
-
+      .populate("messages");
     if (!conversation) {
       return null;
     }
@@ -80,9 +77,7 @@ export const markConversationMessagesAsRead = async (
   try {
     const conversation = await Conversation.findById(conversationId)
       .populate({ path: "participants.userId" })
-      .populate("messages")
-      .populate("latestMessage");
-
+      .populate("messages");
     if (!conversation) {
       return null;
     }

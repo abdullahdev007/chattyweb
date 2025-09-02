@@ -32,10 +32,19 @@ const Conversations: FC = () => {
     });
 
     filtered.sort((a, b) => {
-      if (!a.latestMessage || !b.latestMessage) return 0;
+      const aLatestMessage =
+        a.messages && a.messages.length > 0
+          ? a.messages[a.messages.length - 1]
+          : null;
+      const bLatestMessage =
+        b.messages && b.messages.length > 0
+          ? b.messages[b.messages.length - 1]
+          : null;
+
+      if (!aLatestMessage || !bLatestMessage) return 0;
       return (
-        new Date(b.latestMessage.createdAt).getTime() -
-        new Date(a.latestMessage.createdAt).getTime()
+        new Date(bLatestMessage.createdAt).getTime() -
+        new Date(aLatestMessage.createdAt).getTime()
       );
     });
 
@@ -54,8 +63,7 @@ const Conversations: FC = () => {
         filtredConversations.length <= 0 ? (
         <div className="break-words text-center w-full flex justify-center flex-col items-center gap-2 sm:gap-3 p-2">
           <span className="text-xs sm:text-sm max-w-full px-2">
-            You don't have any friends yet. Start adding friends and
-            chatting!
+            You don't have any friends yet. Start adding friends and chatting!
           </span>
 
           <button

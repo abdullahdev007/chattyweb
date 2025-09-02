@@ -1,5 +1,5 @@
-import { Conversation } from "@/types/models/conversation";
-import { Message } from "@/types/models/message";
+import { Conversation } from "../models/conversation";
+import { Message } from "../models/message";
 
 export type SendMessagePayload = {
   conversation: Conversation;

@@ -1,5 +1,5 @@
-import { SafeUser } from "@/types/models/user";
-import { RespondFriendRequestBody } from "@/types/http";
+import { SafeUser } from "../models/user";
+import { RespondFriendRequestBody } from "../http";
 
 export interface FriendSocketEvents {
   // Response to friend request event

@@ -75,13 +75,12 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
           </div>
 
           <div className="text-xs sm:text-sm opacity-70 truncate max-w-full">
-            {conversation.latestMessage
-              ? conversation.latestMessage.message
+            {conversation.messages && conversation.messages.length > 0
+              ? conversation.messages[conversation.messages.length - 1].message
               : ""}
           </div>
         </div>
       </div>
-
     </>
   );
 };
