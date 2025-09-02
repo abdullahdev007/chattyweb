@@ -1,5 +1,5 @@
-import type { BaseResponse } from "@/types/http/base";
-import { SafeUser } from "@/types/models/user";
+import type { BaseResponse } from "../base";
+import { SafeUser } from "../../models/user";
 
 export interface SendFriendRequestParams {
   id: string; // friendId
@@ -16,7 +16,6 @@ export interface DeleteFriendRequestParams {
 export interface RespondFriendRequestBody {
   response: "accept" | "reject";
 }
-
 
 export interface GetFriendsResponse extends BaseResponse {
   friends?: SafeUser[];

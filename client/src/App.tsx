@@ -24,7 +24,8 @@ import Navbar from "@/layout/Navbar/Navbar";
 import Footar from "@/layout/Footer/Footer";
 import AnimatedBackground from "@/layout/AnimatedBackground";
 
-const App: React.FC = () => {
+// Component that needs to access theme context
+const AppContent: React.FC = () => {
   const { authUser, setAuthUser } = useAuthContext();
 
   useListenResponseToFriendRequest();
@@ -42,43 +43,57 @@ const App: React.FC = () => {
   }, [setAuthUser]);
 
   return (
-    <ThemeProvider>
-      <SidebarProvider>
-        <AnimatedBackground />
-        <div className="flex flex-col h-screen">
-          <Navbar />
-          <div className="p-2 sm:p-4 flex-1 flex items-center justify-center min-h-0">
-            <Routes>
-              <Route
-                path="/"
-                element={authUser ? <Home /> : <Navigate to={"/login"} />}
-              />
-              <Route
-                path="/change-password"
-                element={
-                  authUser ? <ChangePassword /> : <Navigate to={"/login"} />
-                }
-              />
-              <Route
-                path="/update-profile"
-                element={
-                  authUser ? <UpdateProfile /> : <Navigate to={"/login"} />
-                }
-              />
-              <Route
-                path="/login"
-                element={!authUser ? <Login /> : <Navigate to={"/"} />}
-              />
-              <Route
-                path="/signup"
-                element={!authUser ? <Signup /> : <Navigate to={"/"} />}
-              />
-            </Routes>
-            <Toaster toastOptions={{ }} />
-          </div>
-          <Footar />
+    <SidebarProvider>
+      <AnimatedBackground />
+      <div className="flex flex-col h-screen">
+        <Navbar />
+        <div className="p-2 sm:p-4 flex-1 flex items-center justify-center min-h-0">
+          <Routes>
+            <Route
+              path="/"
+              element={authUser ? <Home /> : <Navigate to={"/login"} />}
+            />
+            <Route
+              path="/change-password"
+              element={
+                authUser ? <ChangePassword /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/update-profile"
+              element={
+                authUser ? <UpdateProfile /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/login"
+              element={!authUser ? <Login /> : <Navigate to={"/"} />}
+            />
+            <Route
+              path="/signup"
+              element={!authUser ? <Signup /> : <Navigate to={"/"} />}
+            />
+          </Routes>
+          <Toaster
+            toastOptions={{
+              duration: 4000,
+              position: "top-center",
+              className:
+                "bg-base-100 border border-base-300 text-base-content shadow-lg rounded-lg",
+              style: {},
+            }}
+          />
         </div>
-      </SidebarProvider>
+        <Footar />
+      </div>
+    </SidebarProvider>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <AppContent />
     </ThemeProvider>
   );
 };

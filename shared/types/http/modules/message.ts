@@ -1,6 +1,6 @@
-import { Conversation } from "@/types/models/conversation";
-import { BaseResponse } from "@/types/http/base";
-import { Message } from "@/types/models/message";
+import { Conversation } from "../../models/conversation";
+import { BaseResponse } from "../base";
+import { Message } from "../../models/message";
 
 export interface SendMessageRequestBody {
   message: string;

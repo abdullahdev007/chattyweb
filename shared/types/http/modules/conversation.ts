@@ -1,5 +1,5 @@
-import { BaseResponse } from "@/types/http/base";
-import { Conversation } from "@/types/models/conversation";
+import { BaseResponse } from "../base";
+import { Conversation } from "../../models/conversation";
 
 export interface ConversationParams {
   id: string;

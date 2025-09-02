@@ -1,10 +1,10 @@
-import { SafeUser } from "@/types/models/user";
-import { BaseResponse } from "@/types/http/base";
+import { SafeUser } from "../../models/user";
+import { BaseResponse } from "../base";
 
 export interface GetUserResponseBody extends BaseResponse {
-  user?: SafeUser
+  user?: SafeUser;
 }
 
 export interface GetUsersResponseBody extends BaseResponse {
-  users?: SafeUser[]
+  users?: SafeUser[];
 }

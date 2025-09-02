@@ -1,6 +1,6 @@
-import { SafeUser } from "@/types/models/user";
-import type { Gender } from "@/types/types";
-import type { BaseResponse } from "@/types/http/base";
+import { SafeUser } from "../../models/user";
+import type { Gender } from "../../types";
+import type { BaseResponse } from "../base";
 
 export interface SignupRequestBody {
   fullName: string;
