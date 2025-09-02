@@ -3,6 +3,10 @@ import Conversation from "../models/conversation.model.js";
 import { Conversation as ConversationType } from "@shared/types/models/conversation.js";
 import { Types } from "mongoose";
 import Message from "../models/message.model.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { CONVERSATION_ANALYSIS_PROMPT } from "@/prompts";
+import { getMessages } from "./message.service.js";
+import { log } from "console";
 
 /**
  * Get all conversations for a user
@@ -251,5 +255,87 @@ export const deleteConversation = async (
   } catch (error: any) {
     console.error("Error deleting conversation:", error);
     throw new Error(error.message || "Failed to delete conversation");
+  }
+};
+
+/**
+ * Get AI insights for a conversation
+ * @param conversationId - The conversation ID
+ * @param userId - The current user ID for access control
+ * @returns AI insights object or null if not found/access denied
+ */
+export const getConversationInsightsService = async (
+  conversationId: string,
+  userId: string
+): Promise<{
+  summary: string;
+  sentiment: string;
+  keyTakeaways: string[];
+} | null> => {
+  try {
+    const conversation = await Conversation.findById(conversationId)
+      .populate("messages")
+      .populate({ path: "participants.userId" });
+
+    if (!conversation) {
+      return null;
+    }
+
+    // Check if user has access to this conversation
+    const currentUserParticipant = conversation.participants.find(
+      (participant: any) => participant.userId.equals(userId)
+    );
+
+    if (!currentUserParticipant) {
+      return null;
+    }
+
+    // Get all messages for the conversation
+    const messages = await getMessages(conversationId, userId);
+
+    if (messages.length === 0) {
+      return {
+        summary: "No messages found in this conversation",
+        sentiment: "neutral",
+        keyTakeaways: ["Conversation is empty"],
+      };
+    }
+
+    // Format messages for AI analysis
+    const formattedMessages = messages
+      .map((msg) => `${msg.senderId.fullName}: ${msg.message}`)
+      .join("\n");
+
+    // Initialize Google Gemini AI
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+    // Create prompt for AI analysis
+    const prompt = CONVERSATION_ANALYSIS_PROMPT(formattedMessages);
+
+    // Generate AI insights
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    // Extract JSON from AI response
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error("Failed to parse AI response");
+    }
+
+    const insights = JSON.parse(jsonMatch[0]);
+
+    // Validate and return insights
+    return {
+      summary: insights.summary || "Unable to generate summary",
+      sentiment: insights.sentiment || "neutral",
+      keyTakeaways: Array.isArray(insights.keyTakeaways)
+        ? insights.keyTakeaways.slice(0, 3)
+        : ["Unable to generate key takeaways"],
+    };
+  } catch (error: any) {
+    console.error("Error getting conversation insights:", error);
+    throw new Error("Failed to generate insights");
   }
 };

@@ -37,9 +37,9 @@ const useListenMessages = () => {
 
         setMessages([...messages, message]);
         updateConversation(conversation);
+        
       } else {
         increaseUnreadCount(conversation._id.toString());
-
         pushMessage({
           toastId: toast.custom(
             (t) => (

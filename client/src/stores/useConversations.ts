@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Conversation } from "@shared/types/models/conversation";
+import useConversation from "./useConversation";
 
 interface ConversationsState {
   conversations: Conversation[];
@@ -19,6 +20,13 @@ const useConversations = create<ConversationsState>((set) => ({
         return conversation;
       }),
     }));
+
+    // Also update selected conversation if it matches the updated conversation
+    const { selectedConversation, setSelectedConversation } =
+      useConversation.getState();
+    if (selectedConversation?._id === updatedConversation._id) {
+      setSelectedConversation(updatedConversation);
+    }
   },
 }));
 

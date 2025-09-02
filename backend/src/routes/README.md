@@ -87,6 +87,12 @@ Handles conversation management endpoints:
   - Increments unread message counter
   - Requires authentication
 
+- **POST `/insights/:id`** - Get AI insights for conversation
+  - Validates conversation ID parameter
+  - Returns AI-generated insights including summary, sentiment, and key takeaways
+  - Requires authentication
+  - Uses Google Gemini AI for analysis
+
 ### Message Routes (`/api/messages`)
 
 Handles message-related endpoints:

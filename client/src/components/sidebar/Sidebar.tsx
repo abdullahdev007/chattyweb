@@ -1,15 +1,22 @@
 import { FC } from "react";
-import Conversations from "./Conversations";
+import TabbedSidebar from "./TabbedSidebar";
 
 const Sidebar: FC = () => {
   return (
     <div
-      className="border-r max-sm:border-r-0 
-    max-sm:border-b  border-base-content 
-    border-opacity-40  p-4 flex flex-col overflow-auto max-sm:h-1/4
-    min-w-64 max-md:min-w-32"
+      className="
+        border-r border-base-content border-opacity-40 
+        p-2 sm:p-3 md:p-4
+        w-full sm:w-64 md:w-72 lg:w-80
+        min-w-0 sm:min-w-48
+        max-w-full sm:max-w-none
+        h-auto sm:h-full
+        flex flex-col
+        shadow-sm
+        flex-shrink-0
+      "
     >
-      <Conversations />
+      <TabbedSidebar />
     </div>
   );
 };

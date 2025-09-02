@@ -1,6 +1,6 @@
 import type { ObjectId } from "mongoose";
-import { SafeUser } from "./user";
-import { IMessage } from "./message";
+import { SafeUser } from "@/types/models/user";
+import { IMessage } from "@/types/models/message";
 
 export interface IParticipant<TUserId = ObjectId> {
   userId: TUserId;

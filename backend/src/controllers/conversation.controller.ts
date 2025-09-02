@@ -11,6 +11,7 @@ import {
   markConversationMessagesAsRead,
   getUnreadMessageCount,
   increaseUnreadMessageCount,
+  getConversationInsightsService,
 } from "@/services";
 
 export const getConversations: RequestHandler<
@@ -147,6 +148,40 @@ export const increaseUnReadedMessage = async (
       "Error in increaseUnReadedMessage controller : ",
       error.message
     );
+    res.status(500).json({
+      success: false,
+      message: error.message || "Internal server error",
+    });
+  }
+};
+
+export const getConversationInsights: RequestHandler<
+  ConversationParams,
+  any
+> = async (req: Request<ConversationParams>, res) => {
+  try {
+    const conversationId: string = req.params.id;
+    const userId = req.user?._id.toString();
+
+    const insights = await getConversationInsightsService(
+      conversationId,
+      userId
+    );
+
+    if (!insights) {
+      res.status(404).json({
+        success: false,
+        message: "Conversation not found or access denied",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      insights,
+    });
+  } catch (error: any) {
+    console.log("error in getConversationInsights controller :", error.message);
     res.status(500).json({
       success: false,
       message: error.message || "Internal server error",

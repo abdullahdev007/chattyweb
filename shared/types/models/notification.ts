@@ -1,5 +1,5 @@
 import type { ObjectId } from "mongoose";
-import { SafeUser } from "./user";
+import { SafeUser } from "@/types/models/user";
 
 export interface INotification {
   _id: ObjectId | string;

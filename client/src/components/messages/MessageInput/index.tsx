@@ -1,4 +1,4 @@
-import useSendMessage from "../../hooks/messages/useSendMessage";
+import useSendMessage from "../../../hooks/messages/useSendMessage";
 import { useState, useRef, useEffect } from "react";
 import React from "react";
 import { FaPaperPlane } from "react-icons/fa";

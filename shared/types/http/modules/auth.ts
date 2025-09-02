@@ -1,6 +1,6 @@
-import { SafeUser } from "@shared/types/models/user";
-import type { Gender } from "../../types";
-import type { BaseResponse } from "../base";
+import { SafeUser } from "@/types/models/user";
+import type { Gender } from "@/types/types";
+import type { BaseResponse } from "@/types/http/base";
 
 export interface SignupRequestBody {
   fullName: string;
@@ -20,7 +20,7 @@ export interface LoginRequestBody {
 }
 
 export interface LoginResponseBody extends BaseResponse {
-  user?: SafeUser
+  user?: SafeUser;
 }
 
 export interface ChangePasswordRequestBody {
@@ -35,5 +35,5 @@ export interface UpdateProfileRequestBody {
 }
 
 export interface UpdateProfileResponseBody extends BaseResponse {
-  user?: any
+  user?: any;
 }

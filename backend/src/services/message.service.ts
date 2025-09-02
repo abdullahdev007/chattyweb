@@ -2,7 +2,7 @@ import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getSocketId, io } from "../socket/socket.js";
 import { Types } from "mongoose";
-import { IMessage } from "@shared/types/models/message.js";
+import { IMessage, Message as MessageType } from "@shared/types/models/message.js";
 import { SendMessagePayload } from "@shared/types/socket/message.js";
 import {
   asPopulatedConversation,
@@ -115,7 +115,7 @@ export const sendMessage = async (
 export const getMessages = async (
   conversationId: string,
   userId: string
-): Promise<any[]> => {
+): Promise<MessageType[]> => {
   try {
     const conversation = await Conversation.findById(conversationId).populate([
       { path: "participants.userId" },

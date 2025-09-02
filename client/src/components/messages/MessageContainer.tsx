@@ -12,13 +12,13 @@ const MessageContainer: React.FC = () => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className="flex flex-col flex-1 min-w-0 min-h-0">
+    <div className="flex flex-col flex-1 overflow-y-auto">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>
           {/* Header */}
-          <div className="px-4 py-2 mb-2 border-b border-base-content border-opacity-20 flex-shrink-0">
+          <div className="px-4 py-2 mb-2 border-b border-base-content border-opacity-20 flex-shrink-0 ">
             <span className="text-base-content">To:</span>{" "}
             <span className="text-primary font-bold">
               {selectedConversation.participants[0].userId.fullName}

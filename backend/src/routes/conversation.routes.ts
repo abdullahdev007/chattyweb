@@ -7,6 +7,7 @@ import {
   markMessagesAsReaded,
   getUnReadedMessageCount,
   increaseUnReadedMessage,
+  getConversationInsights,
 } from "@/controllers";
 import {
   getConversationParamsSchema,
@@ -41,6 +42,13 @@ router.put(
   protectRoute,
   validate({ params: increaseUnReadedMessageParamsSchema }),
   increaseUnReadedMessage as unknown as RequestHandler
+);
+
+router.post(
+  "/insights/:id",
+  protectRoute,
+  validate({ params: getConversationParamsSchema }),
+  getConversationInsights as unknown as RequestHandler
 );
 
 export default router;

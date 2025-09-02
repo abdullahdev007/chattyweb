@@ -1,5 +1,5 @@
-import type { BaseResponse } from "../base";
-import { SafeUser } from "@shared/types/models/user";
+import type { BaseResponse } from "@/types/http/base";
+import { SafeUser } from "@/types/models/user";
 
 export interface SendFriendRequestParams {
   id: string; // friendId
