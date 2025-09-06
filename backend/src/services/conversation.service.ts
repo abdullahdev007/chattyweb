@@ -14,7 +14,7 @@ import { log } from "console";
  * @returns Array of conversations with populated data
  */
 export const getUserConversations = async (
-  userId: string
+  userId: string,
 ): Promise<ConversationType[]> => {
   try {
     const conversations = await Conversation.find({
@@ -38,7 +38,7 @@ export const getUserConversations = async (
  */
 export const getConversationById = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId)
@@ -50,7 +50,7 @@ export const getConversationById = async (
 
     // Check if user has access to this conversation
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId)
+      (participant: any) => participant.userId.equals(userId),
     );
 
     if (!currentUserParticipant) {
@@ -72,7 +72,7 @@ export const getConversationById = async (
  */
 export const markConversationMessagesAsRead = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId)
@@ -84,7 +84,7 @@ export const markConversationMessagesAsRead = async (
 
     // Check if user has access to this conversation
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId)
+      (participant: any) => participant.userId.equals(userId),
     );
 
     if (!currentUserParticipant) {
@@ -108,7 +108,7 @@ export const markConversationMessagesAsRead = async (
  * @returns New conversation object
  */
 export const createConversation = async (
-  participants: string[]
+  participants: string[],
 ): Promise<ConversationType> => {
   try {
     const conversation = new Conversation({
@@ -134,7 +134,7 @@ export const createConversation = async (
  */
 export const addParticipantToConversation = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId);
@@ -145,7 +145,7 @@ export const addParticipantToConversation = async (
 
     // Check if user is already a participant
     const existingParticipant = conversation.participants.find((p: any) =>
-      p.userId.equals(userId)
+      p.userId.equals(userId),
     );
 
     if (existingParticipant) {
@@ -174,7 +174,7 @@ export const addParticipantToConversation = async (
  */
 export const removeParticipantFromConversation = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<ConversationType | null> => {
   try {
     const conversation = await Conversation.findById(conversationId);
@@ -185,7 +185,7 @@ export const removeParticipantFromConversation = async (
 
     // Remove participant
     conversation.participants = conversation.participants.filter(
-      (p: any) => !p.userId.equals(userId)
+      (p: any) => !p.userId.equals(userId),
     );
 
     await conversation.save();
@@ -204,7 +204,7 @@ export const removeParticipantFromConversation = async (
  */
 export const getUnreadMessageCount = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<number> => {
   try {
     const conversation = await Conversation.findByIdAndUpdate(conversationId);
@@ -214,7 +214,7 @@ export const getUnreadMessageCount = async (
     }
 
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId)
+      (participant: any) => participant.userId.equals(userId),
     );
 
     if (!currentUserParticipant) {
@@ -233,7 +233,7 @@ export const getUnreadMessageCount = async (
  * @param conversationId - The conversation ID
  */
 export const deleteConversation = async (
-  conversationId: string
+  conversationId: string,
 ): Promise<void> => {
   try {
     const conversation = await Conversation.findById(conversationId);
@@ -261,7 +261,7 @@ export const deleteConversation = async (
  */
 export const getConversationInsightsService = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<{
   summary: string;
   sentiment: string;
@@ -278,7 +278,7 @@ export const getConversationInsightsService = async (
 
     // Check if user has access to this conversation
     const currentUserParticipant = conversation.participants.find(
-      (participant: any) => participant.userId.equals(userId)
+      (participant: any) => participant.userId.equals(userId),
     );
 
     if (!currentUserParticipant) {

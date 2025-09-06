@@ -1,7 +1,6 @@
 import { useState } from "react";
-import useConversation from "@/stores/useConversation";
 import toast from "react-hot-toast";
-import useConversations from "@/stores/useConversations";
+import {useConversations, useConversation} from "@/stores";
 import { SendMessageResponse } from "@shared/types/http";
 import { ClientMessage } from "@/types/MessageTypes";
 

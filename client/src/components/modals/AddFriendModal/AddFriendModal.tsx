@@ -1,24 +1,56 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import SearchInput from "./SearchInput";
 import useGetUsers from "@/hooks/users/useGetUsers";
+import { useUsers, useUsersPagination } from "@/stores";
 import AddFriendUser from "./AddFriendUser";
-import { SafeUser } from "@shared/types/models/user";
+import Pagination from "@/components/ui/Pagination";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
 
 const AddFriendModal: FC = () => {
-  const [search, setSearch] = useState<string>("");
-  const { users } = useGetUsers();
-  const [filteredUsers, setFilteredUsers] = useState<SafeUser[]>([]);
+  // API functions only
+  const { fetchUsers, searchUsers } = useGetUsers();
 
+  // State from stores
+  const { users } = useUsers();
+  const {
+    currentPage,
+    totalPages,
+    total,
+    isLoading,
+    searchQuery,
+    isSearching,
+    searchResults,
+    setSearchQuery,
+    setCurrentPage,
+  } = useUsersPagination();
+
+  // Get current users (search results or regular users)
+  const displayUsers = isSearching ? searchResults : users;
+
+  // Initialize data when modal opens
   useEffect(() => {
-    if (search.length < 3) return setFilteredUsers(users);
+    fetchUsers(1);
+  }, []);
 
-    setFilteredUsers(
-      users.filter((user) =>
-        user.username.toLowerCase().startsWith(search.toLowerCase()),
-      ) as SafeUser[],
-    );
-  }, [users, search]);
+  // Handle search
+  const handleSearchChange = (newSearch: string) => {
+    setSearchQuery(newSearch);
+    if (newSearch.length >= 3) {
+      searchUsers(newSearch, 1);
+    } else {
+      fetchUsers(1);
+    }
+  };
+
+  // Handle page changes
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    if (isSearching) {
+      searchUsers(searchQuery, page);
+    } else {
+      fetchUsers(page);
+    }
+  };
 
   return (
     <>
@@ -39,33 +71,54 @@ const AddFriendModal: FC = () => {
           </div>
 
           {/* Search Input */}
-          <SearchInput search={search} setSearch={setSearch} />
+          <SearchInput search={searchQuery} setSearch={handleSearchChange} />
 
-          <div className="divider my-4"></div>
+          <div className="divider my-2"></div>
 
           {/* Content */}
-          <div className="overflow-y-auto max-h-[60vh]">
-            {filteredUsers.length > 0 ? (
-              <div className="space-y-3">
-                {filteredUsers.map((user, index) => (
-                  <AddFriendUser
-                    user={user}
-                    key={user._id.toString()}
-                    lastIdx={index === users.length - 1}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <FaUsers className="text-6xl text-base-content/20 mx-auto mb-4" />
-                <p className="text-base-content/70 font-medium">
-                  {users.length <= 0
-                    ? "You don't have any friends"
-                    : `No users found starting with "${search}"`}
-                </p>
-              </div>
-            )}
+          <div className="flex flex-col">
+            {/* Users List */}
+            <div className="flex-1 overflow-y-auto max-h-[50vh]">
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <span className="loading loading-spinner loading-lg text-primary"></span>
+                  <p className="text-base-content/70 font-medium mt-4">
+                    Loading users...
+                  </p>
+                </div>
+              ) : displayUsers.length > 0 ? (
+                <div className="space-y-3">
+                  {displayUsers.map((user, index) => (
+                    <AddFriendUser user={user} key={user._id.toString()} />
+                  ))}
+                </div>
+              ) : (
+                /* No users found */
+                <div className="text-center py-8">
+                  <FaUsers className="text-6xl text-base-content/20 mx-auto mb-4" />
+                  <p className="text-base-content/70 font-medium">
+                    {isSearching
+                      ? `No users found for "${searchQuery}"`
+                      : "No users available"}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
+
+          <div className="divider my-2"></div>
+
+          {/* Pagination */}
+          {!isLoading && displayUsers.length > 0 && totalPages > 1 && (
+            <div className="">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                isLoading={isLoading}
+              />
+            </div>
+          )}
         </div>
 
         <form method="dialog" className="modal-backdrop">

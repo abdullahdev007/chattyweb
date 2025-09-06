@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useNotifications from "@/stores/useNotifications";
+import { useNotifications } from "@/stores";
 import { GetNotificationsResponse } from "@shared/types/http/modules/notification";
 import { SafeNotification } from "@shared/types/models/notification";
 

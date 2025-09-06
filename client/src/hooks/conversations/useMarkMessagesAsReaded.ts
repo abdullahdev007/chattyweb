@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { MarkMessagesAsReadedResponse } from "@shared/types/http";
-import useConversations from "@/stores/useConversations";
+import { useConversations } from "@/stores";
 
 const useMarkMessagesAsReaded = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const useMarkMessagesAsReaded = () => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Error marking messages as readed",
+          : "Error marking messages as readed"
       );
     } finally {
       setLoading(false);

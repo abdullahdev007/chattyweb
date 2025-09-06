@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useSocketContext } from "@/context/socketContext";
-import useConversation from "@/stores/useConversation";
+import {
+  useConversation,
+  useConversations,
+  useMessageNotificationStore,
+} from "@/stores";
 import useIncreaseUnreadCount from "@/hooks/conversations/useIncreaseUnreadCount";
-import useConversations from "@/stores/useConversations";
 import toast from "react-hot-toast";
 import NewMessageNotification from "@/components/NewMessageNotification/NewMessageNotification";
-import useMessageNotificationStore from "@/stores/messageNotificationStore";
 import { SendMessagePayload } from "@shared/types/socket";
 import { ClientMessage } from "@/types/MessageTypes";
 
@@ -16,11 +18,11 @@ const useListenMessages = () => {
   const { updateConversation } = useConversations();
 
   const { messageQueue, pushMessage, popMessage } = useMessageNotificationStore(
-    (state) => ({
+    (state: any) => ({
       messageQueue: state.messageQueue,
       pushMessage: state.pushMessage,
       popMessage: state.popMessage,
-    }),
+    })
   );
 
   useEffect(() => {
@@ -37,7 +39,6 @@ const useListenMessages = () => {
 
         setMessages([...messages, message]);
         updateConversation(conversation);
-        
       } else {
         increaseUnreadCount(conversation._id.toString());
         pushMessage({
@@ -51,7 +52,7 @@ const useListenMessages = () => {
             {
               position: "bottom-right",
               duration: 1500,
-            },
+            }
           ),
           newMessage: newMessage,
         });

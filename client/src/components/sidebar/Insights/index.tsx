@@ -1,9 +1,8 @@
 import { FC, useEffect } from "react";
 import { FaBrain, FaClock } from "react-icons/fa";
-import useConversation from "@/stores/useConversation";
+import { useConversation, useInsights } from "@/stores";
 import { IoRefresh } from "react-icons/io5";
 import useGetConversationInsights from "@/hooks/conversations/useGetConversationInsights";
-import useInsights from "@/stores/useInsights";
 import toast from "react-hot-toast";
 
 const Insights: FC = () => {

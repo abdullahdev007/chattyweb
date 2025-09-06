@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import useClearAllNotifications from "@/hooks/notifications/useClearNotifications";
 import useGetNotifications from "@/hooks/notifications/useGetNotifications";
 import Notification from "./Notification";
-import useNotifications from "@/stores/useNotifications";
+import { useNotifications } from "@/stores";
 import useMarkAsReaded from "@/hooks/notifications/useMarkAsReaded";
 import { FaBell, FaTrash, FaBellSlash } from "react-icons/fa";
 
@@ -14,7 +14,7 @@ const NotificationsModal: FC = () => {
 
   useEffect(() => {
     const modal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     if (modal?.open && notifications.length > 0) {
       markAsReaded();
@@ -22,7 +22,7 @@ const NotificationsModal: FC = () => {
   }, [notifications.length, unReadedNotificationsCount, markAsReaded]);
 
   const sortedNotifications = [...notifications].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   return (

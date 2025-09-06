@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useFriends from "@/stores/useFriends";
+import { useFriends } from "@/stores";
 import { BaseResponse, DeleteFriendRequestParams } from "@shared/types/http";
 
 const useRemoveFriend = () => {

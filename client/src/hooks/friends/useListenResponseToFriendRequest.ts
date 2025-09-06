@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSocketContext } from "../../context/socketContext";
-import useFriendRequests from "@/stores/useFriendRequests";
-import useFriends from "@/stores/useFriends";
+import { useFriendRequests, useFriends } from "@/stores";
 import { RespondToFriendRequestPayload } from "@shared/types/socket";
 
 const useListenResponseToFriendRequest = () => {

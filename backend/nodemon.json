@@ -3,5 +3,5 @@
   "ext": "ts",
   "exec": "node dev-server.mjs",
   "signal": "SIGTERM",
-  "delay": "2000"
+  "delay": "3000"
 }

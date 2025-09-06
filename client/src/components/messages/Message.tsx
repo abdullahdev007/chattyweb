@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/AuthContext";
-import useConversation from "@/stores/useConversation";
+import { useConversation } from "@/stores";
 import { extractTime } from "@/utils/extractTime";
 import React from "react";
 import { Gender } from "@shared/types/types";

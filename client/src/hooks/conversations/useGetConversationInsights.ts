@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
-import useInsights from "@/stores/useInsights";
-import useConversation from "@/stores/useConversation";
+import { useInsights, useConversation } from "@/stores";
 
 interface InsightsData {
   summary: string;

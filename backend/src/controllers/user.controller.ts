@@ -3,7 +3,11 @@ import {
   GetUserResponseBody,
   GetUsersResponseBody,
 } from "@shared/types/http/modules/user.js";
-import { getAllUsersExceptCurrent, getUserById } from "@/services";
+import {
+  getAllUsersExceptCurrent,
+  getUserById,
+  getUsers as getUsersService,
+} from "@/services";
 
 export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
   req: Request,
@@ -11,9 +15,28 @@ export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
 ) => {
   try {
     const loggedInUserId = req.user?._id.toString();
-    const users = await getAllUsersExceptCurrent(loggedInUserId);
 
-    res.status(200).json({ success: true, users });
+    // Get page parameter from query
+
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = 8; // Fixed page size for simplicity
+
+    console.log(page);
+    // Use pagination if page parameter is provided
+    if (req.query.page) {
+      const result = await getUsersService(loggedInUserId, page, limit);
+      res.status(200).json({
+        success: true,
+        users: result.users,
+        total: result.total,
+        page: result.page,
+        totalPages: result.totalPages,
+      });
+    } else {
+      // Fallback to old behavior for backward compatibility
+      const users = await getAllUsersExceptCurrent(loggedInUserId);
+      res.status(200).json({ success: true, users });
+    }
   } catch (error: any) {
     console.log("error in getUsers controller :", error.message);
     res.status(500).json({ success: false, message: "Internal server error" });

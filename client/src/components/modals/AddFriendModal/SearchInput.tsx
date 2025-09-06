@@ -27,6 +27,7 @@ const SearchInput: FC<SearchInputProps> = ({ search, setSearch }) => {
         {/* Input Field */}
         <input
           type="text"
+          autoFocus
           placeholder="Search for users by username..."
           className="input input-bordered w-full pl-12 pr-12 py-4 text-base transition-all duration-300 focus:input-primary focus:ring-2 focus:ring-primary/20 hover:border-primary/50"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -63,7 +64,7 @@ const SearchInput: FC<SearchInputProps> = ({ search, setSearch }) => {
 
       {/* Search Status */}
       {search.length > 0 && (
-        <div className="mt-2 text-xs text-base-content/60 animate-fade-in">
+        <div className="mt-1 text-xs text-base-content/60 animate-fade-in">
           {search.length < 3 ? (
             <span className="text-warning">
               Type at least 3 characters to search

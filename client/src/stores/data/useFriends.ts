@@ -16,7 +16,7 @@ const useFriends = create<FriendsState>((set) => ({
   removeFriend: (friendId) =>
     set((state) => ({
       ...state,
-      friends: state.friends.filter((f) => f._id !== friendId),
+      friends: state.friends.filter((f) => f._id.toString() !== friendId),
     })),
 }));
 

@@ -1,9 +1,7 @@
 import { FC } from "react";
 import calculateNotificationTime from "@/utils/calculateNotificationTime";
 import { NotificationTypes } from "@shared/types/notificationTypes";
-import useConversation from "@/stores/useConversation";
-import useFriends from "@/stores/useFriends";
-import useConversations from "@/stores/useConversations";
+import { useConversation, useFriends, useConversations } from "@/stores";
 import { useAuthContext } from "@/context/AuthContext";
 import { SafeNotification } from "@shared/types/models/notification";
 
@@ -20,10 +18,10 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
 
   const handleOnClick = () => {
     const notificationsModal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     const requestsModal = document.getElementById(
-      "pending_friendships_modal",
+      "pending_friendships_modal"
     ) as HTMLDialogElement;
 
     switch (notification.type) {
@@ -45,12 +43,12 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
               conv.participants.some(
                 (participant) =>
                   participant.userId.toString() ===
-                  notification.senderId._id.toString(),
+                  notification.senderId._id.toString()
               ) &&
               conv.participants.some(
                 (participant) =>
-                  participant.userId.toString() === authUser?._id?.toString(),
-              ),
+                  participant.userId.toString() === authUser?._id?.toString()
+              )
           );
 
           if (conversation) {

@@ -1,6 +1,6 @@
 import { useEffect, useState, FC } from "react";
 import useGetConversations from "@/hooks/conversations/useFetchConversations";
-import useSearchConversation from "@/stores/useSearchConversation";
+import { useSearchConversation } from "@/stores";
 import Conversation from "./Conversation";
 import { FaUserPlus } from "react-icons/fa";
 import { useAuthContext } from "@/context/AuthContext";

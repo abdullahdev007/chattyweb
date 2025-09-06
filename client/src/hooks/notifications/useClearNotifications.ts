@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useNotifications from "@/stores/useNotifications";
+import { useNotifications } from "@/stores";
 import { BaseResponse } from "@shared/types/http/base";
 
 const useClearAllNotifications = () => {

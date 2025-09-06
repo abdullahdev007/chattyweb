@@ -12,7 +12,7 @@ import {
 
 export const sendMessage = async (
   req: Request<ConversationParams, SendMessageResponse, SendMessageRequestBody>,
-  res: Response<SendMessageResponse>
+  res: Response<SendMessageResponse>,
 ) => {
   try {
     const { message, replayTo } = req.body;
@@ -23,7 +23,7 @@ export const sendMessage = async (
       conversationId,
       senderId,
       message,
-      replayTo
+      replayTo,
     );
 
     res.status(200).json({
@@ -42,7 +42,7 @@ export const sendMessage = async (
 
 export const getMessages = async (
   req: Request<ConversationParams, GetMessagesResponse>,
-  res: Response<GetMessagesResponse>
+  res: Response<GetMessagesResponse>,
 ) => {
   try {
     const { id: conversationId } = req.params;

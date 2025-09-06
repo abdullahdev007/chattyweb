@@ -71,7 +71,7 @@ export const markMessagesAsReaded: RequestHandler<
   MarkMessagesAsReadedResponse
 > = async (
   req: Request<ConversationParams>,
-  res: Response<MarkMessagesAsReadedResponse>
+  res: Response<MarkMessagesAsReadedResponse>,
 ) => {
   try {
     const conversationId: string = req.params.id;
@@ -79,7 +79,7 @@ export const markMessagesAsReaded: RequestHandler<
 
     const conversation = await markConversationMessagesAsRead(
       conversationId,
-      userId
+      userId,
     );
 
     if (!conversation) {
@@ -105,7 +105,7 @@ export const markMessagesAsReaded: RequestHandler<
 
 export const getUnReadedMessageCount = async (
   req: Request<ConversationParams>,
-  res: Response<{ success: boolean; unreadCount: number }>
+  res: Response<{ success: boolean; unreadCount: number }>,
 ) => {
   try {
     const userId = req.user?._id.toString();
@@ -128,7 +128,7 @@ export const getUnReadedMessageCount = async (
 
 export const increaseUnReadedMessage = async (
   req: Request<ConversationParams, any>,
-  res: Response<any>
+  res: Response<any>,
 ) => {
   try {
     const conversationId = req.params.id;
@@ -136,7 +136,7 @@ export const increaseUnReadedMessage = async (
 
     const conversation = await increaseUnreadMessageCount(
       conversationId,
-      userId
+      userId,
     );
 
     res.status(200).json({
@@ -146,7 +146,7 @@ export const increaseUnReadedMessage = async (
   } catch (error: any) {
     console.log(
       "Error in increaseUnReadedMessage controller : ",
-      error.message
+      error.message,
     );
     res.status(500).json({
       success: false,
@@ -165,7 +165,7 @@ export const getConversationInsights: RequestHandler<
 
     const insights = await getConversationInsightsService(
       conversationId,
-      userId
+      userId,
     );
 
     if (!insights) {

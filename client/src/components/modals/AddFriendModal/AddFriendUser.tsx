@@ -8,11 +8,10 @@ import useGetUsers from "@/hooks/users/useGetUsers";
 import { SafeUser } from "@shared/types/models/user";
 
 interface AddFriendUserProps {
-  user: SafeUser;
-  lastIdx: boolean;
+  user: SafeUser; 
 }
 
-const AddFriendUser: FC<AddFriendUserProps> = ({ user, lastIdx }) => {
+const AddFriendUser: FC<AddFriendUserProps> = ({ user }) => {
   const { authUser } = useAuthContext();
   const { onlineUsers } = useSocketContext();
   const { sendFriendRequest, loading } = useSendFriendRequest();
@@ -25,7 +24,8 @@ const AddFriendUser: FC<AddFriendUserProps> = ({ user, lastIdx }) => {
 
   const handleAddFriend = async (friendId: string) => {
     await sendFriendRequest(friendId);
-    await fetchUsers();
+    // Refresh to show updated friend status
+    await fetchUsers(1);
   };
 
   return (
