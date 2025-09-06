@@ -7,4 +7,7 @@ export interface GetUserResponseBody extends BaseResponse {
 
 export interface GetUsersResponseBody extends BaseResponse {
   users?: SafeUser[];
+  total?: number;
+  page?: number;
+  totalPages?: number;
 }

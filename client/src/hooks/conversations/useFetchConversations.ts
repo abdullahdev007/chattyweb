@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { GetConversationsResponse } from "@shared/types/http";
 import { Conversation } from "@shared/types/models/conversation";
-import useConversation from "@/stores/useConversation";
-import useFriends from "@/stores/useFriends";
-import useConversations from "@/stores/useConversations";
+import { useConversation, useFriends, useConversations } from "@/stores";
 
 const useGetConversations = () => {
   const [loading, setLoading] = useState<boolean>(false);

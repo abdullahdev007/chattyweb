@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FaComments, FaBrain } from "react-icons/fa";
 import Conversations from "./Conversations";
 import Insights from "./Insights";
-import useConversation from "@/stores/useConversation";
+import { useConversation } from "@/stores";
 import { useSidebarContext } from "@/context/sidebarContext";
 
 const TabbedSidebar: FC = () => {

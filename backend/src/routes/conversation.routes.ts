@@ -23,32 +23,32 @@ router.get(
   "/:id",
   protectRoute,
   validate({ params: getConversationParamsSchema }),
-  getConversation as unknown as RequestHandler
+  getConversation as unknown as RequestHandler,
 );
 router.put(
   "/read/:id",
   protectRoute,
   validate({ params: markMessagesAsReadedParamsSchema }),
-  markMessagesAsReaded as unknown as RequestHandler
+  markMessagesAsReaded as unknown as RequestHandler,
 );
 router.get(
   "/unreadCount/:id",
   protectRoute,
   validate({ params: getUnReadedMessageCountParamsSchema }),
-  getUnReadedMessageCount as unknown as RequestHandler
+  getUnReadedMessageCount as unknown as RequestHandler,
 );
 router.put(
   "/increaseUnreadCount/:id",
   protectRoute,
   validate({ params: increaseUnReadedMessageParamsSchema }),
-  increaseUnReadedMessage as unknown as RequestHandler
+  increaseUnReadedMessage as unknown as RequestHandler,
 );
 
 router.post(
   "/insights/:id",
   protectRoute,
   validate({ params: getConversationParamsSchema }),
-  getConversationInsights as unknown as RequestHandler
+  getConversationInsights as unknown as RequestHandler,
 );
 
 export default router;

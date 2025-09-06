@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useConversation from "@/stores/useConversation";
+import { useConversation } from "@/stores";
 import toast from "react-hot-toast";
 import { Message } from "@shared/types/models/message";
 import { ClientMessage } from "@/types/MessageTypes";

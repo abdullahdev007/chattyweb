@@ -20,7 +20,7 @@ const useFriendRequests = create<FriendRequestsState>((set) => ({
     set((state) => ({
       ...state,
       friendRequests: state.friendRequests.filter(
-        (req) => req._id !== friendId,
+        (req) => req._id.toString() !== friendId
       ),
     })),
 }));

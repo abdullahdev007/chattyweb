@@ -62,7 +62,7 @@ export const createUser = async (userData: {
  */
 export const authenticateUser = async (
   username: string,
-  password: string
+  password: string,
 ): Promise<UserDocument> => {
   try {
     const user = await User.findOne({ username });
@@ -91,7 +91,7 @@ export const authenticateUser = async (
  */
 export const updateUserPassword = async (
   userId: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<UserDocument> => {
   try {
     const user = await User.findById(userId);
@@ -122,7 +122,7 @@ export const updateUserProfile = async (
     username?: string;
     fullName?: string;
     gender?: Gender;
-  }
+  },
 ): Promise<UserDocument> => {
   try {
     const user = await User.findById(userId);
@@ -170,7 +170,7 @@ export const deleteUserAccount = async (userId: string): Promise<boolean> => {
     });
 
     await Promise.all(
-      conversations.map((c) => deleteConversation(c._id.toString()))
+      conversations.map((c) => deleteConversation(c._id.toString())),
     );
 
     await Promise.all([

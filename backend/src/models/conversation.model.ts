@@ -9,7 +9,7 @@ const participantSchema = new Schema<IParticipant>(
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     unreadCount: { type: Number, default: 0 },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const conversationSchema = new Schema<IConversation & Document>(
@@ -23,7 +23,7 @@ const conversationSchema = new Schema<IConversation & Document>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Conversation: Model<IConversation & Document> = mongoose.model<

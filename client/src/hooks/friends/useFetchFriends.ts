@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import useFriends from "@/stores/useFriends";
-import useFriendRequests from "@/stores/useFriendRequests";
+import { useFriends, useFriendRequests } from "@/stores";
 import { GetFriendsResponse } from "@shared/types/http";
 
 const useGetFriends = () => {

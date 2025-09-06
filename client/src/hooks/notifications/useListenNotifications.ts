@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSocketContext } from "../../context/socketContext";
-import useNotifications from "@/stores/useNotifications";
-import { SafeNotification } from "@shared/types/models/notification";
+import { useNotifications } from "@/stores";
 import { NewNotificationPayload } from "@shared/types/socket";
 
 const useListenNotifications = (): void => {

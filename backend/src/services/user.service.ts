@@ -78,7 +78,7 @@ export const searchUsers = async (
  * @param limit - Number of users per page
  * @returns Object with users and pagination info
  */
-export const getUsersWithPagination = async (
+export const getUsers = async (
   currentUserId: string,
   page: number = 1,
   limit: number = 20,

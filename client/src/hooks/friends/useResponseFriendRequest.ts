@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useFriendRequests from "@/stores/useFriendRequests";
+import { useFriendRequests } from "@/stores";
 import { BaseResponse, RespondFriendRequestBody } from "@shared/types/http";
 
 const useResponseFriendRequest = () => {

@@ -1,5 +1,5 @@
 import { useSocketContext } from "@/context/socketContext";
-import useConversation from "@/stores/useConversation";
+import { useConversation } from "@/stores";
 import useMarkMessagesAsReaded from "@/hooks/conversations/useMarkMessagesAsReaded";
 import { useAuthContext } from "@/context/AuthContext";
 import { useSidebarContext } from "@/context/sidebarContext";

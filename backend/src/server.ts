@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config();
+import "dotenv-flow/config";
 
 import path from "path";
 import express, { Request, Response } from "express";
@@ -41,7 +39,7 @@ app.use(
   cors({
     origin: [process.env.APP_URL as string],
     credentials: true,
-  })
+  }),
 );
 
 app.use("/api/auth", authRoutes);

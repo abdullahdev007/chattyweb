@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
-import useSearchConversation from "@/stores/useSearchConversation";
+import { useSearchConversation } from "@/stores";
 
 export const SearchConversation: FC = () => {
   const { setSearchConversation } = useSearchConversation();

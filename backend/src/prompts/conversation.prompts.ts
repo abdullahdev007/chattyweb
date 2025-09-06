@@ -1,6 +1,5 @@
-
 export const CONVERSATION_ANALYSIS_PROMPT = (
-  formattedMessages: string
+  formattedMessages: string,
 ) => `Analyze the following conversation and provide insights in JSON format:
 
 Conversation:

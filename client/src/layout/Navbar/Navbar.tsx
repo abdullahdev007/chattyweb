@@ -4,9 +4,8 @@ import DeleteAccountModal from "@/components/modals/deleteAccountModal/DeleteAcc
 import { useAuthContext } from "@/context/AuthContext";
 import useLogout from "@/hooks/auth/useLogout";
 import { FaUser, FaUserPlus, FaUserFriends } from "react-icons/fa";
-import useFriendRequests from "@/stores/useFriendRequests";
 import { IoMdNotifications } from "react-icons/io";
-import useNotifications from "@/stores/useNotifications";
+import { useNotifications, useFriendRequests } from "@/stores";
 import useMarkAsReaded from "@/hooks/notifications/useMarkAsReaded";
 import { SafeUser } from "@shared/types/models/user";
 import ThemeToggle from "@/components/ui/ThemeToggle";

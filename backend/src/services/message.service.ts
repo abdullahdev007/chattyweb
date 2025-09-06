@@ -29,7 +29,7 @@ export const sendMessage = async (
   conversationId: string,
   senderId: string,
   message: string,
-  replayTo?: string
+  replayTo?: string,
 ): Promise<{ conversation: any; newMessage: any }> => {
   try {
     // Use conversation service to check access and get populated conversation
@@ -40,7 +40,7 @@ export const sendMessage = async (
 
     // Get all other participants (receivers)
     const receiverParticipants = conversation.participants.filter(
-      (user: any) => user.userId.id != senderId
+      (user: any) => user.userId.id != senderId,
     );
 
     if (receiverParticipants.length === 0) {
@@ -115,7 +115,7 @@ export const sendMessage = async (
  */
 export const getMessages = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<MessageType[]> => {
   try {
     const conversation = await Conversation.findById(conversationId).populate([
@@ -149,7 +149,7 @@ export const getMessages = async (
  */
 export const increaseUnreadMessageCount = async (
   conversationId: string,
-  userId: string
+  userId: string,
 ): Promise<any> => {
   try {
     // Use conversation service to check access and get populated conversation
@@ -165,7 +165,7 @@ export const increaseUnreadMessageCount = async (
     }
 
     const receiverUserParticipant = conversationDoc.participants.find(
-      (user: any) => user.userId.equals(userId)
+      (user: any) => user.userId.equals(userId),
     );
 
     if (!receiverUserParticipant) {

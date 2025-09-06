@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IncreaseUnReadCountResponse } from "@shared/types/http";
-import useConversations from "@/stores/useConversations";
+import { useConversations } from "@/stores";
 
 const useIncreaseUnreadCount = () => {
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const useIncreaseUnreadCount = () => {
       if (!res.ok) throw new Error("Failed to increase unread count");
 
       const data: IncreaseUnReadCountResponse = await res.json();
-      updateConversation(data.conversation);
+      if(data.conversation) updateConversation(data.conversation);
       return data;
     } catch (error) {
       console.error("Error increasing unread count:", error);

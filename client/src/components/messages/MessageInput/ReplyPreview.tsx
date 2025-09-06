@@ -1,6 +1,6 @@
 import React from "react";
 import { FaReply, FaTimes } from "react-icons/fa";
-import useConversation from "@/stores/useConversation";
+import { useConversation } from "@/stores";
 import { useAuthContext } from "@/context/AuthContext";
 
 const ReplyPreview: React.FC = () => {
