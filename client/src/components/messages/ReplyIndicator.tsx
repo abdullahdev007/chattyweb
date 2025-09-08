@@ -1,7 +1,7 @@
 import React from "react";
 import { ClientMessage } from "@/types/MessageTypes";
 import { FaReply } from "react-icons/fa";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 interface ReplyIndicatorProps {
   message: ClientMessage;
@@ -12,11 +12,11 @@ const ReplyIndicator: React.FC<ReplyIndicatorProps> = ({
   message,
   repliedMessage,
 }) => {
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
   const truncateMessage = (
     text: string,
     maxLines: number = 2,
-    maxCharsPerLine: number = 50,
+    maxCharsPerLine: number = 50
   ) => {
     if (!text) return "";
 

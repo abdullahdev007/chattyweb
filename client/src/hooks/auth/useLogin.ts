@@ -1,11 +1,11 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { LoginRequestBody, LoginResponseBody } from "@shared/types/http";
 
 const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useAuthStore();
 
   const login = async ({
     username,

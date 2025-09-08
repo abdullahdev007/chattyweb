@@ -3,7 +3,7 @@ import { useConversation } from "@/stores";
 import MessageInput from "./MessageInput";
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
-import { useAuthContext } from "../../context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import React from "react";
 
 const MessageContainer: React.FC = () => {
@@ -35,7 +35,7 @@ const MessageContainer: React.FC = () => {
 export default MessageContainer;
 
 const NoChatSelected: React.FC = () => {
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   return (
     <div className="flex items-center justify-center w-full h-full min-h-[400px]">

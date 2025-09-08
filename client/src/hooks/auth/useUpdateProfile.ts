@@ -5,11 +5,11 @@ import {
   UpdateProfileRequestBody,
   UpdateProfileResponseBody,
 } from "@shared/types/http";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 const useUpdateProfile = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useAuthStore();
   const navigate = useNavigate();
 
   const updateProfile = async ({

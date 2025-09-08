@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Toast } from "react-hot-toast";
 import { useConversation, useConversations } from "@/stores";
-import { useAuthContext } from "../../context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import useMarkMessagesAsReaded from "../../hooks/conversations/useMarkMessagesAsReaded";
 import { FaMessage } from "react-icons/fa6";
 import { ClientMessage } from "@/types/MessageTypes";
@@ -18,7 +18,7 @@ const NewMessageNotification: FC<NewMessageNotificationProps> = ({
 }) => {
   const { setSelectedConversation } = useConversation();
   const { conversations } = useConversations();
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
   const { markMessagesAsReaded } = useMarkMessagesAsReaded();
 
   return (
@@ -31,17 +31,17 @@ const NewMessageNotification: FC<NewMessageNotificationProps> = ({
           (conv: Conversation) =>
             conv.participants.some(
               (participant) =>
-                participant.userId._id === newMessage.senderId._id,
+                participant.userId._id === newMessage.senderId._id
             ) &&
             conv.participants.some(
-              (participant) => participant.userId._id === authUser?._id,
-            ),
+              (participant) => participant.userId._id === authUser?._id
+            )
         );
 
         if (!conversation) return;
 
         const currentUserObject = conversation.participants.find(
-          (u) => u.userId._id === authUser?._id,
+          (u) => u.userId._id === authUser?._id
         );
 
         if (!currentUserObject) return;

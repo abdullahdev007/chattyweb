@@ -1,11 +1,11 @@
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { SignupRequestBody, SignupResponseBody } from "@shared/types/http";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const useSignup = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useAuthStore();
 
   const signup = async ({
     fullName,
@@ -30,7 +30,7 @@ const useSignup = () => {
       const data: SignupResponseBody = await res.json();
       if (!data.success) throw new Error(data.message);
 
-      setAuthUser(data.user);
+      if (data.user) setAuthUser(data.user);
     } catch (error) {
       toast.error((error as Error).message);
     } finally {

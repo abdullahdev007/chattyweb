@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { useSocketContext } from "@/context/socketContext";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { FaUserFriends, FaCheck } from "react-icons/fa";
@@ -12,7 +12,7 @@ interface AddFriendUserProps {
 }
 
 const AddFriendUser: FC<AddFriendUserProps> = ({ user }) => {
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
   const { onlineUsers } = useSocketContext();
   const { sendFriendRequest, loading } = useSendFriendRequest();
   const { fetchUsers } = useGetUsers();

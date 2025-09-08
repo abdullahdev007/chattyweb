@@ -2,7 +2,7 @@ import { FC } from "react";
 import calculateNotificationTime from "@/utils/calculateNotificationTime";
 import { NotificationTypes } from "@shared/types/notificationTypes";
 import { useConversation, useFriends, useConversations } from "@/stores";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { SafeNotification } from "@shared/types/models/notification";
 
 interface NotificationProps {
@@ -14,14 +14,14 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
   const { setSelectedConversation } = useConversation();
   const { friends } = useFriends();
   const { conversations } = useConversations();
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   const handleOnClick = () => {
     const notificationsModal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     const requestsModal = document.getElementById(
-      "pending_friendships_modal",
+      "pending_friendships_modal"
     ) as HTMLDialogElement;
 
     switch (notification.type) {
@@ -43,12 +43,12 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
               conv.participants.some(
                 (participant) =>
                   participant.userId.toString() ===
-                  notification.senderId._id.toString(),
+                  notification.senderId._id.toString()
               ) &&
               conv.participants.some(
                 (participant) =>
-                  participant.userId.toString() === authUser?._id?.toString(),
-              ),
+                  participant.userId.toString() === authUser?._id?.toString()
+              )
           );
 
           if (conversation) {
@@ -57,8 +57,6 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
         }
         break;
     }
-
-    console.log(notification.type);
   };
 
   return (

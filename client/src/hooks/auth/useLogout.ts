@@ -1,11 +1,11 @@
 import toast from "react-hot-toast";
-import { useAuthContext } from "../../context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { useState } from "react";
 import { BaseResponse } from "@shared/types/http";
 
 const useLogout = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { setAuthUser } = useAuthContext();
+  const { setAuthUser } = useAuthStore();
 
   const logout = async (): Promise<void> => {
     setLoading(true);
