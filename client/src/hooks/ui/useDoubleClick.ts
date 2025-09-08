@@ -49,7 +49,7 @@ const useDoubleClick = ({
         }, activeDuration);
       } else {
         // Single click - wait for potential double click
-        clickTimeoutRef.current = setTimeout(() => {
+        clickTimeoutRef.current = window.setTimeout(() => {
           // Single click confirmed
           onSingleClick?.();
           clickTimeoutRef.current = null;

@@ -66,7 +66,7 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
       onClick={handleOnClick}
       className="card bg-base-100 shadow-sm hover:shadow-md transition-all duration-200 border border-base-300 cursor-pointer hover:bg-base-200/50"
     >
-      <div className="card-body p-4">
+      <div className="card-body p-3">
         <div className="flex items-start gap-4">
           {/* Avatar */}
           <div className="avatar flex-shrink-0">
@@ -87,7 +87,7 @@ const Notification: FC<NotificationProps> = ({ notification, lastIdx }) => {
             <p className="text-base-content text-sm leading-relaxed">
               {notification.message}
             </p>
-            <p className="text-base-content/50 text-xs mt-2">
+            <p className="text-base-content/50 text-xs">
               {calculateNotificationTime(notification.createdAt.toString())}
             </p>
           </div>

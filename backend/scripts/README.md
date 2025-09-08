@@ -61,3 +61,56 @@ You can modify the script to:
 - Add different types of relationships
 - Include additional data fields
 - Modify the fake data generation patterns
+
+## Notification Seed Script
+
+The `seed-notifications.ts` script generates test notifications for development and testing purposes.
+
+### Features
+
+- Generates notifications for a specific user or multiple users
+- Creates all types of notifications (friend requests, acceptances, rejections, removals)
+- Randomly distributes read/unread status (70% unread, 30% read)
+- Uses realistic timestamps within the last 30 days
+- Batch processing for better performance with large datasets
+- Detailed logging and progress indicators
+
+### Usage
+
+```bash
+# Generate notifications for a single user (default: first user in database)
+npm run seed:notifications
+
+# Generate notifications for multiple users (bulk mode)
+npm run seed:notifications:bulk
+
+# Or run directly with ts-node
+npx ts-node ./scripts/seed-notifications.ts
+npx ts-node ./scripts/seed-notifications.ts bulk
+```
+
+### Configuration
+
+You can modify the script to:
+
+- **Single User Mode**: Generates 1000 notifications for the first user in the database
+- **Bulk Mode**: Generates 50 notifications per user for up to 20 users
+- Change notification counts by modifying the `notificationCount` and `notificationsPerUser` variables
+- Adjust read/unread ratio by changing the probability in `faker.datatype.boolean({ probability: 0.3 })`
+
+### Notification Types
+
+The script generates all available notification types:
+
+- `NewFriendRequest`: When someone sends a friend request
+- `FriendRequestAccepted`: When a friend request is accepted
+- `FriendRequestRejected`: When a friend request is rejected
+- `RemoveFriendShip`: When someone removes you from their friends list
+
+### Safety
+
+⚠️ **Warning**:
+
+- Single mode will **DELETE ALL NOTIFICATIONS** for the target user before creating new ones
+- Bulk mode will **DELETE ALL NOTIFICATIONS** in the database before creating new ones
+- Only run this in development environments
