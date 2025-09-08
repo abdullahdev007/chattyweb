@@ -1,7 +1,7 @@
 import {
   NotificationTypes,
   NotificationType,
-} from "@shared/types/NotificationTypes.js";
+} from "@shared/types/notification-types.js";
 import Notification from "../models/notification.model.js";
 import {
   INotification,
