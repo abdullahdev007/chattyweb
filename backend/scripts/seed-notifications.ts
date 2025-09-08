@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import User from "../src/models/user.model.ts";
 import Notification from "../src/models/notification.model.ts";
 import { faker } from "@faker-js/faker";
-import { NotificationTypes } from "../../shared/types/NotificationTypes.ts";
+import { NotificationTypes } from "../../shared/types/notification-types.ts";
 
 import "dotenv-flow/config";
 
