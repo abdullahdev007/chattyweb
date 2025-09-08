@@ -5,6 +5,7 @@ import React, { useRef } from "react";
 import { ClientMessage } from "@/types/MessageTypes";
 import ReplyIndicator from "./ReplyIndicator";
 import useDoubleClick from "@/hooks/ui/useDoubleClick";
+import { FaReply } from "react-icons/fa";
 
 interface MessageProps {
   message: ClientMessage;
@@ -67,10 +68,23 @@ const Message: React.FC<MessageProps> = ({ message }) => {
 
       {/* Message bubble with swipe interactions */}
       <div
-        className={`chat-bubble text-base-content ${fromMe ? "chat-bubble-primary" : ""} ${message.shouldShake ? "shake" : ""} pb-2 max-w-[80%] sm:max-w-[70%] lg:max-w-[60%] text-sm sm:text-base cursor-pointer select-none transition-all duration-200 ${
+        className={`chat-bubble text-base-content ${fromMe ? "chat-bubble-primary" : ""} ${message.shouldShake ? "shake" : ""} pb-2 max-w-[80%] sm:max-w-[70%] lg:max-w-[60%] text-sm sm:text-base cursor-pointer select-none transition-all duration-200 group relative ${
           isPressed ? "animate-shake" : ""
         }`}
       >
+        {/* Reply button - appears on hover */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering the double-click handler
+            setReplyToMessage(message);
+          }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity
+          duration-200 p-1.5 rounded-full bg-base-100/80 hover:bg-base-200/80 shadow-sm border border-base-300 z-10"
+          title="Reply to this message"
+        >
+          <FaReply className="w-3 h-3 text-accent/70 hover:text-accent" />
+        </button>
+
         {/* Reply indicator */}
         {isReply && (
           <ReplyIndicator message={message} repliedMessage={repliedMessage} />
