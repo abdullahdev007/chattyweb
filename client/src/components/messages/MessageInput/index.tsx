@@ -25,7 +25,7 @@ const MessageInput: React.FC = () => {
     // Send message with reply ID if available
     const success = await sendMessage(
       message.trim(),
-      replyToMessage?._id.toString()
+      replyToMessage?._id.toString(),
     );
 
     if (!success) return;

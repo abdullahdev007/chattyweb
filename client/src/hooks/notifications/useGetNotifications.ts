@@ -27,7 +27,7 @@ const useGetNotifications = () => {
       }
 
       const unreadCount = data.notifications.filter(
-        (not: SafeNotification) => !not.readed
+        (not: SafeNotification) => !not.readed,
       ).length;
       setUnReadedNotificationsCount(unreadCount);
       setNotifications(data.notifications);
@@ -52,7 +52,6 @@ const useGetNotifications = () => {
       setPaginationLoading(false);
     }
   };
-
 
   return { loading, notifications, fetchNotifications };
 };

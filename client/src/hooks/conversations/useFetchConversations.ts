@@ -24,7 +24,7 @@ const useGetConversations = () => {
         if (
           selectedConversation &&
           !data.conversations!.find(
-            (conv: Conversation) => conv._id == selectedConversation._id
+            (conv: Conversation) => conv._id == selectedConversation._id,
           )
         ) {
           setSelectedConversation(null);
@@ -32,7 +32,7 @@ const useGetConversations = () => {
       }
     } catch (error: any) {
       toast.error(
-        error instanceof Error ? error.message : "Error fetching conversations"
+        error instanceof Error ? error.message : "Error fetching conversations",
       );
     } finally {
       setLoading(false);

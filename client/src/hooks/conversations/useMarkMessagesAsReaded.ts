@@ -21,7 +21,7 @@ const useMarkMessagesAsReaded = () => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Error marking messages as readed"
+          : "Error marking messages as readed",
       );
     } finally {
       setLoading(false);

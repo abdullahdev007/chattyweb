@@ -64,7 +64,7 @@ const useNotificationsPagination = create<NotificationsPaginationState>(
         isLoading: false,
       });
     },
-  })
+  }),
 );
 
 export default useNotificationsPagination;

@@ -28,7 +28,7 @@ export const getNotifications: RequestHandler<
           ...(n as any).toObject(),
           senderId: toSafeUser(n.senderId as any),
           receiverId: toSafeUser(n.receiverId as any),
-        })
+        }),
       );
 
       res.status(200).json({
@@ -42,11 +42,12 @@ export const getNotifications: RequestHandler<
       // Fallback to old behavior for backward compatibility
       const notifications = await getNotificationsService(loggedInUserId);
 
-      const safeNotifications: SafeNotification[] = notifications.notifications.map((n) => ({
-        ...(n as any).toObject(),
-        senderId: toSafeUser(n.senderId as any),
-        receiverId: toSafeUser(n.receiverId as any),
-      }));
+      const safeNotifications: SafeNotification[] =
+        notifications.notifications.map((n) => ({
+          ...(n as any).toObject(),
+          senderId: toSafeUser(n.senderId as any),
+          receiverId: toSafeUser(n.receiverId as any),
+        }));
 
       res.status(200).json({
         success: true,
@@ -64,7 +65,7 @@ export const getNotifications: RequestHandler<
 
 export const markAsReaded = async (
   req: Request,
-  res: Response<BaseResponse>
+  res: Response<BaseResponse>,
 ): Promise<void> => {
   try {
     await markAllNotificationsAsRead(req.user!._id.toString());
@@ -81,7 +82,7 @@ export const markAsReaded = async (
 
 export const getUnreadCount = async (
   req: Request,
-  res: Response<{ success: boolean; count: number }>
+  res: Response<{ success: boolean; count: number }>,
 ): Promise<void> => {
   try {
     const count = await getUnreadNotificationsCount(req.user!._id.toString());
@@ -101,7 +102,7 @@ export const getUnreadCount = async (
 
 export const clearAll: RequestHandler = async (
   req: Request,
-  res: Response<BaseResponse>
+  res: Response<BaseResponse>,
 ): Promise<void> => {
   try {
     if (!req.user?._id) {

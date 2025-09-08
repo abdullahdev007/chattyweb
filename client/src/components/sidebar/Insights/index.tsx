@@ -29,7 +29,7 @@ const Insights: FC = () => {
     selectedConversation && insights
       ? !isInsightsStale(
           selectedConversation._id.toString(),
-          selectedConversation.messages?.length || 0
+          selectedConversation.messages?.length || 0,
         )
       : false;
 

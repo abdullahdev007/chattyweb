@@ -9,7 +9,7 @@ const useResponseFriendRequest = () => {
 
   const responseFriendRequest = async (
     friendId: string,
-    response: RespondFriendRequestBody["response"]
+    response: RespondFriendRequestBody["response"],
   ): Promise<void> => {
     setLoading(true);
     try {
@@ -35,7 +35,7 @@ const useResponseFriendRequest = () => {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Failed to respond to friend request"
+          : "Failed to respond to friend request",
       );
     } finally {
       setLoading(false);

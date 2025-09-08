@@ -27,7 +27,7 @@ const useGetUsers = () => {
       }
     } catch (error: any) {
       toast.error(
-        error instanceof Error ? error.message : "Error fetching Users"
+        error instanceof Error ? error.message : "Error fetching Users",
       );
     } finally {
       setLoading(false);
@@ -37,7 +37,7 @@ const useGetUsers = () => {
   // Search users with pagination
   const searchUsers = async (
     query: string,
-    page: number = 1
+    page: number = 1,
   ): Promise<void> => {
     if (query.length < 3) {
       await fetchUsers(page);
@@ -53,7 +53,7 @@ const useGetUsers = () => {
       const filtered = users.filter(
         (user) =>
           user.username.toLowerCase().includes(query.toLowerCase()) ||
-          user.fullName.toLowerCase().includes(query.toLowerCase())
+          user.fullName.toLowerCase().includes(query.toLowerCase()),
       );
 
       // Paginate results
@@ -61,7 +61,7 @@ const useGetUsers = () => {
       const startIndex = (page - 1) * itemsPerPage;
       const paginatedResults = filtered.slice(
         startIndex,
-        startIndex + itemsPerPage
+        startIndex + itemsPerPage,
       );
       const totalPages = Math.ceil(filtered.length / itemsPerPage);
 

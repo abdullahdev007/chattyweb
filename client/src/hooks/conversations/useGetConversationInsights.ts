@@ -48,7 +48,7 @@ const useGetConversationInsights = () => {
               "Content-Type": "application/json",
             },
             credentials: "include",
-          }
+          },
         );
 
         const data: InsightsResponse = await response.json();
@@ -61,13 +61,13 @@ const useGetConversationInsights = () => {
         setStoreInsights(conversationId, data.insights, currentMessageCount);
       } catch (error: any) {
         toast.error(
-          error instanceof Error ? error.message : "Error generating insights"
+          error instanceof Error ? error.message : "Error generating insights",
         );
       } finally {
         setLoading(false);
       }
     },
-    [selectedConversation, getStoreInsights, isInsightsStale, setStoreInsights]
+    [selectedConversation, getStoreInsights, isInsightsStale, setStoreInsights],
   );
 
   // Get current insights for selected conversation

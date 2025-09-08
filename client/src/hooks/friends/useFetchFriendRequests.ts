@@ -23,7 +23,7 @@ const useGetFriendRequests = () => {
         toast.error(
           error instanceof Error
             ? error.message
-            : "Failed to fetch friend requests"
+            : "Failed to fetch friend requests",
         );
       } finally {
         setLoading(false);

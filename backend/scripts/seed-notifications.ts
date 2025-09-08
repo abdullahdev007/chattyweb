@@ -17,7 +17,7 @@ if (!MONGO_URI) {
 // Function to generate notification messages based on type
 const generateNotificationMessage = (
   type: string,
-  senderName: string
+  senderName: string,
 ): string => {
   switch (type) {
     case NotificationTypes.NewFriendRequest:
@@ -46,7 +46,7 @@ const seedNotifications = async () => {
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in database. Please run the main seed script first."
+        "❌ No users found in database. Please run the main seed script first.",
       );
       await mongoose.disconnect();
       process.exit(1);
@@ -57,7 +57,7 @@ const seedNotifications = async () => {
     // Ask for target user (you can modify this to target a specific user)
     const targetUser = users[0]; // Using first user as target, you can change this
     console.log(
-      `🎯 Target user: ${targetUser.fullName} (${targetUser.username})`
+      `🎯 Target user: ${targetUser.fullName} (${targetUser.username})`,
     );
 
     // Clear existing notifications for the target user
@@ -75,7 +75,7 @@ const seedNotifications = async () => {
     for (let i = 0; i < notificationCount; i++) {
       // Randomly select a sender (excluding the target user)
       const availableSenders = users.filter(
-        (user) => user._id.toString() !== targetUser._id.toString()
+        (user) => user._id.toString() !== targetUser._id.toString(),
       );
       const sender = faker.helpers.arrayElement(availableSenders);
 
@@ -113,21 +113,21 @@ const seedNotifications = async () => {
       await Notification.insertMany(batch);
       savedCount += batch.length;
       console.log(
-        `📝 Saved ${savedCount}/${notifications.length} notifications`
+        `📝 Saved ${savedCount}/${notifications.length} notifications`,
       );
     }
 
     // Display summary
     console.log("\n📊 Notification Seeding Summary:");
     console.log(
-      `   🎯 Target user: ${targetUser.fullName} (${targetUser.username})`
+      `   🎯 Target user: ${targetUser.fullName} (${targetUser.username})`,
     );
     console.log(`   🔔 Total notifications: ${notifications.length}`);
     console.log(
-      `   📖 Read notifications: ${notifications.filter((n) => n.readed).length}`
+      `   📖 Read notifications: ${notifications.filter((n) => n.readed).length}`,
     );
     console.log(
-      `   📭 Unread notifications: ${notifications.filter((n) => !n.readed).length}`
+      `   📭 Unread notifications: ${notifications.filter((n) => !n.readed).length}`,
     );
 
     // Show breakdown by type
@@ -140,7 +140,7 @@ const seedNotifications = async () => {
 
     await mongoose.disconnect();
     console.log(
-      "\n✅ Notification seeding completed successfully and disconnected from MongoDB"
+      "\n✅ Notification seeding completed successfully and disconnected from MongoDB",
     );
   } catch (error) {
     console.error("❌ Error during notification seeding:", error);
@@ -162,7 +162,7 @@ const seedNotificationsForMultipleUsers = async () => {
 
     if (users.length === 0) {
       console.error(
-        "❌ No users found in database. Please run the main seed script first."
+        "❌ No users found in database. Please run the main seed script first.",
       );
       await mongoose.disconnect();
       process.exit(1);
@@ -182,13 +182,13 @@ const seedNotificationsForMultipleUsers = async () => {
 
     for (const targetUser of users) {
       console.log(
-        `🔔 Creating ${notificationsPerUser} notifications for ${targetUser.fullName}...`
+        `🔔 Creating ${notificationsPerUser} notifications for ${targetUser.fullName}...`,
       );
 
       for (let i = 0; i < notificationsPerUser; i++) {
         // Randomly select a sender (excluding the target user)
         const availableSenders = users.filter(
-          (user) => user._id.toString() !== targetUser._id.toString()
+          (user) => user._id.toString() !== targetUser._id.toString(),
         );
         const sender = faker.helpers.arrayElement(availableSenders);
 
@@ -227,7 +227,7 @@ const seedNotificationsForMultipleUsers = async () => {
       await Notification.insertMany(batch);
       savedCount += batch.length;
       console.log(
-        `📝 Saved ${savedCount}/${allNotifications.length} notifications`
+        `📝 Saved ${savedCount}/${allNotifications.length} notifications`,
       );
     }
 
@@ -237,15 +237,15 @@ const seedNotificationsForMultipleUsers = async () => {
     console.log(`   🔔 Notifications per user: ${notificationsPerUser}`);
     console.log(`   🔔 Total notifications: ${allNotifications.length}`);
     console.log(
-      `   📖 Read notifications: ${allNotifications.filter((n) => n.readed).length}`
+      `   📖 Read notifications: ${allNotifications.filter((n) => n.readed).length}`,
     );
     console.log(
-      `   📭 Unread notifications: ${allNotifications.filter((n) => !n.readed).length}`
+      `   📭 Unread notifications: ${allNotifications.filter((n) => !n.readed).length}`,
     );
 
     await mongoose.disconnect();
     console.log(
-      "\n✅ Bulk notification seeding completed successfully and disconnected from MongoDB"
+      "\n✅ Bulk notification seeding completed successfully and disconnected from MongoDB",
     );
   } catch (error) {
     console.error("❌ Error during bulk notification seeding:", error);

@@ -16,12 +16,12 @@ interface InsightsState {
   setInsights: (
     conversationId: string,
     insights: InsightsData,
-    messageCount: number
+    messageCount: number,
   ) => void;
   getInsights: (conversationId: string) => InsightsData | null;
   isInsightsStale: (
     conversationId: string,
-    currentMessageCount: number
+    currentMessageCount: number,
   ) => boolean;
   clearInsights: (conversationId: string) => void;
   clearAllInsights: () => void;
@@ -37,7 +37,7 @@ const useInsights = create<InsightsState>()(
       setInsights: (
         conversationId: string,
         insights: InsightsData,
-        messageCount: number
+        messageCount: number,
       ) => {
         set((state) => ({
           insights: {
@@ -61,7 +61,7 @@ const useInsights = create<InsightsState>()(
 
       isInsightsStale: (
         conversationId: string,
-        currentMessageCount: number
+        currentMessageCount: number,
       ) => {
         const state = get();
         const storedCount = state.messageCounts[conversationId] || 0;
@@ -111,8 +111,8 @@ const useInsights = create<InsightsState>()(
         lastUpdated: state.lastUpdated,
         messageCounts: state.messageCounts,
       }),
-    }
-  )
+    },
+  ),
 );
 
 export default useInsights;
