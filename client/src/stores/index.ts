@@ -9,6 +9,7 @@ export { default as useInsights } from "./data/useInsights";
 
 // UI stores
 export { default as useUsersPagination } from "./ui/useUsersPagination";
+export { default as useNotificationsPagination } from "./ui/useNotificationsPagination";
 export { default as useSearchConversation } from "./ui/useSearchConversation";
 export { default as useMessageNotificationStore } from "./ui/messageNotificationStore";
 

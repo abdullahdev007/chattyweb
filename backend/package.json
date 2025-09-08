@@ -11,7 +11,9 @@
     "format": "prettier --write .",
     "build": "tsc && npx tsc-alias --resolve-full-paths && npm run copy-client",
     "copy-client": "cpx \"../client/dist/**/*\" \"./dist/public\"",
-    "seed": "cross-env NODE_ENV=development ts-node ./scripts/seed.ts"
+    "seed": "cross-env NODE_ENV=development ts-node ./scripts/seed.ts",
+    "seed:notifications": "cross-env NODE_ENV=development ts-node ./scripts/seed-notifications.ts",
+    "seed:notifications:bulk": "cross-env NODE_ENV=development ts-node ./scripts/seed-notifications.ts bulk"
   },
   "dependencies": {
     "@google/generative-ai": "^0.2.1",
