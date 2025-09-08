@@ -21,7 +21,7 @@ import { NewNotificationPayload } from "@shared/types/socket/notification.js";
  */
 const generateNotificationMessage = (
   type: NotificationType,
-  senderName: string
+  senderName: string,
 ): string => {
   const messageMap: Record<NotificationType, string> = {
     [NotificationTypes.NewFriendRequest]: `A new friend request from ${senderName}`,
@@ -45,7 +45,7 @@ const createNotificationDocument = async (
   sender: UserDocument,
   receiver: UserDocument,
   type: NotificationType,
-  message: string
+  message: string,
 ): Promise<INotification & Document> => {
   const notification = new Notification({
     senderId: sender._id,
@@ -70,7 +70,7 @@ const createNotificationDocument = async (
 const sendSocketNotification = (
   receiver: UserDocument,
   sender: UserDocument,
-  notification: INotification & Document
+  notification: INotification & Document,
 ): void => {
   const receiverSocketId = getSocketId(receiver._id.toString());
 
@@ -101,7 +101,7 @@ const sendSocketNotification = (
 export const createNotification = async (
   sender: UserDocument,
   receiver: UserDocument,
-  type: NotificationType
+  type: NotificationType,
 ): Promise<INotification | { error: string }> => {
   try {
     const message = generateNotificationMessage(type, sender.fullName);
@@ -111,7 +111,7 @@ export const createNotification = async (
       sender,
       receiver,
       type,
-      message
+      message,
     );
 
     // Send real-time notification
@@ -133,7 +133,7 @@ export const createNotification = async (
 export const getNotifications = async (
   userId: string,
   page: number = 1,
-  limit: number = 12
+  limit: number = 12,
 ): Promise<{
   notifications: INotification[];
   total: number;
@@ -171,12 +171,12 @@ export const getNotifications = async (
  * @returns Number of updated notifications
  */
 export const markAllNotificationsAsRead = async (
-  userId: string
+  userId: string,
 ): Promise<number> => {
   try {
     const result = await Notification.updateMany(
       { receiverId: userId, readed: false },
-      { readed: true }
+      { readed: true },
     );
 
     return result.modifiedCount;
@@ -192,7 +192,7 @@ export const markAllNotificationsAsRead = async (
  * @returns Number of unread notifications
  */
 export const getUnreadNotificationsCount = async (
-  userId: string
+  userId: string,
 ): Promise<number> => {
   try {
     const count = await Notification.countDocuments({
@@ -213,7 +213,7 @@ export const getUnreadNotificationsCount = async (
  * @returns Number of deleted notifications
  */
 export const deleteAllNotifications = async (
-  userId: string
+  userId: string,
 ): Promise<number> => {
   try {
     const result = await Notification.deleteMany({ receiverId: userId });

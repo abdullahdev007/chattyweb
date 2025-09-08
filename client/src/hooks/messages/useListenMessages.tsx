@@ -22,7 +22,7 @@ const useListenMessages = () => {
       messageQueue: state.messageQueue,
       pushMessage: state.pushMessage,
       popMessage: state.popMessage,
-    })
+    }),
   );
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const useListenMessages = () => {
             {
               position: "bottom-right",
               duration: 1500,
-            }
+            },
           ),
           newMessage: newMessage,
         });

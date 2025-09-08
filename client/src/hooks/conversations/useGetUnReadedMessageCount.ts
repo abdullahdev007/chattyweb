@@ -4,7 +4,7 @@ import { IConversation } from "@shared/types/models/conversation";
 const getUnReadedMessageCount = async (conversation: IConversation) => {
   try {
     const res = await fetch(
-      `/api/conversations/unreadCount/${conversation._id}`
+      `/api/conversations/unreadCount/${conversation._id}`,
     );
     const data: GetUnreadCountResponse = await res.json();
 

@@ -8,7 +8,7 @@ import useGetUsers from "@/hooks/users/useGetUsers";
 import { SafeUser } from "@shared/types/models/user";
 
 interface AddFriendUserProps {
-  user: SafeUser; 
+  user: SafeUser;
 }
 
 const AddFriendUser: FC<AddFriendUserProps> = ({ user }) => {

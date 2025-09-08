@@ -22,7 +22,7 @@ const NotificationsModal: FC = () => {
 
   useEffect(() => {
     const modal = document.getElementById(
-      "notifications_modal"
+      "notifications_modal",
     ) as HTMLDialogElement;
     if (modal?.open && notifications.length > 0) {
       markAsReaded();
@@ -36,7 +36,7 @@ const NotificationsModal: FC = () => {
   };
 
   const sortedNotifications = [...notifications].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
 
   return (
@@ -113,12 +113,12 @@ const NotificationsModal: FC = () => {
 
         {/* Pagination */}
         {!isLoading && notifications.length > 0 && totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-              isLoading={isLoading}
-            />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            isLoading={isLoading}
+          />
         )}
       </div>
 

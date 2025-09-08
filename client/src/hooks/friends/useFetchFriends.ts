@@ -23,7 +23,7 @@ const useGetFriends = () => {
         if (data.friends) setFriends(data.friends);
       } catch (error) {
         toast.error(
-          error instanceof Error ? error.message : "Failed to fetch friends"
+          error instanceof Error ? error.message : "Failed to fetch friends",
         );
       } finally {
         setLoading(false);

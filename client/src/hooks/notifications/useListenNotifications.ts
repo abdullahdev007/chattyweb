@@ -13,7 +13,7 @@ const useListenNotifications = (): void => {
       ({ notification }: NewNotificationPayload) => {
         addNotification(notification);
         addUnReadedNotificationsCount();
-      }
+      },
     );
     return () => {
       socket?.off("newNotification");

@@ -23,7 +23,7 @@ const useUsers = create<UsersState>((set) => ({
   updateUser: (userId: string, updates: Partial<SafeUser>) =>
     set((state) => ({
       users: state.users.map((user) =>
-        user._id.toString() === userId ? { ...user, ...updates } : user
+        user._id.toString() === userId ? { ...user, ...updates } : user,
       ),
     })),
 

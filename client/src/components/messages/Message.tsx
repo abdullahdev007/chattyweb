@@ -21,7 +21,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
     message.senderId._id === authUser?._id
       ? message.senderId
       : selectedConversation?.participants.find(
-          (p: any) => p.userId._id != authUser?._id
+          (p: any) => p.userId._id != authUser?._id,
         )?.userId;
   const fromMe = message.senderId._id === authUser?._id;
 
@@ -30,7 +30,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   const repliedMessage = isReply
     ? messages.find(
         (msg: ClientMessage) =>
-          msg._id.toString() === message.replayTo?.toString()
+          msg._id.toString() === message.replayTo?.toString(),
       )
     : null;
 

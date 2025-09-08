@@ -15,13 +15,13 @@ const useIncreaseUnreadCount = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (!res.ok) throw new Error("Failed to increase unread count");
 
       const data: IncreaseUnReadCountResponse = await res.json();
-      if(data.conversation) updateConversation(data.conversation);
+      if (data.conversation) updateConversation(data.conversation);
       return data;
     } catch (error) {
       console.error("Error increasing unread count:", error);
