@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, FormEvent, ChangeEvent } from "react";
 import GenderCheckbox from "@/components/ui/GenderCheckbox";
 import useUpdateProfile from "@/hooks/auth/useUpdateProfile";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { UpdateProfileRequestBody } from "@shared/types/http";
 import { Gender } from "@shared/types/types";
 import { FaUser, FaIdCard, FaUserEdit, FaArrowLeft } from "react-icons/fa";
@@ -14,7 +14,7 @@ interface FormInputs {
 }
 
 const UpdateProfile: FC = () => {
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   const [inputs, setInputs] = useState<FormInputs>({
     fullName: authUser!.fullName,

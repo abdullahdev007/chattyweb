@@ -12,8 +12,6 @@ const useGetUser = () => {
 
       if (!data.success) throw new Error(data.message);
 
-      console.log(data);
-
       return data.user;
     } catch (error: any) {
       toast.error(error.message);

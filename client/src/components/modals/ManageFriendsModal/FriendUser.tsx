@@ -4,7 +4,7 @@ import { IoPersonRemoveSharp } from "react-icons/io5";
 import { IoMdChatbubbles } from "react-icons/io";
 import { useConversation, useConversations } from "@/stores";
 import useRemoveFriend from "@/hooks/friends/useRemoveFriend";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { SafeUser } from "@shared/types/models/user";
 import { Conversation } from "@shared/types/models/conversation";
 
@@ -19,7 +19,7 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
   const { setSelectedConversation } = useConversation();
   const { conversations } = useConversations();
   const { removeFriend, loading } = useRemoveFriend();
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   const isOnline = onlineUsers.includes(friend._id.toString());
 
@@ -29,10 +29,10 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
 
       if (
         participants.some(
-          (participant) => participant.userId._id === friend._id,
+          (participant) => participant.userId._id === friend._id
         ) &&
         participants.some(
-          (participant) => participant.userId._id === authUser?._id,
+          (participant) => participant.userId._id === authUser?._id
         )
       ) {
         return conversation;
@@ -82,7 +82,7 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
                 className="btn btn-circle btn-outline btn-secondary hover:btn-primary transition-all duration-200"
                 onClick={() => {
                   setSelectedConversation(
-                    findConversationWithFriendAndAuthUser(),
+                    findConversationWithFriendAndAuthUser()
                   );
                 }}
                 title="Start chat"

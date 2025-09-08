@@ -21,7 +21,6 @@ export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
     const page = parseInt(req.query.page as string) || 1;
     const limit = 8; // Fixed page size for simplicity
 
-    console.log(page);
     // Use pagination if page parameter is provided
     if (req.query.page) {
       const result = await getUsersService(loggedInUserId, page, limit);

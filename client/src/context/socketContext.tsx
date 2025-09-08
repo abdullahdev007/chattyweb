@@ -5,7 +5,7 @@ import React, {
   useState,
   ReactNode,
 } from "react";
-import { useAuthContext } from "./AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import io, { Socket } from "socket.io-client";
 
 interface SocketContextType {
@@ -19,7 +19,7 @@ export const useSocketContext = () => {
   const context = useContext(SocketContext);
   if (!context) {
     throw new Error(
-      "useSocketContext must be used within a SocketContextProvider",
+      "useSocketContext must be used within a SocketContextProvider"
     );
   }
   return context;
@@ -34,7 +34,7 @@ export const SocketContextProvider: React.FC<SocketContextProviderProps> = ({
 }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   useEffect(() => {
     let socketInstance: Socket | null = null;

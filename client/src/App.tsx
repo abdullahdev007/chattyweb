@@ -1,18 +1,14 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-
-import { ThemeProvider } from "@/context/themeContext";
-import { SidebarProvider } from "@/context/sidebarContext";
 
 import useListenDeletedFromFriends from "@/hooks/friends/useListenDeletedFromFriends";
 import useListenFriendRequest from "@/hooks/friends/useListenFriendRequest";
 import useListenResponseToFriendRequest from "@/hooks/friends/useListenResponseToFriendRequest";
 import useListenNotifications from "@/hooks/notifications/useListenNotifications";
 import useListenMessages from "@/hooks/messages/useListenMessages";
-import { useSyncAuthUser } from "@/hooks/auth/useSyncAuthUser";
 
 import ChangePassword from "@/pages/changePassword/ChangePassword";
 import UpdateProfile from "@/pages/updateProfile/UpdateProfile";
@@ -26,14 +22,13 @@ import AnimatedBackground from "@/layout/AnimatedBackground";
 
 // Component that needs to access theme context
 const AppContent: React.FC = () => {
-  const { authUser, setAuthUser } = useAuthContext();
+  const { authUser, setAuthUser } = useAuthStore();
 
   useListenResponseToFriendRequest();
   useListenMessages();
   useListenFriendRequest();
   useListenNotifications();
   useListenDeletedFromFriends();
-  useSyncAuthUser();
 
   useEffect(() => {
     const token = Cookies.get("jwt");
@@ -43,7 +38,7 @@ const AppContent: React.FC = () => {
   }, [setAuthUser]);
 
   return (
-    <SidebarProvider>
+    <>
       <AnimatedBackground />
       <div className="flex flex-col h-screen">
         <Navbar />
@@ -86,16 +81,12 @@ const AppContent: React.FC = () => {
         </div>
         <Footar />
       </div>
-    </SidebarProvider>
+    </>
   );
 };
 
 const App: React.FC = () => {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
-  );
+  return <AppContent />;
 };
 
 export default App;

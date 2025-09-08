@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { SearchConversation } from "@/components/SearchConversationInput/SearchConversation";
 import DeleteAccountModal from "@/components/modals/deleteAccountModal/DeleteAccountModal";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 import useLogout from "@/hooks/auth/useLogout";
 import { FaUser, FaUserPlus, FaUserFriends } from "react-icons/fa";
 import { IoMdNotifications } from "react-icons/io";
@@ -17,7 +17,7 @@ interface ProfileDropdownProps {
 }
 
 const Navbar: FC = () => {
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { friendRequests } = useFriendRequests();
   const { unReadedNotificationsCount } = useNotifications();
@@ -112,7 +112,7 @@ const Navbar: FC = () => {
                       label="Friend Requests"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "pending_friendships_modal",
+                          "pending_friendships_modal"
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                       }}
@@ -123,7 +123,7 @@ const Navbar: FC = () => {
                       label="Manage Friends"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "manage_friends_modal",
+                          "manage_friends_modal"
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                       }}
@@ -133,7 +133,7 @@ const Navbar: FC = () => {
                       label="Add Friend"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "add_friend_modal",
+                          "add_friend_modal"
                         ) as HTMLDialogElement;
                         if (modal) modal.showModal();
                       }}
@@ -143,7 +143,7 @@ const Navbar: FC = () => {
                       label="Notifications"
                       onClick={() => {
                         const modal = document.getElementById(
-                          "notifications_modal",
+                          "notifications_modal"
                         ) as HTMLDialogElement;
                         if (modal) {
                           modal.showModal();
@@ -262,7 +262,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({ authUser }) => {
         <li
           onClick={() => {
             const modal = document.getElementById(
-              "delete-account-modal",
+              "delete-account-modal"
             ) as HTMLDialogElement | null;
             if (modal) modal.showModal();
           }}
@@ -299,7 +299,7 @@ const NotificationsDropdown: FC = () => {
 
   const handleClick = () => {
     const modal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     if (modal) {
       modal.showModal();
@@ -326,7 +326,7 @@ const NotificationsDropdown: FC = () => {
 const AddFriendButton: FC = () => {
   const handleClick = () => {
     const modal = document.getElementById(
-      "add_friend_modal",
+      "add_friend_modal"
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };
@@ -345,7 +345,7 @@ const AddFriendButton: FC = () => {
 const ManageFriendsButton: FC = () => {
   const handleClick = () => {
     const modal = document.getElementById(
-      "manage_friends_modal",
+      "manage_friends_modal"
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };
@@ -366,7 +366,7 @@ const FriendRequestsDropdown: FC = () => {
 
   const handleClick = () => {
     const modal = document.getElementById(
-      "pending_friendships_modal",
+      "pending_friendships_modal"
     ) as HTMLDialogElement;
     if (modal) modal.showModal();
   };

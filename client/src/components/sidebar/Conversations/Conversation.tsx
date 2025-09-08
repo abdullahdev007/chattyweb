@@ -1,8 +1,8 @@
 import { useSocketContext } from "@/context/socketContext";
 import { useConversation } from "@/stores";
 import useMarkMessagesAsReaded from "@/hooks/conversations/useMarkMessagesAsReaded";
-import { useAuthContext } from "@/context/AuthContext";
-import { useSidebarContext } from "@/context/sidebarContext";
+import useAuthStore from "@/stores/core/useAuthStore";
+import useSidebarState from "@/stores/ui/useSidebarState";
 import { FC } from "react";
 import { Conversation as ConversationType } from "@shared/types/models/conversation";
 
@@ -15,15 +15,15 @@ const Conversation: FC<ConversationProps> = ({ conversation, lastIdx }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { markMessagesAsReaded } = useMarkMessagesAsReaded();
   const { onlineUsers } = useSocketContext();
-  const { authUser } = useAuthContext();
-  const { switchToInsights } = useSidebarContext();
+  const { authUser } = useAuthStore();
+  const { switchToInsights } = useSidebarState();
 
   const userObject = conversation.participants.find(
-    (u) => u.userId._id !== authUser?._id,
+    (u) => u.userId._id !== authUser?._id
   );
 
   const currentUserObject = conversation.participants.find(
-    (u) => u.userId._id === authUser?._id,
+    (u) => u.userId._id === authUser?._id
   );
 
   if (!userObject || !currentUserObject) {

@@ -1,11 +1,11 @@
 import React from "react";
 import { FaReply, FaTimes } from "react-icons/fa";
 import { useConversation } from "@/stores";
-import { useAuthContext } from "@/context/AuthContext";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 const ReplyPreview: React.FC = () => {
   const { replyToMessage, clearReplyToMessage } = useConversation();
-  const { authUser } = useAuthContext();
+  const { authUser } = useAuthStore();
 
   if (!replyToMessage) return null;
 
