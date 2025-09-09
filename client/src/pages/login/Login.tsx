@@ -20,8 +20,8 @@ const Login: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-full h-full min-h-[500px]">
-      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-4">
+    <div className="flex-1 self-stretch px-3 flex justify-center items-center">
+      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md max-h-max">
         {/* Header */}
         <div className="bg-gradient-to-r from-primary to-secondary p-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-primary-content">
@@ -84,7 +84,9 @@ const Login: React.FC = () => {
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <>
-                    <FaSignInAlt className="mr-2" />
+                    <span className="max-xs:hidden">
+                      <FaSignInAlt className="mr-2" />
+                    </span>
                     Sign In
                   </>
                 )}

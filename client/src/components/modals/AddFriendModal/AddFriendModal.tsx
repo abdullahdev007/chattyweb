@@ -106,18 +106,17 @@ const AddFriendModal: FC = () => {
             </div>
           </div>
 
-          <div className="divider my-2"></div>
-
           {/* Pagination */}
           {!isLoading && displayUsers.length > 0 && totalPages > 1 && (
-            <div className="">
+            <>
+              <div className="divider my-2"></div>
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
                 isLoading={isLoading}
               />
-            </div>
+            </>
           )}
         </div>
 

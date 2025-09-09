@@ -20,6 +20,11 @@ import Navbar from "@/layout/Navbar/Navbar";
 import Footar from "@/layout/Footer/Footer";
 import AnimatedBackground from "@/layout/AnimatedBackground";
 
+import AddFriendModal from "@/components/modals/AddFriendModal/AddFriendModal";
+import ManageFriendsModal from "@/components/modals/ManageFriendsModal/ManageFriendsModal";
+import NotificationsModal from "@/components/modals/NotificationsModal/NotificationsModal";
+import PendingFriendShipsListModal from "@/components/modals/PendingFriendShipsListModal/PendingFriendShipsListModal";
+
 // Component that needs to access theme context
 const AppContent: React.FC = () => {
   const { authUser, setAuthUser } = useAuthStore();
@@ -40,9 +45,9 @@ const AppContent: React.FC = () => {
   return (
     <>
       <AnimatedBackground />
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col min-h-screen">
         <Navbar />
-        <div className="p-2 sm:p-4 flex-1 flex items-center justify-center min-h-0">
+        <div className="flex-1 px-3 py-4 flex size-full">
           <Routes>
             <Route
               path="/"
@@ -78,6 +83,11 @@ const AppContent: React.FC = () => {
               style: {},
             }}
           />
+
+          <AddFriendModal />
+          <ManageFriendsModal />
+          <NotificationsModal />
+          <PendingFriendShipsListModal />
         </div>
         <Footar />
       </div>

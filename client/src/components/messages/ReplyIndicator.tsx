@@ -4,19 +4,15 @@ import { FaReply } from "react-icons/fa";
 import useAuthStore from "@/stores/core/useAuthStore";
 
 interface ReplyIndicatorProps {
-  message: ClientMessage;
   repliedMessage?: ClientMessage | null;
 }
 
-const ReplyIndicator: React.FC<ReplyIndicatorProps> = ({
-  message,
-  repliedMessage,
-}) => {
+const ReplyIndicator: React.FC<ReplyIndicatorProps> = ({ repliedMessage }) => {
   const { authUser } = useAuthStore();
   const truncateMessage = (
     text: string,
     maxLines: number = 2,
-    maxCharsPerLine: number = 50
+    maxCharsPerLine: number = 50,
   ) => {
     if (!text) return "";
 

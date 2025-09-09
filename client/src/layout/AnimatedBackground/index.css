@@ -1,7 +1,8 @@
 .animated-background {
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   z-index: -1;
+  inset: 0;
   height: 100vh;
   width: 100vw;
 }

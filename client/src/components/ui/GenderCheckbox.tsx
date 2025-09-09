@@ -12,10 +12,10 @@ const GenderCheckbox: React.FC<GenderCheckboxProps> = ({
   selectedGender,
 }) => {
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full">
       {/* Male Option */}
       <label
-        className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
+        className={`flex items-center justify-center gap-3 p-3 sm:p-3.5 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-[1.02] sm:hover:scale-105 w-full sm:w-auto text-sm sm:text-base ${
           selectedGender === "male"
             ? "border-primary bg-primary/10 text-primary"
             : "border-base-300 bg-base-100 text-base-content hover:border-primary/50"
@@ -28,13 +28,13 @@ const GenderCheckbox: React.FC<GenderCheckboxProps> = ({
           checked={selectedGender === "male"}
           onChange={() => onCheckboxChange("male")}
         />
-        <FaMars className="text-lg" />
+        <FaMars className="text-base sm:text-lg" />
         <span className="font-medium">Male</span>
       </label>
 
       {/* Female Option */}
       <label
-        className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
+        className={`flex items-center justify-center gap-3 p-3 sm:p-3.5 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:scale-[1.02] sm:hover:scale-105 w-full sm:w-auto text-sm sm:text-base ${
           selectedGender === "female"
             ? "border-secondary bg-secondary/10 text-secondary"
             : "border-base-300 bg-base-100 text-base-content hover:border-secondary/50"
@@ -47,7 +47,7 @@ const GenderCheckbox: React.FC<GenderCheckboxProps> = ({
           checked={selectedGender === "female"}
           onChange={() => onCheckboxChange("female")}
         />
-        <FaVenus className="text-lg" />
+        <FaVenus className="text-base sm:text-lg" />
         <span className="font-medium">Female</span>
       </label>
     </div>

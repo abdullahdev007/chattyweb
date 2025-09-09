@@ -12,7 +12,7 @@ const MessageContainer: React.FC = () => {
     return () => setSelectedConversation(null);
   }, [setSelectedConversation]);
   return (
-    <div className="flex flex-col flex-1 overflow-y-auto">
+    <div className="flex flex-col flex-1 overflow-y-auto max-h-full">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (

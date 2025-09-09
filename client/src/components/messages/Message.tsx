@@ -21,18 +21,12 @@ const Message: React.FC<MessageProps> = ({ message }) => {
     message.senderId._id === authUser?._id
       ? message.senderId
       : selectedConversation?.participants.find(
-          (p: any) => p.userId._id != authUser?._id
+          (p: any) => p.userId._id != authUser?._id,
         )?.userId;
   const fromMe = message.senderId._id === authUser?._id;
 
   // Check if this message is a reply and get the replied message
-  const isReply = message.replayTo !== null;
-  const repliedMessage = isReply
-    ? messages.find(
-        (msg: ClientMessage) =>
-          msg._id.toString() === message.replayTo?.toString()
-      )
-    : null;
+  const repliedToMessage = message.replayTo as ClientMessage | null;
 
   // Use the enhanced double click hook with timing state
   const { handleClick, isPressed } = useDoubleClick({
@@ -86,8 +80,8 @@ const Message: React.FC<MessageProps> = ({ message }) => {
         </button>
 
         {/* Reply indicator */}
-        {isReply && (
-          <ReplyIndicator message={message} repliedMessage={repliedMessage} />
+        {repliedToMessage && (
+          <ReplyIndicator repliedMessage={repliedToMessage} />
         )}
 
         {/* Message content */}

@@ -18,9 +18,9 @@ const useGetUsers = () => {
 
       if (data.users) {
         setUsers(data.users);
-        
-        const pagination = data.pagination
-        if(pagination === undefined) return;
+
+        const pagination = data.pagination;
+        if (pagination === undefined) return;
 
         setPaginationData({
           total: pagination.total || 0,
@@ -44,7 +44,6 @@ const useGetUsers = () => {
     page: number = 1,
   ): Promise<void> => {
     if (query.length < 3) {
-      await fetchUsers(page);
       return;
     }
 

@@ -28,7 +28,7 @@ const SearchInput: FC<SearchInputProps> = ({ search, setSearch }) => {
         <input
           type="text"
           autoFocus
-          placeholder="Search for users by username..."
+          placeholder="Search in users with username or fullname..."
           className="input input-bordered w-full pl-12 pr-12 py-4 text-base transition-all duration-300 focus:input-primary focus:ring-2 focus:ring-primary/20 hover:border-primary/50"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setSearch(e.target.value)

@@ -109,16 +109,17 @@ const NotificationsModal: FC = () => {
           </div>
         </div>
 
-        <div className="divider my-2"></div>
-
         {/* Pagination */}
         {!isLoading && notifications.length > 0 && totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            isLoading={isLoading}
-          />
+          <>
+            <div className="divider my-2"></div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              isLoading={isLoading}
+            />
+          </>
         )}
       </div>
 

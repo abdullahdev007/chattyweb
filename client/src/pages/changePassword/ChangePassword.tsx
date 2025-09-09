@@ -19,8 +19,8 @@ const ChangePassword: FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-full h-full min-h-[500px]">
-      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-4">
+    <div className="flex-1 self-stretch px-3 flex justify-center items-center">
+      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md max-h-max">
         {/* Header */}
         <div className="bg-gradient-to-r from-secondary to-accent p-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-warning-content">
@@ -87,7 +87,9 @@ const ChangePassword: FC = () => {
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <>
-                    <FaKey className="mr-2" />
+                    <span className="max-xs:hidden">
+                      <FaKey className="mr-2" />
+                    </span>
                     Update Password
                   </>
                 )}
@@ -98,7 +100,7 @@ const ChangePassword: FC = () => {
             <div className="text-center mt-4">
               <Link
                 to="/"
-                className="link link-warning hover:link-error transition-colors duration-200 font-medium inline-flex items-center"
+                className="link link-warning hover:link-error transition-colors duration-200 font-base inline-flex items-center"
               >
                 <FaArrowLeft className="mr-2" />
                 Back to Home
