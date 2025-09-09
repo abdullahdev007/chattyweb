@@ -7,7 +7,15 @@ export interface GetUserResponseBody extends BaseResponse {
 
 export interface GetUsersResponseBody extends BaseResponse {
   users?: SafeUser[];
-  total?: number;
-  page?: number;
-  totalPages?: number;
+  pagination?: {
+    total: number;
+    page: number;
+    totalPages: number;
+    
+  }
+}
+
+// to use pagination with get users route
+export interface GetUsersQuery {
+  page?: number
 }
