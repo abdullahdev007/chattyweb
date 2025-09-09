@@ -16,8 +16,8 @@ const useAuthStore = create<AuthState>()(
     {
       name: "chattyweb_auth",
       partialize: (state) => ({ authUser: state.authUser }),
-    }
-  )
+    },
+  ),
 );
 
 export default useAuthStore;

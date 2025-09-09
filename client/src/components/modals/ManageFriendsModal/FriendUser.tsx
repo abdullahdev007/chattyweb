@@ -29,10 +29,10 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
 
       if (
         participants.some(
-          (participant) => participant.userId._id === friend._id
+          (participant) => participant.userId._id === friend._id,
         ) &&
         participants.some(
-          (participant) => participant.userId._id === authUser?._id
+          (participant) => participant.userId._id === authUser?._id,
         )
       ) {
         return conversation;
@@ -82,7 +82,7 @@ const FriendUser: FC<FriendUserProps> = ({ friend, lastIdx }) => {
                 className="btn btn-circle btn-outline btn-secondary hover:btn-primary transition-all duration-200"
                 onClick={() => {
                   setSelectedConversation(
-                    findConversationWithFriendAndAuthUser()
+                    findConversationWithFriendAndAuthUser(),
                   );
                 }}
                 title="Start chat"

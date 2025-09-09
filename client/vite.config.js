@@ -7,6 +7,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+    headers: {
+      "Content-Security-Policy":
+        "img-src 'self' data: https://avatar.iran.liara.run https:;",
+    },
     proxy: {
       "/api": {
         target: "http://localhost:5000",
@@ -15,6 +19,7 @@ export default defineConfig({
       },
     },
   },
+
   build: {
     outDir: "dist",
   },

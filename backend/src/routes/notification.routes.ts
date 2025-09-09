@@ -10,7 +10,7 @@ router.get(
   "/",
   protectRoute,
   validate({ query: getNotificationsQuerySchema }),
-  getNotifications
+  getNotifications,
 );
 router.post("/markAsReaded", protectRoute, markAsReaded);
 router.post("/clearAll", protectRoute, clearAll);

@@ -17,7 +17,7 @@ export const getUsers: RequestHandler<
   GetUsersQuery
 > = async (
   req: Request<any, GetUsersResponseBody, any, GetUsersQuery>,
-  res
+  res,
 ) => {
   try {
     const loggedInUserId = req.user?._id.toString();
@@ -51,7 +51,7 @@ export const getUsers: RequestHandler<
 
 export const getUser: RequestHandler<any, GetUserResponseBody, any> = async (
   req,
-  res
+  res,
 ) => {
   try {
     const userID: string = req.params.id;

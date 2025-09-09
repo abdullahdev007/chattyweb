@@ -43,8 +43,8 @@ const UpdateProfile: FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full min-h-[500px]">
-      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-4">
+    <div className="flex-1 self-stretch px-3 flex justify-center items-center">
+      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md min-h-[500px] max-h-max">
         {/* Header */}
         <div className="bg-gradient-to-r from-accent to-primary p-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-accent-content">
@@ -79,7 +79,7 @@ const UpdateProfile: FC = () => {
 
             {/* Username Field */}
             <div className="form-control">
-              <label className="label">
+              <label className="label ">
                 <span className="label-text text-base-content font-medium">
                   <FaUser className="inline mr-2" />
                   Username
@@ -122,7 +122,9 @@ const UpdateProfile: FC = () => {
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <>
-                    <FaUserEdit className="mr-2" />
+                    <span className="max-xs:hidden">
+                      <FaUserEdit className="mr-2 " />
+                    </span>
                     Update Profile
                   </>
                 )}
@@ -133,7 +135,7 @@ const UpdateProfile: FC = () => {
             <div className="text-center mt-4">
               <Link
                 to="/"
-                className="link link-accent hover:link-primary transition-colors duration-200 font-medium inline-flex items-center"
+                className="link link-accent hover:link-primary transition-colors duration-200 font-base inline-flex items-center"
               >
                 <FaArrowLeft className="mr-2" />
                 Back to Home

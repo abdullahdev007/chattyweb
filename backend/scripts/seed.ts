@@ -151,7 +151,7 @@ const seedDB = async () => {
 
     await mongoose.disconnect();
     console.log(
-      "✅ Seeding completed successfully and disconnected from MongoDB"
+      "✅ Seeding completed successfully and disconnected from MongoDB",
     );
   } catch (error) {
     console.error("❌ Error during seeding:", error);

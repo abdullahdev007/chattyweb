@@ -15,7 +15,7 @@ const Messages: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="px-4 flex-1 overflow-y-auto min-h-0">
+    <div className="px-4 flex-1 overflow-y-auto max-h-full ">
       {!loading &&
         messages.length > 0 &&
         messages.map((message: any) => (

@@ -34,8 +34,8 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full min-h-[600px]">
-      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-4">
+    <div className="flex-1 self-stretch px-3 flex justify-center items-center">
+      <div className="bg-base-200 shadow-lg rounded-lg overflow-hidden w-full max-w-md">
         {/* Header */}
         <div className="bg-gradient-to-r from-secondary to-accent p-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-secondary-content">
@@ -155,7 +155,9 @@ const Signup: React.FC = () => {
                   <span className="loading loading-spinner loading-sm"></span>
                 ) : (
                   <>
-                    <FaUserPlus className="mr-2" />
+                    <span className="max-xs:hidden">
+                      <FaUserPlus className="mr-2" />
+                    </span>
                     Create Account
                   </>
                 )}

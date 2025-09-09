@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNotifications, useNotificationsPagination } from "@/stores";
 import { GetNotificationsResponse } from "@shared/types/http/modules/notification";
@@ -11,7 +11,7 @@ const useGetNotifications = () => {
   const {
     setLoading: setPaginationLoading,
     setPaginationData,
-    setCurrentPage
+    setCurrentPage,
   } = useNotificationsPagination();
 
   // Fetch notifications with pagination
@@ -34,9 +34,7 @@ const useGetNotifications = () => {
 
       // Set pagination data if available
       const pagination = data.pagination;
-      if (
-        pagination !== undefined
-      ) {
+      if (pagination !== undefined) {
         setPaginationData({
           total: pagination.total,
           page: pagination.page,

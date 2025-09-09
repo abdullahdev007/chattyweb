@@ -52,9 +52,8 @@ const useThemeStore = create<ThemeState>()(
         }
         state?.setLoading(false); // خلص, ما عاد في loading
       },
-    }
-  )
+    },
+  ),
 );
-
 
 export default useThemeStore;

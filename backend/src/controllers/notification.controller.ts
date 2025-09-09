@@ -20,7 +20,7 @@ export const getNotifications: RequestHandler<
   GetNotificationsQuery
 > = async (
   req: Request<any, GetNotificationsResponse, any, GetNotificationsQuery>,
-  res
+  res,
 ): Promise<void> => {
   try {
     const loggedInUserId = req.user!._id.toString();
@@ -36,7 +36,7 @@ export const getNotifications: RequestHandler<
           ...(n as any).toObject(),
           senderId: toSafeUser(n.senderId as any),
           receiverId: toSafeUser(n.receiverId as any),
-        })
+        }),
       );
 
       res.status(200).json({
@@ -45,8 +45,8 @@ export const getNotifications: RequestHandler<
         pagination: {
           total: result.total,
           page: result.page,
-          totalPages: result.totalPages
-        }
+          totalPages: result.totalPages,
+        },
       });
     } else {
       // Fallback to old behavior for backward compatibility
@@ -75,7 +75,7 @@ export const getNotifications: RequestHandler<
 
 export const markAsReaded = async (
   req: Request,
-  res: Response<BaseResponse>
+  res: Response<BaseResponse>,
 ): Promise<void> => {
   try {
     await markAllNotificationsAsRead(req.user!._id.toString());
@@ -92,7 +92,7 @@ export const markAsReaded = async (
 
 export const getUnreadCount = async (
   req: Request,
-  res: Response<{ success: boolean; count: number }>
+  res: Response<{ success: boolean; count: number }>,
 ): Promise<void> => {
   try {
     const count = await getUnreadNotificationsCount(req.user!._id.toString());
@@ -112,7 +112,7 @@ export const getUnreadCount = async (
 
 export const clearAll: RequestHandler = async (
   req: Request,
-  res: Response<BaseResponse>
+  res: Response<BaseResponse>,
 ): Promise<void> => {
   try {
     if (!req.user?._id) {

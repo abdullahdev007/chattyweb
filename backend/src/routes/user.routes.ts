@@ -13,7 +13,7 @@ router.get(
   "/",
   protectRoute,
   validate({ query: getUsersQuerySchema }),
-  getUsers
+  getUsers,
 );
 router.get("/:id", protectRoute, validate({ params: getUserSchema }), getUser);
 
