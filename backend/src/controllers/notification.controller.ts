@@ -1,5 +1,8 @@
 import type { Request, RequestHandler, Response } from "express";
-import { GetNotificationsResponse } from "@shared/types/http/modules/notification.js";
+import {
+  GetNotificationsResponse,
+  GetNotificationsQuery,
+} from "@shared/types/http/modules/notification.js";
 import { BaseResponse } from "@shared/types/http/base.js";
 import toSafeUser from "@/utils/toSafeUser.js";
 import { SafeNotification } from "@shared/types/models/notification.js";
@@ -12,11 +15,16 @@ import {
 
 export const getNotifications: RequestHandler<
   any,
-  GetNotificationsResponse
-> = async (req: Request, res): Promise<void> => {
+  GetNotificationsResponse,
+  any,
+  GetNotificationsQuery
+> = async (
+  req: Request<any, GetNotificationsResponse, any, GetNotificationsQuery>,
+  res
+): Promise<void> => {
   try {
     const loggedInUserId = req.user!._id.toString();
-    const page = parseInt(req.query.page as string) || 1;
+    const page = req.query.page || 1;
     const limit = 12; // 12 notifications per page
 
     // Use pagination if page parameter is provided
@@ -28,15 +36,17 @@ export const getNotifications: RequestHandler<
           ...(n as any).toObject(),
           senderId: toSafeUser(n.senderId as any),
           receiverId: toSafeUser(n.receiverId as any),
-        }),
+        })
       );
 
       res.status(200).json({
         success: true,
         notifications: safeNotifications,
-        total: result.total,
-        page: result.page,
-        totalPages: result.totalPages,
+        pagination: {
+          total: result.total,
+          page: result.page,
+          totalPages: result.totalPages
+        }
       });
     } else {
       // Fallback to old behavior for backward compatibility
@@ -65,7 +75,7 @@ export const getNotifications: RequestHandler<
 
 export const markAsReaded = async (
   req: Request,
-  res: Response<BaseResponse>,
+  res: Response<BaseResponse>
 ): Promise<void> => {
   try {
     await markAllNotificationsAsRead(req.user!._id.toString());
@@ -82,7 +92,7 @@ export const markAsReaded = async (
 
 export const getUnreadCount = async (
   req: Request,
-  res: Response<{ success: boolean; count: number }>,
+  res: Response<{ success: boolean; count: number }>
 ): Promise<void> => {
   try {
     const count = await getUnreadNotificationsCount(req.user!._id.toString());
@@ -102,7 +112,7 @@ export const getUnreadCount = async (
 
 export const clearAll: RequestHandler = async (
   req: Request,
-  res: Response<BaseResponse>,
+  res: Response<BaseResponse>
 ): Promise<void> => {
   try {
     if (!req.user?._id) {

@@ -18,12 +18,16 @@ const useGetUsers = () => {
 
       if (data.users) {
         setUsers(data.users);
+        
+        const pagination = data.pagination
+        if(pagination === undefined) return;
+
         setPaginationData({
-          total: data.total || 0,
-          page: data.page || 1,
-          totalPages: data.totalPages || 1,
+          total: pagination.total || 0,
+          page: pagination.page || 1,
+          totalPages: pagination.totalPages || 1,
         });
-        setCurrentPage(data.page || 1);
+        setCurrentPage(pagination.page || 1);
       }
     } catch (error: any) {
       toast.error(

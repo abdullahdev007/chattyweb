@@ -52,6 +52,7 @@ Handles user-related endpoints:
 
 - **GET `/`** - Get all users except current user
   - Returns list of all users for friend requests/search
+  - Supports pagination with optional `page` query parameter
   - Requires authentication
 
 - **GET `/:id`** - Get specific user by ID
@@ -113,6 +114,7 @@ Handles notification management endpoints:
 
 - **GET `/`** - Get user notifications
   - Returns all notifications for current user
+  - Supports pagination with optional `page` query parameter
   - Requires authentication
 
 - **POST `/markAsReaded`** - Mark all notifications as read

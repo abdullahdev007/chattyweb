@@ -1,6 +1,7 @@
 import { Request, RequestHandler } from "express";
 import {
   GetUserResponseBody,
+  GetUsersQuery,
   GetUsersResponseBody,
 } from "@shared/types/http/modules/user.js";
 import {
@@ -9,16 +10,20 @@ import {
   getUsers as getUsersService,
 } from "@/services";
 
-export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
-  req: Request,
-  res,
+export const getUsers: RequestHandler<
+  any,
+  GetUsersResponseBody,
+  any,
+  GetUsersQuery
+> = async (
+  req: Request<any, GetUsersResponseBody, any, GetUsersQuery>,
+  res
 ) => {
   try {
     const loggedInUserId = req.user?._id.toString();
 
     // Get page parameter from query
-
-    const page = parseInt(req.query.page as string) || 1;
+    const page = req.query.page || 1;
     const limit = 8; // Fixed page size for simplicity
 
     // Use pagination if page parameter is provided
@@ -27,9 +32,11 @@ export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
       res.status(200).json({
         success: true,
         users: result.users,
-        total: result.total,
-        page: result.page,
-        totalPages: result.totalPages,
+        pagination: {
+          total: result.total,
+          page: result.page,
+          totalPages: result.totalPages,
+        },
       });
     } else {
       // Fallback to old behavior for backward compatibility
@@ -44,7 +51,7 @@ export const getUsers: RequestHandler<any, GetUsersResponseBody, any> = async (
 
 export const getUser: RequestHandler<any, GetUserResponseBody, any> = async (
   req,
-  res,
+  res
 ) => {
   try {
     const userID: string = req.params.id;
