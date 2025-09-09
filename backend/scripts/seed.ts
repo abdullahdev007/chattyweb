@@ -44,7 +44,7 @@ const seedDB = async () => {
     const users: UserDocument[] = [];
 
     // Create 10 users for better testing
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const plainPassword = "password123";
       const hashedPassword = bcrypt.hashSync(plainPassword, 10);
       const gender = faker.helpers.arrayElement(["male", "female"]);
@@ -151,7 +151,7 @@ const seedDB = async () => {
 
     await mongoose.disconnect();
     console.log(
-      "✅ Seeding completed successfully and disconnected from MongoDB",
+      "✅ Seeding completed successfully and disconnected from MongoDB"
     );
   } catch (error) {
     console.error("❌ Error during seeding:", error);
