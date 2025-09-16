@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useFriendRequests } from "@/stores";
 import { GetFriendRequestsResponse } from "@shared/types/http";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 const useGetFriendRequests = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { friendRequests, setFriendRequests } = useFriendRequests();
-
+  const { authUser } = useAuthStore();
+  
   useEffect(() => {
     const fetchFriendRequests = async () => {
       setLoading(true);
@@ -30,7 +32,7 @@ const useGetFriendRequests = () => {
       }
     };
 
-    fetchFriendRequests();
+    if(authUser) fetchFriendRequests();
   }, [setFriendRequests]);
 
   return { loading, friendRequests };

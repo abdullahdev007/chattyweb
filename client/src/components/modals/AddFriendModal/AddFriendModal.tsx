@@ -5,6 +5,7 @@ import { useUsers, useUsersPagination } from "@/stores";
 import AddFriendUser from "./AddFriendUser";
 import Pagination from "@/components/ui/Pagination";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 const AddFriendModal: FC = () => {
   // API functions only
@@ -15,7 +16,6 @@ const AddFriendModal: FC = () => {
   const {
     currentPage,
     totalPages,
-    total,
     isLoading,
     searchQuery,
     isSearching,
@@ -23,13 +23,14 @@ const AddFriendModal: FC = () => {
     setSearchQuery,
     setCurrentPage,
   } = useUsersPagination();
+  const { authUser } = useAuthStore();
 
   // Get current users (search results or regular users)
   const displayUsers = isSearching ? searchResults : users;
 
   // Initialize data when modal opens
   useEffect(() => {
-    fetchUsers(1);
+    if(authUser) fetchUsers(1);
   }, []);
 
   // Handle search

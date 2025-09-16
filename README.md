@@ -211,18 +211,16 @@ Create the following files in the `backend` directory:
 `.env` (default environment variables):
 
 ```env
-# Database
-MONGODB_URI=mongodb://localhost:27017/chattyweb
-
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key-here
 
 # Application
 PORT=5000
-APP_URL=http://localhost:5173
+DOMAIN=localhost
 
 # Google Gemini AI
 GOOGLE_API_KEY=your-google-gemini-api-key-here
+
 ```
 
 `.env.development` (development-specific overrides):

@@ -6,23 +6,25 @@ import { useNotifications, useNotificationsPagination } from "@/stores";
 import useMarkAsReaded from "@/hooks/notifications/useMarkAsReaded";
 import Pagination from "@/components/ui/Pagination";
 import { FaBell, FaTrash, FaBellSlash } from "react-icons/fa";
+import useAuthStore from "@/stores/core/useAuthStore";
 
 const NotificationsModal: FC = () => {
   const { notifications, fetchNotifications } = useGetNotifications();
   const { clearAllNotifications } = useClearAllNotifications();
   const { unReadedNotificationsCount } = useNotifications();
   const { markAsReaded } = useMarkAsReaded();
-  const { currentPage, totalPages, total, isLoading, setCurrentPage } =
+  const { currentPage, totalPages, isLoading, setCurrentPage } =
     useNotificationsPagination();
+  const { authUser } = useAuthStore();
 
   // Initialize data when modal opens
   useEffect(() => {
-    fetchNotifications(1);
+    if (authUser) fetchNotifications(1);
   }, []);
 
   useEffect(() => {
     const modal = document.getElementById(
-      "notifications_modal",
+      "notifications_modal"
     ) as HTMLDialogElement;
     if (modal?.open && notifications.length > 0) {
       markAsReaded();
@@ -36,7 +38,7 @@ const NotificationsModal: FC = () => {
   };
 
   const sortedNotifications = [...notifications].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
   return (

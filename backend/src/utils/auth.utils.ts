@@ -64,7 +64,7 @@ export const generateTokenAndSetCookie = (
 
   res.cookie("jwt", token, {
     secure: process.env.NODE_ENV !== "development",
-    domain: process.env.domain,
+    domain: process.env.DOMAIN,
     path: "/",
   });
 };
