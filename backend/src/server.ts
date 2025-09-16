@@ -23,7 +23,7 @@ import { fileURLToPath } from "url";
 const PORT: string | number = process.env.PORT || 5000;
 
 // Adds security headers to protect against common web vulnerabilities
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // Compresses response bodies to reduce size and improve load times
 app.use(compression());

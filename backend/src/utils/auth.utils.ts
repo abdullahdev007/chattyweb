@@ -61,7 +61,7 @@ export const generateTokenAndSetCookie = (
 ): void => {
   const jwtSecret = process.env.JWT_SECRET || "";
   const token = jwt.sign({ userId }, jwtSecret);
-
+  
   res.cookie("jwt", token, {
     secure: process.env.NODE_ENV !== "development",
     domain: process.env.DOMAIN,

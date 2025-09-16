@@ -6,7 +6,7 @@
       "script": "dev",
       "path": "client",
       "problemMatcher": [],
-      "label": "npm: dev - client",
+      "label": "Client Development Server",
       "detail": "npm run dev"
     },
     {
@@ -14,7 +14,7 @@
       "script": "dev",
       "path": "backend",
       "problemMatcher": [],
-      "label": "npm: dev - backend",
+      "label": "Backend Development Server",
       "detail": "npm run dev"
     }
   ]
